@@ -1,28 +1,4 @@
-class PokemonS1:
-    def __init__(self, name, evo, type_1, type_2, hp, att,
-                 deff, spd):
-        self.name = name
-        self.evo = evo
-        self.type_1 = type_1
-        self.type_2 = type_1
-        self.hp_1 = hp
-        self.att_1 = att
-        self.deff = deff
-        self.spd = spd
-
-class PokemonS2:
-    def __init__(self, name, evo, type_1, type_2, hp, att,
-                 deff, spd):
-        self.name = name
-        self.evo = evo
-        self.type_1 = type_1
-        self.type_2 = type_1
-        self.hp_1 = hp
-        self.att_1 = att
-        self.deff = deff
-        self.spd = spd
-
-class PokemonS3:
+class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
                  deff, spd):
         self.name = name
@@ -35,10 +11,10 @@ class PokemonS3:
         self.spd = spd
 
 class PokemonM:
-    def __init__(self, name, revert, type_1, type_2, hp, att,
+    def __init__(self, name, evo_back, type_1, type_2, hp, att,
                  deff, spd):
-        self.name_1 = name
-        self.revert = revert
+        self.name = name
+        self.evo = evo_back
         self.type_1 = type_1
         self.type_2 = type_1
         self.hp_1 = hp
@@ -46,17 +22,15 @@ class PokemonM:
         self.deff = deff
         self.spd = spd
 
-
-
-Charmander = PokemonS1("Charmander", "Charmeleon",
+Charmander = Pokemon("Charmander", "Charmeleon",
                        "Fire", "None",
                        39, 52, 50, 65,)
 
-Charmeleon = PokemonS2("Charmeleon", "Charizard",
+Charmeleon = Pokemon("Charmeleon", "Charizard",
                        "Fire", "None", 58, 80,
                        65, 80)
 
-Charizard = PokemonS3("Charizard", "Mega Charizard X",
+Charizard = Pokemon("Charizard", "Mega Charizard X",
                       "Fire", "Flying", 78, 109,
                       85, 100)
 
