@@ -1,11 +1,15 @@
 import random
 
-from SAM_TEST.Test_0001 import Charizard
+def poke_hp_bar(pokemon_a):
+    c_hp = int(pokemon_a.health)
+    f_hp = int(pokemon_a.max_health)
+    bar ="■" * (round( c_hp / f_hp * 20))
+    output = ("[" + f"{bar:<20}]" )
+    # print(c_hp)
+    # print(f_hp)
+    return output
 
-
-def poke_hp_bar(pokemon):
-    print("■" * round((pokemon.health / pokemon.max_health) * 20))
-    return None
+# print("■" * round((20 / 100) * 20))
 
 
 def pokemon_battle(your_mon, opo_mon):
@@ -15,7 +19,7 @@ def pokemon_battle(your_mon, opo_mon):
         opo_hp_str = f"{opo_mon.health}/{opo_mon.max_health}"
         print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
               f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
-        print("[" + "■" * 20 + "" + "]") # you will have to make a real one
+        print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
         print(f"HP:{your_hp_str:<38}HP:{opo_hp_str}" )
         print("")
         print("")
@@ -33,6 +37,7 @@ def pokemon_battle(your_mon, opo_mon):
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
                 else:
+
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
             if opo_mon.health > 0:
@@ -55,9 +60,19 @@ def pokemon_battle(your_mon, opo_mon):
                     input("Press Enter to continue")
 
     if your_mon.health <= 0:
+        print("=" * 100)
+        print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
+              f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
+        print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
+        print(f"HP:{"0":<38}HP:{opo_hp_str}")
         print(f"Your {your_mon.name} fainted!")
         print("You lose")
     elif your_mon.health > 0:
+        print("=" * 100)
+        print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
+              f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
+        print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
+        print(f"HP:{your_hp_str:<38}HP:{"0"}")
         print("The opposing Pokémon is knocked out!")
         print("You win")
         your_mon.lvl += 1
@@ -77,7 +92,7 @@ class Pokemon:
         self.name = name
         self.evo = evo
         self.type_1 = type_1
-        self.type_2 = type_1
+        self.type_2 = type_2
         self.hp_1 = hp
         self.att_1 = att
         self.deff = deff

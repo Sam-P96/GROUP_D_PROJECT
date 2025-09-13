@@ -1,2 +1,4 @@
-customer = input("Enter customer name: ")
-print(f"Customer: {customer:<20} Next field")
+
+# def poke_hp_bar(pokemon):
+print("■" * round(1 - (20 / 350) * 20))
+
