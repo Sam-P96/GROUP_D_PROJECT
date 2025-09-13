@@ -1,11 +1,16 @@
 import random
 
-def rou_g(player)
+def rou_g(player):
+    print("hi")
+
+
 
 class Player:
     def __init__(self, name):
         self.name = name
         self.health = 100
+        self.plane_health = 300
+        self.plane_fuel = 100
 
     def attack(self, player_2):
         """
@@ -22,8 +27,9 @@ class Player:
         print(f"{self.name} challenged {player_2.name} to Russian Roulette!")
         while self.health > 0 and player_2.health > 0:
             for turn in player_list:
-                bullet = random.randint(1, 2)
-                print(f"Bullet is {bullet}") #remove later after testing
+                print("*Spinning the barrel*")
+                bullet = random.randint(1, 6)
+                # print(f"Bullet is {bullet}") #remove later after testing
                 if turn == self:
                     print(f"{self.name}'s turn. Click.")
                     if shot != bullet:
@@ -53,8 +59,8 @@ class Player:
             print("Game Over")
 
 
-player1 = Player("Sam")
-player2 = Player("Alice")
+player1 = Player("Meeri")
+player2 = Player("Sam")
 
 input("Press Enter to play Russian Roulette.")
 player1.game_russian(player2)

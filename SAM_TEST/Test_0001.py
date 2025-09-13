@@ -1,3 +1,8 @@
+attack_dict = {
+    "Flamethrower": 95,
+    "Hydropump": 120,
+}
+
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
                  deff, spd):
@@ -9,6 +14,13 @@ class Pokemon:
         self.att_1 = att
         self.deff = deff
         self.spd = spd
+        self.health = round(100 * (hp/100))
+
+    def attack(self, player_2, key):
+        base_dmg = attack_dict[key]
+        dmg_out = self.att_1 * attack_dict[key] / 250
+        print(player_2.health)
+
 
 class PokemonM:
     def __init__(self, name, evo_back, type_1, type_2, hp, att,
@@ -38,3 +50,4 @@ Mega_Charizard_X = PokemonM("Mega Charizard X", "Charizard",
                             "Fire", "Dragon", 78,
                             130, 111, 100)
 
+Charmander.attack(Charmeleon, "Flamethrower")

@@ -1,3 +1,4 @@
-import random
+x = "a"
 
-print(random.randint(1, 6))
+if x.casefold() == "A":
+    print("yay")
