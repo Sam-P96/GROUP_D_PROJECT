@@ -75,8 +75,8 @@ class Pokemon:
         self.deff = deff
         self.spd = spd
         self.lvl = 1
-        self.health = round(150 * (hp/100))
-        self.max_health = round(150 * (hp/100))
+        self.health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
+        self.max_health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
 
     def attack(self, player_2, key):
         dmg_pre = round(self.att_1 * attack_dict[key] / random.randint(200,300))
