@@ -1,6 +1,46 @@
+import random
+
+def pokemon_battle(your_mon, opo_mon):
+    while your_mon.health > 0 and opo_mon.health > 0:
+        your_hp_str = f"{your_mon.health}/{your_mon.max_health}"
+        opo_hp_str = f"{opo_mon.health}/{opo_mon.max_health}"
+        print(f"{your_mon.name:<40} {opo_mon.name}")
+        print(f"HP:{your_hp_str:<38}HP:{opo_hp_str}" )
+        # print("1234567890"*10)
+        if your_mon.spd >= opo_mon.spd:
+            if your_mon.health > 0:
+                print("Your turn!")
+                your_att = input("Select your attack: ")
+                # your_att = "Flamethrower"
+                if your_att in attack_dict:
+                    your_mon.attack(opo_mon, your_att)
+                    input("Press Enter to Continue")
+            if opo_mon.health > 0:
+                print("Opponent's turn!")
+                opo_mon.attack(your_mon, "Flamethrower")
+        else:
+            if opo_mon.health > 0:
+                print("Opponent's turn!")
+                opo_mon.attack(your_mon, "Flamethrower")
+            if your_mon.health > 0:
+                print("Your turn!")
+                # your_att = input("Select your attack: ")
+                your_att = "Flamethrower"
+                your_mon.attack(opo_mon, your_att)
+                input("Press Enter to Continue")
+
+    if your_mon.health <= 0:
+        print("Your lose")
+    elif your_mon.health > 0:
+        print("You win")
+
+
+
 attack_dict = {
     "Flamethrower": 95,
+    "Dragon Claw": 80,
     "Hydropump": 120,
+    "Draco Meteor": 130,
 }
 
 class Pokemon:
@@ -14,12 +54,18 @@ class Pokemon:
         self.att_1 = att
         self.deff = deff
         self.spd = spd
-        self.health = round(100 * (hp/100))
+        self.lvl =1
+        self.health = round(150 * (hp/100))
+        self.max_health = round(150 * (hp/100))
 
     def attack(self, player_2, key):
-        base_dmg = attack_dict[key]
-        dmg_out = self.att_1 * attack_dict[key] / 250
-        print(player_2.health)
+        dmg_pre = round(self.att_1 * attack_dict[key] / random.randint(200,300))
+        dmg_out = round((dmg_pre * 0.5) + (dmg_pre * (0.5 * (player_2.deff/300))))
+        player_2.health -= dmg_out
+        # print(dmg_pre)
+        # print(dmg_out)
+        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
+        # + str(player_2.health) + " " + str(dmg_out))
 
 
 class PokemonM:
@@ -46,8 +92,19 @@ Charizard = Pokemon("Charizard", "Mega Charizard X",
                       "Fire", "Flying", 78, 109,
                       85, 100)
 
-Mega_Charizard_X = PokemonM("Mega Charizard X", "Charizard",
+Charizard_2 = Pokemon("Opponent's Charizard", "Mega Charizard X",
+                      "Fire", "Flying", 78, 109,
+                      85, 100)
+
+Mega_Charizard_X = Pokemon("Mega Charizard X", "Charizard",
                             "Fire", "Dragon", 78,
                             130, 111, 100)
 
-Charmander.attack(Charmeleon, "Flamethrower")
+# print(Charmeleon.health)
+# Charmander.attack(Charmeleon, "Flamethrower")
+# print(Charmander.health)
+#
+# print(Charmeleon.health)
+# Charizard.attack(Charmeleon, "Flamethrower")
+
+pokemon_battle(Mega_Charizard_X, Charizard_2)

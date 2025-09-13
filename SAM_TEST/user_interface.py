@@ -4,34 +4,41 @@ def second_menu(input_sec):
     if choice == "a" or choice.casefold() == "menu":
         print("=" * 120)
         print("PLACE HOLDER MENU FOR MENU")
-        input("Press Enter to continue")
+        a_menu = input("Press Enter to continue")
         print("=" * 120)
+        if a_menu.casefold() == "exit":
+            return "exit"
+        return None
     elif choice == "b" or choice.casefold() == "bag":
         print("=" * 120)
         print("PLACE HOLDER MENU FOR BAG")
         input("Press Enter to continue")
         print("=" * 120)
+        return None
     elif choice == "c" or choice.casefold() == "stats":
         print("=" * 120)
         print("PLACE HOLDER MENU FOR STATS")
         input("Press Enter to continue")
         print("=" * 120)
+        return None
     elif choice == "d" or choice.casefold() == "achievements":
         print("=" * 120)
         print("PLACE HOLDER MENU FOR ACHIEVEMENTS")
         input("Press Enter to continue")
         print("=" * 120)
+        return None
     elif input_sec == "PAYDAY":
         print("=" * 120)
         print("[YOU RECEIVED MEOWTH]") # Saved for later MIGHT REMOVE
         input("Press Enter to continue")
         print("=" * 120)
+        return None
     else:
         print("=" * 120)
         print("Please enter a valid input.")
         input("Press Enter to continue")
         print("=" * 120)
-
+        return None
 
 
 def travel_menu(input_travel):
@@ -92,7 +99,9 @@ def main_menu(player):
         if main_input.isdigit():
             travel_menu(main_input)
         else:
-            second_menu(main_input)
+            if second_menu((main_input)) == "exit":
+                print("-Session Ended-")
+                break
 
 
 

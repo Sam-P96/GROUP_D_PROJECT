@@ -1,4 +1,2 @@
-x = "a"
-
-if x.casefold() == "A":
-    print("yay")
+customer = input("Enter customer name: ")
+print(f"Customer: {customer:<20} Next field")
