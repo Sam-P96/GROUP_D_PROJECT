@@ -65,12 +65,12 @@ def pokemon_battle(your_mon, opo_mon):
                     input("Press Enter to continue")
             if opo_mon.health > 0:
                 print("Opponent's turn!")
-                opo_mon.attack(your_mon, "Flamethrower")
+                opo_mon.attack(your_mon, random.choice(npc_attack_dict))
                 input("Press Enter to continue")
         else:
             if opo_mon.health > 0:
                 print("Your opponent is fast!")
-                opo_mon.attack(your_mon, "Flamethrower")
+                opo_mon.attack(your_mon, random.choice(npc_attack_dict))
                 input("Press Enter to continue")
             if your_mon.health > 0:
                 print("Now is your chance!")
@@ -108,7 +108,25 @@ attack_dict = {
     "Hydropump": ("Water", 120),
     "Draco Meteor": ("Dragon", 130),
     "Earthquake": ("Ground", 100),
+    "Roar of Time": ("Dragon", 150),
+    "Shadow Ball": ("Ghost", 80),
+    "Psystrike": ("Psychic", 100),
+    "Blaze Kick": ("Fire", 85),
+    "Sky Uppercut": ("Fighting", 85)
 }
+
+npc_attack_dict = [
+    "Flamethrower",
+    "Dragon Claw",
+    "Hydropump",
+    "Draco Meteor",
+    "Earthquake",
+    "Roar of Time",
+    "Shadow Ball",
+    "Psystrike",
+    "Blaze Kick",
+    "Sky Uppercut",
+]
 
 type_chart_dict = {"FireWater": 0.5,
                    "FireFire": 0.5,
@@ -174,29 +192,50 @@ Charizard = Pokemon("Charizard", "Mega Charizard X",
                       "Fire", "Flying", 78, 109,
                       85, 100)
 
-Charizard_2 = Pokemon("Opponent's Charizard", "Mega Charizard X",
-                      "Fire", "Flying", 78, 109,
-                      85, 100)
+# Charizard_2 = Pokemon("Opponent's Charizard", "Mega Charizard X",
+#                       "Fire", "Flying", 78, 109,
+#                       85, 100)
 
 Mega_Charizard_X = Pokemon("Mega Charizard X", "Charizard",
                             "Fire", "Dragon", 78,
                             130, 111, 100)
 
+Dialga_O = Pokemon("Dialga, Origin Form", None,
+                            "Steel", "Dragon", 100,
+                            150, 120, 90)
+
+Mega_Mewtwo_Y = Pokemon("Mega Mewtwo Y", None, "Psychic",
+                        None, 106, 194, 120, 140)
+
+Landorus_Therian = Pokemon("Landorus Therian Form", None,
+                           "Ground", "Flying", 89,
+                           145, 90, 91)
+
+Torterra = Pokemon("Torterra", None, "Grass", "Ground",
+                   95, 109, 105, 56)
+
+Blaziken = Pokemon("Blaziken", None, "Fire", "Fighting",
+                   80, 120, 70, 80)
+
+Mega_Blaziken = Pokemon("Mega Blaziken", None, "Fire", "Fighting",
+                   80, 160, 80, 100)
+
+Rhyperior = Pokemon("Rhyperior", None, "Rock", "Ground",
+                    115, 140, 55, 40)
+
+Cramorant = Pokemon("Cramorant", None, "Flying", "Water",
+                    70, 85, 95, 85)
+
+Vaporeon = Pokemon("Vaporeon", None, "Water", None,
+                   130, 110, 95, 65)
 
 
-poke_team = [Charmander, Charmeleon, Charizard, Mega_Charizard_X]
+all_pokemon_list = [Charmeleon, Charizard, Mega_Charizard_X, Dialga_O,
+                    Mega_Mewtwo_Y, Landorus_Therian, Torterra, Blaziken,
+                    Mega_Blaziken, Rhyperior, Cramorant]
+poke_team = [random.choice(all_pokemon_list),
+             random.choice(all_pokemon_list), random.choice(all_pokemon_list)]
+strong_pokemon_list = [Mega_Charizard_X, Dialga_O, Mega_Mewtwo_Y,
+                       Landorus_Therian, Mega_Blaziken, Vaporeon]
 
-# print(Charmeleon.health)
-# Charmander.attack(Charmeleon, "Flamethrower")
-# print(Charmander.health)
-#
-# print(Charmeleon.health)
-# Charizard.attack(Charmeleon, "Flamethrower")
-
-pokemon_battle(Charizard, Charizard_2)
-
-# print(str(attack_dict["Earthquake"][0]) + str(Charizard.type_1))
-# print(type_chart_dict[str(attack_dict["Earthquake"][0]) + str(Charizard.type_1)])
-#
-# print(type_bonus("Earthquake", Charmeleon))
-# print(attack_dict["Flamethrower"][1])
+pokemon_battle(random.choice(poke_team), random.choice(strong_pokemon_list))
