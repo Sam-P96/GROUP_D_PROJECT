@@ -12,6 +12,7 @@ def type_bonus(key, defender):
         return 1
 
 
+
 def poke_hp_bar(pokemon_a):
     c_hp = int(pokemon_a.health)
     f_hp = int(pokemon_a.max_health)
@@ -21,23 +22,41 @@ def poke_hp_bar(pokemon_a):
     # print(f_hp)
     return output
 
+# print("■" * round((20 / 100) * 20))
+
+def alive_team(teammates, exclude=None):
+    alive_members = [p for p in teammates if p.health > 0 and p is not exclude]
+    return alive_members
+
+def choose_switch_from_team(teammates, exclude = None, prompt="Who do you want to swap to?"):
+    options = alive_team(teammates, exclude=exclude)
+    if not options:
+        return None
+    print(prompt)
+    for index, pokemon_a in enumerate(options, start=1):
+        print(f"{index}. {pokemon_a.name} [HP: {max(pokemon_a.health,0)} / {pokemon_a.max_health}] (Lv. {pokemon_a.lvl})")
+    while True:
+        try:
+            pick = int(input("Send out: "))
+            if 1 <= pick <= len(options):
+                return options[pick - 1]
+        except ValueError:
+            pass
+        print("Invalid choice. Try again.")
 
 
 def pokemon_battle(your_mon, opo_mon):
-    def swap_out(opponent):
-        print("Who do you want to swap to?")
-        for index, pokemon in enumerate(poke_team):
-            print(index + 1, pokemon.name)
-        while True:
-            poke_2 = int(input("Send out: "))
-            pokemon_battle(poke_team[poke_2 - 1], opponent)
-            break
+    def swap_out(current, opponent):
+        return choose_switch_from_team(poke_team, exclude=current, prompt = "Who do you want to swap to?")
+
+
+
     while your_mon.health > 0 and opo_mon.health > 0:
         print("=" * 100)
         your_hp_str = f"{your_mon.health}/{your_mon.max_health}"
         opo_hp_str = f"{opo_mon.health}/{opo_mon.max_health}"
-        print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
-              f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
+        print(f"{str(your_mon.name) + " [Lv." + str(your_mon.lvl) + "]":<40} "
+              f"{str(opo_mon.name) + " [Lv." + str(opo_mon.lvl)}]")
         print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
         print(f"HP:{your_hp_str:<38}HP:{opo_hp_str}" )
         print("")
@@ -52,10 +71,14 @@ def pokemon_battle(your_mon, opo_mon):
                 # print("Your turn!")
                 your_att = input("Select your attack: ")
                 if your_att == "SWAP":
-                    swap_out(opo_mon)
-                    continue
+                    new_mon = swap_out(your_mon, opo_mon)
+                    if new_mon is None:
+                        print("No other healthy Pokemon!!")
+                    else:
+                        print(f"{your_mon.name} come back! Go, {new_mon.name}!")
+                        your_mon = new_mon
                 # your_att = "Flamethrower"
-                elif your_att in attack_dict:
+                elif your_att != "SWAP" and your_att not in attack_dict:
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
                 else:
@@ -75,32 +98,43 @@ def pokemon_battle(your_mon, opo_mon):
                 print("Now is your chance!")
                 your_att = input("Select your attack: ")
                 if your_att == "SWAP":
-                    swap_out(opo_mon)
-                    continue
-                elif your_att in attack_dict:
+                    new_mon = swap_out(your_mon, opo_mon)
+                    if new_mon is None:
+                        print("No other healthy Pokemon!!")
+                    else:
+                        print(f"{your_mon.name} come back! Go, {new_mon.name}!")
+                        your_mon = new_mon
+                if your_att in attack_dict:
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
-                else:
+                elif your_att != "SWAP" and your_att not in attack_dict:
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
 
-    if your_mon.health <= 0:
-        print("=" * 100)
-        print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
-              f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
-        print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
-        print(f"HP:{"0":<38}HP:{opo_hp_str}")
-        print(f"Your {your_mon.name} fainted!")
-        print("That's okay, you can get em next time!")
-    elif your_mon.health > 0 and opo_mon.health < 0:
-        print("=" * 100)
-        print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
-              f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
-        print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
-        print(f"HP:{your_hp_str:<38}HP:{"0"}")
-        print("The opposing Pokémon is knocked out!")
-        print("You won!")
-        your_mon.lvl += 1
+
+        if your_mon.health <= 0:
+            print("=" * 100)
+            print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
+                  f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
+            print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
+            print(f"HP:{"0":<38}HP:{opo_hp_str}")
+            print(f"Your {your_mon.name} fainted!")
+            replacement = choose_switch_from_team(poke_team, exclude=your_mon, prompt = "Who will you send out next?! ")
+            if replacement is None:
+                print("You have no Pokemon left..")
+                print("That's okay, you can get em next time!")
+                break
+            print(f"Go, {replacement.name}!")
+            your_mon = replacement
+        elif your_mon.health > 0 and opo_mon.health < 0:
+            print("=" * 100)
+            print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
+                  f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
+            print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
+            print(f"HP:{your_hp_str:<38}HP:{"0"}")
+            print("The opposing Pokémon is knocked out!")
+            print("You won!")
+            your_mon.lvl += 1
 
 
 
@@ -237,7 +271,8 @@ all_pokemon_list = [Charmeleon, Charizard, Mega_Charizard_X, Dialga_O,
                     Mega_Mewtwo_Y, Landorus_Therian, Torterra, Blaziken,
                     Mega_Blaziken, Rhyperior, Cramorant]
 poke_team = [random.choice(all_pokemon_list),
-             random.choice(all_pokemon_list), random.choice(all_pokemon_list)]
+             random.choice(all_pokemon_list),
+             random.choice(all_pokemon_list)] # I'd add an exclude thing, but this is just for testing
 strong_pokemon_list = [Mega_Charizard_X, Dialga_O, Mega_Mewtwo_Y,
                        Landorus_Therian, Mega_Blaziken, Vaporeon]
 
