@@ -1,4 +1,8 @@
-
-# def poke_hp_bar(pokemon):
-print("■" * round(1 - (20 / 350) * 20))
+type_chart_dict = {"firewater": 0.5,
+                   "firefire": 0.5,
+                   "firedragon": 0.5,
+                   "waterfire": 2,
+                   "waterdragon": 0.5,
+                   "groundflying": 0,
+}
 
