@@ -1,4 +1,6 @@
 import random
+from attack_dict import attack_dict
+from npc_attack_dict import npc_attack_dict
 from type_chart_factor import type_bonus_dict
 
 def opo_bonus(opponent):
@@ -7,14 +9,15 @@ def opo_bonus(opponent):
 
 
 def type_bonus(key, defender):
-    if str(attack_dict[key][0]) + str(defender.type_1) in type_chart_dict:
-        bonus_1 = type_chart_dict[str(attack_dict[key][0]) + str(defender.type_1)]
-        if str(attack_dict[key][0]) + str(defender.type_2) in type_chart_dict:
-            bonus_2 = type_chart_dict[str(attack_dict[key][0]) + str(defender.type_1)] * type_chart_dict[str(attack_dict[key][0]) + str(defender.type_2)]
+    if str(attack_dict[key][0]) + str(defender.type_1) in type_bonus_dict:
+        bonus_1 = type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_1)]
+        if str(attack_dict[key][0]) + str(defender.type_2) in type_bonus_dict:
+            bonus_2 = type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_1)] * type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_2)]
             return bonus_2
         return bonus_1
     else:
         return 1
+
 
 
 def type_display(poke):
@@ -25,6 +28,8 @@ def type_display(poke):
 
     return output
 
+
+
 def poke_hp_bar(pokemon_a):
     c_hp = int(pokemon_a.health)
     f_hp = int(pokemon_a.max_health)
@@ -34,13 +39,16 @@ def poke_hp_bar(pokemon_a):
     # print(f_hp)
     return output
 
-# print("■" * round((20 / 100) * 20))
+
 
 def alive_team(teammates, exclude=None):
     alive_members = [p for p in teammates if p.health > 0 and p is not exclude]
     return alive_members
 
-def choose_switch_from_team(teammates, exclude = None, prompt="Who do you want to swap to?"):
+
+
+def choose_switch_from_team(teammates, exclude = None, prompt =
+"Who do you want to swap to?"):
     options = alive_team(teammates, exclude=exclude)
     if not options:
         return None
@@ -55,6 +63,7 @@ def choose_switch_from_team(teammates, exclude = None, prompt="Who do you want t
         except ValueError:
             pass
         print("Invalid choice. Try again.")
+
 
 
 def pokemon_battle(your_mon, opo_mon):
@@ -91,10 +100,10 @@ def pokemon_battle(your_mon, opo_mon):
                         print(f"{your_mon.name} come back! Go, {new_mon.name}!")
                         your_mon = new_mon
                 # your_att = "Flamethrower"
-                if your_att in attack_dict:
+                if your_att in your_mon.att_dict:
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
-                elif your_att != "SWAP" and your_att not in attack_dict:
+                elif your_att != "SWAP" and your_att not in your_mon.att_dict:
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
                 else:
@@ -118,10 +127,10 @@ def pokemon_battle(your_mon, opo_mon):
                     else:
                         print(f"{your_mon.name} come back! Go, {new_mon.name}!")
                         your_mon = new_mon
-                if your_att in attack_dict:
+                if your_att in your_mon.att_dict:
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
-                elif your_att != "SWAP" and your_att not in attack_dict:
+                elif your_att != "SWAP" and your_att not in your_mon.att_dict:
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
                 else:
@@ -154,55 +163,6 @@ def pokemon_battle(your_mon, opo_mon):
 
 
 
-attack_dict = {
-    "Flamethrower": ("Fire", 95),
-    "Dragon Claw": ("Dragon", 80),
-    "Hydropump": ("Water", 120),
-    "Draco Meteor": ("Dragon", 130),
-    "Earthquake": ("Ground", 100),
-    "Roar of Time": ("Dragon", 150),
-    "Shadow Ball": ("Ghost", 80),
-    "Psystrike": ("Psychic", 100),
-    "Blaze Kick": ("Fire", 85),
-    "Sky Uppercut": ("Fighting", 85),
-    "Stone Edge": ("Rock", 85),
-    "Ice Beam": ("Ice", 95),
-    "Rock Slide": ("Rock", 75),
-    "Scratch": ("Normal", 40),
-    "Aerial Ace": ("Flying", 90),
-    "Thunder Punch": ("Electric", 75),
-    "Ice Punch": ("Ice", 75),
-    "Flare Blitz": ("Fire", 120),
-    "Overheat": ("Fire", 130),
-    "Solar Beam": ("Grass", 120),
-    "Shadow Claw": ("Ghost", 70),
-    "Hyper Beam": ("Normal", 150),
-    "Iron Tail": ("Steel", 100),
-    "Slash": ("Normal", 70),
-    "Horn Drill": ("Normal", 9999),
-    "Fissure": ("Ground", 9999),
-    "Sheer Cold": ("Ice", 9999),
-    "Guillotine": ("Normal", 9999),
-    "DELETE": ("DARK", 9999),
-}
-
-npc_attack_dict = [
-    "Flamethrower",
-    "Dragon Claw",
-    "Hydropump",
-    "Draco Meteor",
-    "Earthquake",
-    "Roar of Time",
-    "Shadow Ball",
-    "Psystrike",
-    "Blaze Kick",
-    "Sky Uppercut",
-    "Ice Beam",
-    "Stone Edge"
-]
-
-type_chart_dict = type_bonus_dict
-
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
                  deff, spd, a1, a2, a3, a4):
@@ -221,6 +181,7 @@ class Pokemon:
         self.atk_2 = a2
         self.atk_3 = a3
         self.atk_4 = a4
+        self.att_dict = [a1, a2, a3, a4]
 
     def attack(self, player_2, key):
         dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
@@ -232,12 +193,10 @@ class Pokemon:
         if float(type_bonus(key, player_2)) > 1.5:
             print("Its super effective!")
         elif float(type_bonus(key, player_2)) == 0:
-            print(f"{player_2.name} is immune to {attack_dict[key]}")
+            print(f"{player_2.name} is immune to {key}")
         elif float(type_bonus(key, player_2)) < 1:
             print("Its not very effective!")
         # + str(player_2.health) + " " + str(dmg_out))
-
-
 
 
 
@@ -255,10 +214,6 @@ Charizard = Pokemon("Charizard", "Mega Charizard X",
                       "Fire", "Flying", 78, 109,
                       85, 100, "Overheat","Thunder Punch",
                     "Aerial Ace", "Shadow Claw")
-
-# Charizard_2 = Pokemon("Opponent's Charizard", "Mega Charizard X",
-#                       "Fire", "Flying", 78, 109,
-#                       85, 100)
 
 Mega_Charizard_X = Pokemon("Mega Charizard X", "Charizard",
                             "Fire", "Dragon", 78,
@@ -279,7 +234,7 @@ Mega_Mewtwo_Y = Pokemon("Mega Mewtwo Y", None, "Psychic",
 Landorus_Therian = Pokemon("Landorus Therian Form", None,
                            "Ground", "Flying", 89,
                            145, 90, 91, "Earthquake",
-                           "Fissure", "Rock Slide", "Aerial Ace")
+                           "Iron Tail", "Rock Slide", "Aerial Ace")
 
 Torterra = Pokemon("Torterra", None, "Grass", "Ground",
                    95, 109, 105, 56, "Earthquake",
@@ -299,7 +254,7 @@ Rhyperior = Pokemon("Rhyperior", None, "Rock", "Ground",
 
 Cramorant = Pokemon("Cramorant", None, "Flying", "Water",
                     70, 85, 95, 85, "Hydropump",
-                    "Aerial Ace", "Sheer Cold", "Hyper Beam")
+                    "Aerial Ace", "Ice Beam", "Hyper Beam")
 
 Vaporeon = Pokemon("Vaporeon", None, "Water", None,
                    130, 110, 95, 65, "Hydropump",

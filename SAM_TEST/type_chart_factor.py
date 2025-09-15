@@ -49,7 +49,7 @@ type_bonus_dict = {
                     "WaterBug": 1,
                     "WaterRock": 2,
                     "WaterGhost": 1,
-                    "WaterDragon": 1,
+                    "WaterDragon": 0.5,
                     "WaterDark": 1,
                     "WaterSteel": 1,
                     "WaterFairy": 1,
