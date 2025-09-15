@@ -100,22 +100,22 @@ def pokemon_battle(your_mon, opo_mon):
                         print(f"{your_mon.name} come back! Go, {new_mon.name}!")
                         your_mon = new_mon
                 # your_att = "Flamethrower"
-                if your_att in your_mon.att_dict:
+                if your_att in your_mon.att_key:
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
-                elif your_att != "SWAP" and your_att not in your_mon.att_dict:
+                elif your_att != "SWAP" and your_att not in your_mon.att_key:
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
                 else:
                     input("Press Enter to continue")
             if opo_mon.health > 0:
                 print("Opponent's turn!")
-                opo_mon.attack(your_mon, random.choice(npc_attack_dict))
+                opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
         else:
             if opo_mon.health > 0:
                 print("Your opponent is fast!")
-                opo_mon.attack(your_mon, random.choice(npc_attack_dict))
+                opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
             if your_mon.health > 0:
                 print("Now is your chance!")
@@ -181,7 +181,7 @@ class Pokemon:
         self.atk_2 = a2
         self.atk_3 = a3
         self.atk_4 = a4
-        self.att_dict = [a1, a2, a3, a4]
+        self.att_key = [a1, a2, a3, a4]
 
     def attack(self, player_2, key):
         dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
