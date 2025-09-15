@@ -78,11 +78,13 @@ def pokemon_battle(your_mon, opo_mon):
                         print(f"{your_mon.name} come back! Go, {new_mon.name}!")
                         your_mon = new_mon
                 # your_att = "Flamethrower"
+                if your_att in attack_dict:
+                    your_mon.attack(opo_mon, your_att)
+                    input("Press Enter to continue")
                 elif your_att != "SWAP" and your_att not in attack_dict:
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
                 else:
-
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
             if opo_mon.health > 0:
