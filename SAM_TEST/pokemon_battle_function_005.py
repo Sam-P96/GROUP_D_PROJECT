@@ -1,4 +1,5 @@
 import random
+from type_chart_factor import type_bonus_dict
 
 def opo_bonus(opponent):
     opponent.health *= 2
@@ -16,6 +17,13 @@ def type_bonus(key, defender):
         return 1
 
 
+def type_display(poke):
+    if poke.type_2 != None:
+        output = f"[{poke.type_1:^10}][{poke.type_2:^10}]"
+    else:
+        output = f"[{poke.type_1:^10}]"
+
+    return output
 
 def poke_hp_bar(pokemon_a):
     c_hp = int(pokemon_a.health)
@@ -61,6 +69,7 @@ def pokemon_battle(your_mon, opo_mon):
         opo_hp_str = f"{opo_mon.health}/{opo_mon.max_health}"
         print(f"{str(your_mon.name) + " [Lv." + str(your_mon.lvl) + "]":<40} "
               f"{str(opo_mon.name) + " [Lv." + str(opo_mon.lvl)}]")
+        print(f"{type_display(your_mon):<41}" + type_display(opo_mon))
         print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
         print(f"HP:{your_hp_str:<38}HP:{opo_hp_str}" )
         print("")
@@ -138,7 +147,7 @@ def pokemon_battle(your_mon, opo_mon):
             print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
                   f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
             print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
-            print(f"HP:{your_hp_str:<38}HP:{"0"}")
+            print(f"HP:{your_hp_str:<38}HP:0/{opo_mon.max_health}")
             print("The opposing Pokémon is knocked out!")
             print("You won!")
             your_mon.lvl += 1
@@ -176,20 +185,7 @@ npc_attack_dict = [
     "Stone Edge"
 ]
 
-type_chart_dict = {"FireWater": 0.5,
-                   "FireFire": 0.5,
-                   "FireDragon": 0.5,
-                   "WaterFire": 2,
-                   "WaterDragon": 0.5,
-                   "GroundFlying": 0,
-                   "GroundFire": 2,
-                   "RockFlying": 2,
-                   "RockFire": 2,
-                   "IceFlying": 2,
-                   "IceGround": 2,
-                   "IceFire": 0.5,
-                   "IceWater": 0.5,
-}
+type_chart_dict = type_bonus_dict
 
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
@@ -235,11 +231,11 @@ class PokemonM:
         self.spd = spd
 
 Charmander = Pokemon("Charmander", "Charmeleon",
-                       "Fire", "None",
+                       "Fire", None,
                        12, 52, 50, 65,)
 
 Charmeleon = Pokemon("Charmeleon", "Charizard",
-                       "Fire", "None", 58, 80,
+                       "Fire", None, 58, 80,
                        65, 80)
 
 Charizard = Pokemon("Charizard", "Mega Charizard X",
