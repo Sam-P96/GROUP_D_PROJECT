@@ -26,5 +26,7 @@ npc_attack_dict = [
     "Sky Uppercut",
 ]
 
-for i in range(10):
-    print(random.choice(npc_attack_dict))
+your_att = "flamethrower"
+
+if your_att in attack_dict:
+    print("attack")

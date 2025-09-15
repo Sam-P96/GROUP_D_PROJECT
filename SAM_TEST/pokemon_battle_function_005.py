@@ -1,5 +1,9 @@
 import random
 
+def opo_bonus(opponent):
+    opponent.health *= 2
+    opponent.max_health *= 2
+
 
 def type_bonus(key, defender):
     if str(attack_dict[key][0]) + str(defender.type_1) in type_chart_dict:
@@ -82,7 +86,6 @@ def pokemon_battle(your_mon, opo_mon):
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
                 elif your_att != "SWAP" and your_att not in attack_dict:
-                    your_mon.attack(opo_mon, your_att)
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
                 else:
@@ -279,5 +282,6 @@ poke_team = [random.choice(all_pokemon_list),
              random.choice(all_pokemon_list)] # I'd add an exclude thing, but this is just for testing
 strong_pokemon_list = [Mega_Charizard_X, Dialga_O, Mega_Mewtwo_Y,
                        Landorus_Therian, Mega_Blaziken, Vaporeon]
-
-pokemon_battle(random.choice(poke_team), random.choice(strong_pokemon_list))
+opponent_1 = random.choice(strong_pokemon_list)
+opo_bonus(opponent_1)
+pokemon_battle(random.choice(poke_team), opponent_1)
