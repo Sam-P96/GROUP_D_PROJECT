@@ -83,9 +83,9 @@ def pokemon_battle(your_mon, opo_mon):
                     input("Press Enter to continue")
                 elif your_att != "SWAP" and your_att not in attack_dict:
                     your_mon.attack(opo_mon, your_att)
+                    print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
                 else:
-                    print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
             if opo_mon.health > 0:
                 print("Opponent's turn!")
@@ -111,6 +111,8 @@ def pokemon_battle(your_mon, opo_mon):
                     input("Press Enter to continue")
                 elif your_att != "SWAP" and your_att not in attack_dict:
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
+                    input("Press Enter to continue")
+                else:
                     input("Press Enter to continue")
 
 
