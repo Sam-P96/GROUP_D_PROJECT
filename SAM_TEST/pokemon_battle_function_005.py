@@ -272,8 +272,8 @@ poke_team = [random.choice(all_pokemon_list),
              random.choice(all_pokemon_list)] # I'd add an exclude thing, but this is just for testing
 strong_pokemon_list = [Mega_Charizard_X, Dialga_O, Mega_Mewtwo_Y,
                        Landorus_Therian, Mega_Blaziken, Vaporeon, Arceus]
-# opponent_1 = random.choice(strong_pokemon_list)
-opponent_1 = Arceus
+opponent_1 = random.choice(strong_pokemon_list)
+# opponent_1 = Arceus
 opo_bonus(opponent_1)
 
 pokemon_battle(random.choice(poke_team), opponent_1)
