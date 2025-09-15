@@ -127,10 +127,10 @@ def pokemon_battle(your_mon, opo_mon):
                     else:
                         print(f"{your_mon.name} come back! Go, {new_mon.name}!")
                         your_mon = new_mon
-                if your_att in your_mon.att_dict:
+                if your_att in your_mon.att_key:
                     your_mon.attack(opo_mon, your_att)
                     input("Press Enter to continue")
-                elif your_att != "SWAP" and your_att not in your_mon.att_dict:
+                elif your_att != "SWAP" and your_att not in your_mon.att_key:
                     print(f"You fumbled your command, {your_mon.name} froze in confusion!")
                     input("Press Enter to continue")
                 else:
@@ -260,6 +260,9 @@ Vaporeon = Pokemon("Vaporeon", None, "Water", None,
                    130, 110, 95, 65, "Hydropump",
                    "Iron Tail", "Shadow Ball", "Ice Beam")
 
+Arceus = Pokemon("Arceus", None, "Normal", None,
+                 120, 120, 120, 120, "Judgment",
+                 "Thunder", "Earthquake", "Seismic Toss")
 
 all_pokemon_list = [Charmeleon, Charizard, Mega_Charizard_X, Dialga_O,
                     Mega_Mewtwo_Y, Landorus_Therian, Torterra, Blaziken,
@@ -268,7 +271,9 @@ poke_team = [random.choice(all_pokemon_list),
              random.choice(all_pokemon_list),
              random.choice(all_pokemon_list)] # I'd add an exclude thing, but this is just for testing
 strong_pokemon_list = [Mega_Charizard_X, Dialga_O, Mega_Mewtwo_Y,
-                       Landorus_Therian, Mega_Blaziken, Vaporeon]
-opponent_1 = random.choice(strong_pokemon_list)
+                       Landorus_Therian, Mega_Blaziken, Vaporeon, Arceus]
+# opponent_1 = random.choice(strong_pokemon_list)
+opponent_1 = Arceus
 opo_bonus(opponent_1)
+
 pokemon_battle(random.choice(poke_team), opponent_1)

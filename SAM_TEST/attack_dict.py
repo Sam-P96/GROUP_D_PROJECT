@@ -1,5 +1,8 @@
 attack_dict = {
     "DELETE": ("Dark", 9999),
+    "Judgment": ("All", 9999),
+    "Seismic Toss": ("Fighting", 95),
+    "Thunder": ("Electric", 110),
     "Flamethrower": ("Fire", 95),
     "Dragon Claw": ("Dragon", 80),
     "Hydropump": ("Water", 120),
