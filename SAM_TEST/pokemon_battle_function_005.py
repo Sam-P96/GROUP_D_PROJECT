@@ -156,6 +156,8 @@ attack_dict = {
     "Psystrike": ("Psychic", 100),
     "Blaze Kick": ("Fire", 85),
     "Sky Uppercut": ("Fighting", 85),
+    "Stone Edge": ("Rock", 85),
+    "Ice Beam": ("Ice", 95),
     "DELETE": ("Grass", 9999),
 }
 
@@ -170,6 +172,8 @@ npc_attack_dict = [
     "Psystrike",
     "Blaze Kick",
     "Sky Uppercut",
+    "Ice Beam",
+    "Stone Edge"
 ]
 
 type_chart_dict = {"FireWater": 0.5,
@@ -179,6 +183,12 @@ type_chart_dict = {"FireWater": 0.5,
                    "WaterDragon": 0.5,
                    "GroundFlying": 0,
                    "GroundFire": 2,
+                   "RockFlying": 2,
+                   "RockFire": 2,
+                   "IceFlying": 2,
+                   "IceGround": 2,
+                   "IceFire": 0.5,
+                   "IceWater": 0.5,
 }
 
 class Pokemon:
