@@ -76,8 +76,8 @@ def pokemon_battle(your_mon, opo_mon):
         print("")
         print("")
         print("Your Moves: ")
-        print(f"[{"Flamethrower":^20}][{"Dragon Claw":^20}]")
-        print(f"[{"Draco Meteor":^20}][{"Hydropump":^20}]")
+        print(f"[{your_mon.atk_1:^20}][{your_mon.atk_2:^20}]")
+        print(f"[{your_mon.atk_3:^20}][{your_mon.atk_4:^20}]")
         # print("1234567890"*10)
         if your_mon.spd >= opo_mon.spd:
             if your_mon.health > 0:
@@ -167,7 +167,23 @@ attack_dict = {
     "Sky Uppercut": ("Fighting", 85),
     "Stone Edge": ("Rock", 85),
     "Ice Beam": ("Ice", 95),
-    "DELETE": ("Grass", 9999),
+    "Rock Slide": ("Rock", 75),
+    "Scratch": ("Normal", 40),
+    "Aerial Ace": ("Flying", 90),
+    "Thunder Punch": ("Electric", 75),
+    "Ice Punch": ("Ice", 75),
+    "Flare Blitz": ("Fire", 120),
+    "Overheat": ("Fire", 130),
+    "Solar Beam": ("Grass", 120),
+    "Shadow Claw": ("Ghost", 70),
+    "Hyper Beam": ("Normal", 150),
+    "Iron Tail": ("Steel", 100),
+    "Slash": ("Normal", 70),
+    "Horn Drill": ("Normal", 9999),
+    "Fissure": ("Ground", 9999),
+    "Sheer Cold": ("Ice", 9999),
+    "Guillotine": ("Normal", 9999),
+    "DELETE": ("DARK", 9999),
 }
 
 npc_attack_dict = [
@@ -189,21 +205,25 @@ type_chart_dict = type_bonus_dict
 
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
-                 deff, spd):
+                 deff, spd, a1, a2, a3, a4):
         self.name = name
         self.evo = evo
         self.type_1 = type_1
         self.type_2 = type_2
         self.hp_1 = hp
-        self.att_1 = att
+        self.atk_stat = att
         self.deff = deff
         self.spd = spd
         self.lvl = 1
         self.health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
         self.max_health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
+        self.atk_1 = a1
+        self.atk_2 = a2
+        self.atk_3 = a3
+        self.atk_4 = a4
 
     def attack(self, player_2, key):
-        dmg_pre = round(self.att_1 * attack_dict[key][1] / random.randint(200,300))
+        dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
         dmg_out = round(((1 + ((self.lvl - 1) /10)) * (dmg_pre * 0.5) + (dmg_pre * (0.5 * (player_2.deff/300)))) * float(type_bonus(key, player_2)))
         player_2.health -= dmg_out
         # print(dmg_pre)
@@ -218,29 +238,23 @@ class Pokemon:
         # + str(player_2.health) + " " + str(dmg_out))
 
 
-class PokemonM:
-    def __init__(self, name, evo_back, type_1, type_2, hp, att,
-                 deff, spd):
-        self.name = name
-        self.evo = evo_back
-        self.type_1 = type_1
-        self.type_2 = type_1
-        self.hp_1 = hp
-        self.att_1 = att
-        self.deff = deff
-        self.spd = spd
+
+
 
 Charmander = Pokemon("Charmander", "Charmeleon",
                        "Fire", None,
-                       12, 52, 50, 65,)
+                       12, 52, 50, 65,"Scratch",
+                     "Flamethrower", "Rock Slide", "Shadow Claw")
 
 Charmeleon = Pokemon("Charmeleon", "Charizard",
                        "Fire", None, 58, 80,
-                       65, 80)
+                       65, 80, "Slash", "Flamethrower",
+                     "Thunder Punch", "Shadow Claw")
 
 Charizard = Pokemon("Charizard", "Mega Charizard X",
                       "Fire", "Flying", 78, 109,
-                      85, 100)
+                      85, 100, "Overheat","Thunder Punch",
+                    "Aerial Ace", "Shadow Claw")
 
 # Charizard_2 = Pokemon("Opponent's Charizard", "Mega Charizard X",
 #                       "Fire", "Flying", 78, 109,
@@ -248,36 +262,48 @@ Charizard = Pokemon("Charizard", "Mega Charizard X",
 
 Mega_Charizard_X = Pokemon("Mega Charizard X", "Charizard",
                             "Fire", "Dragon", 78,
-                            130, 111, 100)
+                            130, 111, 100, "Overheat",
+                           "Thunder Punch", "Shadow Claw",
+                           "Dragon Claw")
 
 Dialga_O = Pokemon("Dialga, Origin Form", None,
                             "Steel", "Dragon", 100,
-                            150, 120, 90)
+                            150, 120, 90, "Roar of Time",
+                   "Earthquake", "Hyper Beam", "Iron Tail")
 
 Mega_Mewtwo_Y = Pokemon("Mega Mewtwo Y", None, "Psychic",
-                        None, 106, 194, 120, 140)
+                        None, 106, 194, 120, 140,
+                        "Psystrike", "Shadow Ball", "Hyper Beam",
+                        "Ice Beam")
 
 Landorus_Therian = Pokemon("Landorus Therian Form", None,
                            "Ground", "Flying", 89,
-                           145, 90, 91)
+                           145, 90, 91, "Earthquake",
+                           "Fissure", "Rock Slide", "Aerial Ace")
 
 Torterra = Pokemon("Torterra", None, "Grass", "Ground",
-                   95, 109, 105, 56)
+                   95, 109, 105, 56, "Earthquake",
+                   "Solar Beam", "Hyper Beam", "Rock Slide")
 
 Blaziken = Pokemon("Blaziken", None, "Fire", "Fighting",
-                   80, 120, 70, 80)
+                   80, 120, 70, 80, "Blaze Kick",
+                   "Aerial Ace", "Sky Uppercut", "Slash")
 
 Mega_Blaziken = Pokemon("Mega Blaziken", None, "Fire", "Fighting",
-                   80, 160, 80, 100)
+                   80, 160, 80, 100, "Overheat",
+                        "Sky Uppercut", "Thunder Punch", "Shadow Claw")
 
 Rhyperior = Pokemon("Rhyperior", None, "Rock", "Ground",
-                    115, 140, 55, 40)
+                    115, 140, 55, 40, "Earthquake",
+                    "Rock Slide", "Thunder Punch", "Ice Punch")
 
 Cramorant = Pokemon("Cramorant", None, "Flying", "Water",
-                    70, 85, 95, 85)
+                    70, 85, 95, 85, "Hydropump",
+                    "Aerial Ace", "Sheer Cold", "Hyper Beam")
 
 Vaporeon = Pokemon("Vaporeon", None, "Water", None,
-                   130, 110, 95, 65)
+                   130, 110, 95, 65, "Hydropump",
+                   "Iron Tail", "Shadow Ball", "Ice Beam")
 
 
 all_pokemon_list = [Charmeleon, Charizard, Mega_Charizard_X, Dialga_O,
