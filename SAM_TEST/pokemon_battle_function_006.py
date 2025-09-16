@@ -1,5 +1,6 @@
 import random
 import pokedex_player
+from SAM_TEST.pokedex_player import Raging_Bolt
 from attack_dict import attack_dict
 from npc_attack_dict import npc_attack_dict
 from type_chart_factor import type_bonus_dict
@@ -161,7 +162,12 @@ def pokemon_battle(your_mon, opo_mon):
 all_pokemon_list = [pokedex_player.Vaporeon, pokedex_player.Charizard,
                     pokedex_player.Dialga_O, pokedex_player.Landorus_Therian,
                     pokedex_player.Charizard, pokedex_player.Mega_Charizard_X,
-                    pokedex_player.Blaziken]
+                    pokedex_player.Blaziken, pokedex_player.Ceruledge,
+                    pokedex_player.Venusaur, pokedex_player.Blastoise,
+                    pokedex_player.Iron_Crown, pokedex_player.Vespiquen,
+                    pokedex_player.Mega_Scizor, pokedex_player.Torterra,
+                    pokedex_player.Sylveon, pokedex_player.Lapras,
+                    ]
 
 poke_team = [random.choice(all_pokemon_list),
              random.choice(all_pokemon_list),
@@ -170,7 +176,11 @@ poke_team = [random.choice(all_pokemon_list),
 strong_pokemon_list = [pokedex_player.Arceus, pokedex_player.Dialga_O,
                        pokedex_player.Rhyperior, pokedex_player.Mega_Mewtwo_Y,
                        pokedex_player.Mega_Blaziken,
-                       pokedex_player.Mega_Charizard_X,]
+                       pokedex_player.Mega_Charizard_X,
+                       pokedex_player.Giratina_O, pokedex_player.Raging_Bolt,
+                       pokedex_player.Iron_Crown, pokedex_player.Regice,
+                       pokedex_player.Glastrier,
+                       ]
 opponent_1 = random.choice(strong_pokemon_list)
 # opponent_1 = Arceus
 opo_bonus(opponent_1)

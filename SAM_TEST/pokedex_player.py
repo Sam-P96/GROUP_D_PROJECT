@@ -109,6 +109,58 @@ Vaporeon = Pokemon("Vaporeon", None, "Water", None,
                    130, 110, 95, 65, "Hydropump",
                    "Iron Tail", "Shadow Ball", "Ice Beam")
 
+Raging_Bolt = Pokemon("Raging Bolt", None, "Electric",
+                      "Dragon", 125, 137, 91, 75,
+                      "Draco Meteor", "Thunderclap",
+                      "Stomping Tantrum", "Crunch")
+
+Ceruledge = Pokemon("Ceruledge", None, "Fire", "Ghost",
+                    75, 125, 100, 85, "Close Comba",
+                    "Phantom Force", "Flare Blitz", "Dragon Claw")
+
+Giratina_O = Pokemon("Giratina Origin Form", None, "Ghost",
+                     "Dragon", 150, 100, 120, 90,
+                     "Phantom Force", "Outrange", "Aura Sphere",
+                     "Thunder")
+
+Sylveon = Pokemon("Sylveon", None, "Fairy", None,
+                  95, 110, 130, 60, "Shadow Ball",
+                  "Trump Card", "Moonblast", "Magical Leaf")
+
+Venusaur = Pokemon("Venusaur", None, "Grass", "Poison",
+                   80, 100, 100, 80, "Solar Beam",
+                   "Sludge Bomb", "Stomping Tantrum", "Hyper Beam")
+
+Blastoise = Pokemon("Blastoise", None, "Water", None,
+                    79, 85, 105, 78, "Hydropump",
+                    "Aura Sphere", "Seismic Toss", "Iron Tail")
+
+Iron_Crown = Pokemon("Iron Crown", None, "Steel",
+                     "Psychic", 90, 122, 108, 98,
+                     "Hyper Beam", "Expanding Force",
+                     "Flash Cannon", "Solar Blade")
+
+Regice = Pokemon("Regice", None, "Ice", None, 80,
+                 100, 200, 50, "Ice Beam", "Thunderbolt",
+                 "Rock Tomb","Stomping Tantrum")
+
+Lapras = Pokemon("Lapras", None, "Water", "Ice",
+                 130, 85, 95, 60, "Ice Beam", "Surf",
+                 "Iron Tail", "Psychic")
+
+Glastrier = Pokemon("Glastrier", None, "Ice", None,
+                    100, 145, 130, 30, "Close Combat",
+                    "Ice Beam", "High Horsepower", "Crunch")
+
+Vespiquen = Pokemon("Vespiquen", None, "Bug", "Flying",
+                    70, 80, 102, 40, "X-Scissor",
+                    "Sludge Bomb", "Aerial Ace", "Psychic Noise")
+
+Mega_Scizor = Pokemon("Mega Scizor", None, "Bug",
+                      "Steel", 70, 150, 140, 75,
+                      "Bullet Punch", "X-Scissor", "Ominous Wind",
+                      "Aerial Ace")
+
 Arceus = Pokemon("Arceus", None, "Normal", None,
                  120, 120, 120, 120, "Judgment",
                  "Thunder", "Earthquake", "Seismic Toss")
