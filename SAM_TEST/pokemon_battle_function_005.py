@@ -68,7 +68,7 @@ def choose_switch_from_team(teammates, exclude = None, prompt =
 
 def pokemon_battle(your_mon, opo_mon):
     def swap_out(current, opponent):
-        return choose_switch_from_team(poke_team, exclude=current, prompt = "Who do you want to swap to?")
+        return choose_switch_from_team(poke_team, exclude = current, prompt = "Who do you want to swap to?")
 
 
 
@@ -87,10 +87,8 @@ def pokemon_battle(your_mon, opo_mon):
         print("Your Moves: ")
         print(f"[{your_mon.atk_1:^20}][{your_mon.atk_2:^20}]")
         print(f"[{your_mon.atk_3:^20}][{your_mon.atk_4:^20}]")
-        # print("1234567890"*10)
         if your_mon.spd >= opo_mon.spd:
             if your_mon.health > 0:
-                # print("Your turn!")
                 your_att = input("Select your attack: ")
                 if your_att == "SWAP":
                     new_mon = swap_out(your_mon, opo_mon)
