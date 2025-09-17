@@ -5,22 +5,53 @@ from attack_dict import attack_dict
 from npc_attack_dict import npc_attack_dict
 from type_chart_factor import type_bonus_dict
 
-def opo_bonus(opponent):
-    opponent.health *= 2
-    opponent.max_health *= 2
+def opo_bonus(opponent, n: int):
+    """
+    Multiplies the opponent's health by n number of time.
+    :param opponent: Pokemon whose stat is to be multiplied
+    :param n: number of times the stat is multiplied by
+    :return:
+    """
+    opponent.health *= n
+    opponent.max_health *= n
 
 
 
-def type_bonus(key, defender):
-    if str(attack_dict[key][0]) + str(defender.type_1) in type_bonus_dict:
-        bonus_1 = type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_1)]
-        if str(attack_dict[key][0]) + str(defender.type_2) in type_bonus_dict:
-            bonus_2 = type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_1)] * type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_2)]
-            return bonus_2
-        return bonus_1
-    else:
-        return 1
 
+class Pokemon:
+    def __init__(self, name, evo, type_1, type_2, hp, att,
+                 deff, spd, a1, a2, a3, a4):
+        self.name = name
+        self.evo = evo
+        self.type_1 = type_1
+        self.type_2 = type_2
+        self.hp_1 = hp
+        self.atk_stat = att
+        self.deff = deff
+        self.spd = spd
+        self.lvl = 1
+        self.health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
+        self.max_health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
+        self.atk_1 = a1
+        self.atk_2 = a2
+        self.atk_3 = a3
+        self.atk_4 = a4
+        self.att_key = [a1, a2, a3, a4]
+
+    def attack(self, player_2, key):
+        dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
+        dmg_out = round(((1 + ((self.lvl - 1) /10)) * (dmg_pre * 0.5) + (dmg_pre * (0.5 * (player_2.deff/300)))) * float(type_bonus(key, player_2)))
+        player_2.health -= dmg_out
+        # print(dmg_pre)
+        # print(dmg_out)
+        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
+        if float(type_bonus(key, player_2)) > 1.5:
+            print("Its super effective!")
+        elif float(type_bonus(key, player_2)) == 0:
+            print(f"{player_2.name} is immune to {key}")
+        elif float(type_bonus(key, player_2)) < 1:
+            print("Its not very effective!")
+        # + str(player_2.health) + " " + str(dmg_out))
 
 
 def type_display(poke):
@@ -157,6 +188,25 @@ def pokemon_battle(your_mon, opo_mon):
             your_mon.lvl += 1
 
 
+def type_bonus(key: str, defender: Pokemon) -> float:
+    """
+    Checks the attack type, and the defending Pokemon types to determine
+    damage bonuses or reductions based on the type chart.
+    :param key: dictionary key for the attack being used
+    :param defender: the defending Pokemon
+    :return:
+    """
+    if str(attack_dict[key][0]) + str(defender.type_1) in type_bonus_dict:
+        bonus_1 = type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_1)]
+        if str(attack_dict[key][0]) + str(defender.type_2) in type_bonus_dict:
+            bonus_2 = type_bonus_dict[str(attack_dict[key][0]) +
+            str(defender.type_1)] * type_bonus_dict[str(attack_dict[key][0])
+            + str(defender.type_2)]
+            return bonus_2
+        return bonus_1
+    else:
+        return 1.0
+
 import random
 
 attack_dict = {
@@ -257,40 +307,7 @@ def type_bonus(key, defender):
     else:
         return 1
 
-class Pokemon:
-    def __init__(self, name, evo, type_1, type_2, hp, att,
-                 deff, spd, a1, a2, a3, a4):
-        self.name = name
-        self.evo = evo
-        self.type_1 = type_1
-        self.type_2 = type_2
-        self.hp_1 = hp
-        self.atk_stat = att
-        self.deff = deff
-        self.spd = spd
-        self.lvl = 1
-        self.health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
-        self.max_health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
-        self.atk_1 = a1
-        self.atk_2 = a2
-        self.atk_3 = a3
-        self.atk_4 = a4
-        self.att_key = [a1, a2, a3, a4]
 
-    def attack(self, player_2, key):
-        dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
-        dmg_out = round(((1 + ((self.lvl - 1) /10)) * (dmg_pre * 0.5) + (dmg_pre * (0.5 * (player_2.deff/300)))) * float(type_bonus(key, player_2)))
-        player_2.health -= dmg_out
-        # print(dmg_pre)
-        # print(dmg_out)
-        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
-        if float(type_bonus(key, player_2)) > 1.5:
-            print("Its super effective!")
-        elif float(type_bonus(key, player_2)) == 0:
-            print(f"{player_2.name} is immune to {key}")
-        elif float(type_bonus(key, player_2)) < 1:
-            print("Its not very effective!")
-        # + str(player_2.health) + " " + str(dmg_out))
 
 
 type_bonus_dict = {
