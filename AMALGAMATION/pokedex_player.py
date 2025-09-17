@@ -121,7 +121,7 @@ Ceruledge = Pokemon("Ceruledge", None, "Fire", "Ghost",
 
 Giratina_O = Pokemon("Giratina Origin Form", None, "Ghost",
                      "Dragon", 150, 100, 120, 90,
-                     "Phantom Force", "Outrange", "Aura Sphere",
+                     "Phantom Force", "Outrage", "Aura Sphere",
                      "Thunder")
 
 Sylveon = Pokemon("Sylveon", None, "Fairy", None,
