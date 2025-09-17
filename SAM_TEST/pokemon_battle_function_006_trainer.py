@@ -4,10 +4,12 @@ from SAM_TEST.pokedex_player import Raging_Bolt
 from attack_dict import attack_dict
 from npc_attack_dict import npc_attack_dict
 from type_chart_factor import type_bonus_dict
+from villain_npc import Sam
+from villain_npc import Meeri
 
 def opo_bonus(opponent):
-    opponent.health *= 0.3
-    opponent.max_health *= 0.3
+    opponent.health *= 0.1
+    opponent.max_health *= 2
 
 
 
@@ -91,8 +93,9 @@ def your_battle_turn(your_mon, opo_mon):
 
 
 
-def swap_out(current, opponent):
-    return choose_switch_from_team(poke_team, exclude = current, prompt = "Who do you want to swap to?")
+def swap_out(you, current, opponent):
+    available_poke = team_health_check(you)
+    return choose_switch_from_team(available_poke, exclude = current, prompt = "Who do you want to swap to?")
 
 
 
@@ -157,32 +160,22 @@ def pokemon_battle(your_mon, opo_mon):
             your_mon.lvl += 1
 
 
+def team_health_check(trainer):
+    healthy_trainer_team = []
+    for poke in trainer.team:
+        if poke.health > 0:
+            healthy_trainer_team.append(poke)
+    return healthy_trainer_team
 
+def trainer_battle(you, opo):
+    healthy_opo_team = team_health_check(opo)
+    your_healthy_team = team_health_check(you)
+    print(f"You send out {you.team[0].name}")
+    while len(healthy_opo_team) > 0 and len(your_healthy_team) > 0:
+        pokemon_battle(you.team[0], opo.team[0])
 
-all_pokemon_list = [pokedex_player.Vaporeon, pokedex_player.Charizard,
-                    pokedex_player.Dialga_O, pokedex_player.Landorus_T,
-                    pokedex_player.Charizard, pokedex_player.Mega_Charizard_X,
-                    pokedex_player.Blaziken, pokedex_player.Ceruledge,
-                    pokedex_player.Venusaur, pokedex_player.Blastoise,
-                    pokedex_player.Iron_Crown, pokedex_player.Vespiquen,
-                    pokedex_player.Mega_Scizor, pokedex_player.Torterra,
-                    pokedex_player.Sylveon, pokedex_player.Lapras,
-                    ]
+    if len(healthy_opo_team) <= 0:
+        print("You Won!")
+    elif len(your_healthy_team) <= 0:
+        print("You Lost!")
 
-poke_team = [random.choice(all_pokemon_list),
-             random.choice(all_pokemon_list),
-             random.choice(all_pokemon_list)]
-
-strong_pokemon_list = [pokedex_player.Arceus, pokedex_player.Dialga_O,
-                       pokedex_player.Rhyperior, pokedex_player.Mega_Mewtwo_Y,
-                       pokedex_player.Mega_Blaziken,
-                       pokedex_player.Mega_Charizard_X,
-                       pokedex_player.Giratina_O, pokedex_player.Raging_Bolt,
-                       pokedex_player.Iron_Crown, pokedex_player.Regice,
-                       pokedex_player.Glastrier,
-                       ]
-opponent_1 = random.choice(strong_pokemon_list)
-# opponent_1 = Arceus
-opo_bonus(opponent_1)
-
-pokemon_battle(random.choice(poke_team), opponent_1)

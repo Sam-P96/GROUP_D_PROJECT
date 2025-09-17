@@ -1,6 +1,5 @@
 import random
 from attack_dict import attack_dict
-from npc_attack_dict import npc_attack_dict
 from type_chart_factor import type_bonus_dict
 
 
@@ -167,17 +166,3 @@ Arceus = Pokemon("Arceus", None, "Normal", None,
                  120, 120, 120, 120, "Judgment",
                  "Thunder", "Earthquake", "Seismic Toss")
 
-your_pc = []
-your_team =[]
-
-wild_poke = [Charmander, Charmeleon, Charizard, Iron_Crown, Regice, Giratina_O,
-             Mega_Scizor, Mega_Blaziken, Blaziken, Blastoise, Landorus_T,
-             Lapras, Torterra, Glastrier, Vespiquen]
-
-
-intern_team = [Charmander, Cramorant]  # Basic Pokemon 1x
-grunt_team = [Vespiquen, Charmeleon, Sylveon, Ceruledge,]  # Mid Stage Evo 2x
-manager_team = [Blaziken, Charizard, Venusaur, Blastoise, Lapras, Torterra]  # Final Forms 3x
-exec_team = [Iron_Crown, Regice, Mega_Scizor, Mega_Blaziken, Mega_Mewtwo_Y,
-             Mega_Charizard_X, Glastrier, Giratina_O, Dialga_O, Raging_Bolt,
-             Landorus_T]  # Legendary & Mega 6x
