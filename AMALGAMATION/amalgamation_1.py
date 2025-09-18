@@ -221,8 +221,6 @@ def trainer_battle(you, opo):
 
 
 
-
-
 from  villain_npc import Sam
 from villain_npc import Meeri
 

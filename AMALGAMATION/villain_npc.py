@@ -25,7 +25,7 @@ class Villain:
         if rank == "intern":
             for team_no in range(1):
                available_poke = []
-               for poke in exec_team:
+               for poke in intern_team:
                    if poke not in self.exclude:
                        available_poke.append(poke)
                poke = random.choice(available_poke)
@@ -34,7 +34,7 @@ class Villain:
         elif rank == "grunt":
             for team_no in range(2):
                available_poke = []
-               for poke in exec_team:
+               for poke in grunt_team:
                    if poke not in self.exclude:
                        available_poke.append(poke)
                poke = random.choice(available_poke)
@@ -43,7 +43,7 @@ class Villain:
         elif rank == "manager":
             for team_no in range(3):
                available_poke = []
-               for poke in exec_team:
+               for poke in manager_team:
                    if poke not in self.exclude:
                        available_poke.append(poke)
                poke = random.choice(available_poke)
@@ -62,7 +62,7 @@ class Villain:
             print("Hold up, check class Villain")
 
 
-Sam = Villain("Sam", "manager")
+Sam = Villain("Sam", "grunt")
 Meeri = Villain("Meeri", "manager")
 
 
