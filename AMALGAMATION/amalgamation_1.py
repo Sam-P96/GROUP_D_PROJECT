@@ -2,7 +2,13 @@ import random
 from type_chart_factor import type_bonus_dict
 from attack_dict import attack_dict
 
-def type_bonus(key, defender):
+def type_bonus(key: str, defender) -> int:
+    """
+    Returns the integer of the type bonus an attack has on any specific Pokemon.
+    :param key: The attack key for the attack dictionary
+    :param defender: The defending Pokemon
+    :return: Integer of percentage bonus, 1 = 100%
+    """
     if str(attack_dict[key][0]) + str(defender.type_1) in type_bonus_dict:
         bonus_1 = type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_1)]
         if str(attack_dict[key][0]) + str(defender.type_2) in type_bonus_dict:
@@ -13,6 +19,12 @@ def type_bonus(key, defender):
         return 1
 
 def team_health_check(trainer):
+    """
+    Checks the Trainer's team, returns a list of Pokemon in that team who
+    health is over 0.
+    :param trainer: Variable the trainer is assigned to
+    :return: List of healthy Pokemon
+    """
     healthy_trainer_team = []
     for poke in trainer.team:
         if poke.health > 0:
@@ -59,12 +71,25 @@ class Pokemon:
 
 
 def opo_bonus(opponent):
-    opponent.health *= 0.1
-    opponent.max_health *= 0.3
+    """
+    Adjusts the health stats of a particular Pokemon, this code is meant
+    to be used to increase the health of an opponent to artificially increase
+    difficulty.
+    :param opponent: The Pokemon, whose stat to be modified
+    :return: None
+    """
+    opponent.health *= 2
+    opponent.max_health *= 2
 
 
 
 def type_display(poke):
+    """
+    Returns str of a Pokemon's type as such: [ Type 1 ] [ Type 2 ] with
+    space reserved
+    :param poke: Pokemon
+    :return: Str of the Pokemon's type
+    """
     if poke.type_2 != None:
         output = f"[{poke.type_1:^10}][{poke.type_2:^10}]"
     else:
@@ -75,6 +100,12 @@ def type_display(poke):
 
 
 def poke_hp_bar(pokemon_a):
+    """
+    Returns the Pokemon HP bar, used as a visual indicator of the Pokemon's
+    health percentage
+    :param pokemon_a: Pokemon whose health is to be displayed
+    :return: Str of Pokemon's health as a bar
+    """
     c_hp = int(pokemon_a.health)
     f_hp = int(pokemon_a.max_health)
     bar ="■" * (round( c_hp / f_hp * 20))
@@ -82,8 +113,15 @@ def poke_hp_bar(pokemon_a):
     return output
 
 
-
+ #PROPERLY DOCUMENT THIS FUNCTION PLS
 def alive_team(teammates, exclude=None):
+    """
+    Takes in your team via you.team format and returns your alive team
+    members.
+    :param teammates: Your team in you.team format
+    :param exclude:
+    :return: Alive team members.
+    """
     alive_members = [p for p in teammates if p.health > 0 and p is not exclude]
     return alive_members
 
@@ -91,6 +129,15 @@ def alive_team(teammates, exclude=None):
 
 def choose_switch_from_team(teammates, exclude = None, prompt =
 "Who do you want to swap to?"):
+    """
+    Takes in your team (you.team), with option to exclude and gives you
+    a prompt asking who do you want to swap to. Prints out your healthy Pokemon
+    and returns your selection for who to send out next.
+    :param teammates: Your team in you.team format
+    :param exclude: Leave empty
+    :param prompt: Leave empty
+    :return: Chosen Pokemon
+    """
     options = alive_team(teammates, exclude=exclude)
     if not options:
         return None
@@ -108,10 +155,32 @@ def choose_switch_from_team(teammates, exclude = None, prompt =
 
 
 
+def swap_out(current, you):
+    """
+    (This is meant to be used when its your turn and you want to swap,
+    not when your Pokemon fainted)
+    Takes in your current Pokemon, and You, then shows you your other Pokemon
+    and asks you if you want to switch to any of them.
+    :param current: your current Pokemon
+    :param you: The player
+    :return: The Pokemon you chose to swap to
+    """
+    return choose_switch_from_team(you.team, exclude = current, prompt = "Who do you want to swap to?")
+
 def your_battle_turn(your_mon, opo_mon, you, opo):
+    """
+    Function for your battle turn, takes in your pokemon, opponent Pokemon,
+    you, and opponent then performs the battle functions or swap functions
+    for gameplay.
+    :param your_mon: Your Pokemon
+    :param opo_mon: Your opponent's Pokemon
+    :param you: The player
+    :param opo: The opponent
+    :return:
+    """
     your_att = input("Select your attack: ")
     if your_att == "SWAP":
-        new_mon = swap_out(your_mon, opo_mon, you, opo)
+        new_mon = swap_out(your_mon, you)
         if new_mon is None:
             print("No other healthy Pokemon!!")
         else:
@@ -129,11 +198,6 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
     else:
         input("Press Enter to continue")
         return "no switch"
-
-
-
-def swap_out(current, opo_mon, you, opo):
-    return choose_switch_from_team(you.team, exclude = current, prompt = "Who do you want to swap to?")
 
 
 
@@ -281,6 +345,8 @@ def pokemon_battle_4wild(your_mon, wild_mon, you):
             print(f"HP:{your_hp_str:<38}HP:0/{opo_mon.max_health}")
             print("The opposing Pokémon is knocked out!")
             print("You won!")
+
+
 
 def wild_encounter_battle(your_mon, you, wild_pokemon_list):
     wild_mon = random.choice(wild_pokemon_list)

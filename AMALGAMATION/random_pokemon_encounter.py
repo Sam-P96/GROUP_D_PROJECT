@@ -1,6 +1,6 @@
 import random
 from pokedex_player import Pokemon
-from attack_dict import attack_dict
+# from attack_dict import attack_dict # ONLY USE WHEN CHECKING ATTACK DICT
 
 
 Metagross = Pokemon("Metagross", None, "Steel", "Psychic",
@@ -414,12 +414,13 @@ wild_poke = [Metagross, Escavalier, Jolteon, Medicham, Mismagius, Clawitzer,
              Zoroark, Zoroark_H
              ]
 
-for pokemon in wild_poke:
-        if pokemon.atk_1 not in attack_dict:
-            print(str(pokemon.atk_1))
-        if pokemon.atk_2 not in attack_dict:
-            print(str(pokemon.atk_2))
-        if pokemon.atk_3 not in attack_dict:
-            print(str(pokemon.atk_3))
-        if pokemon.atk_4 not in attack_dict:
-            print(str(pokemon.atk_4))
+# for pokemon in wild_poke:  # THIS CODE IS FOR TESTING GENERATED POKEMON ATTACKS ARE IN THE ATTACK DICT
+#         if pokemon.atk_1 not in attack_dict:
+#             print(str(pokemon.atk_1))
+#         if pokemon.atk_2 not in attack_dict:
+#             print(str(pokemon.atk_2))
+#         if pokemon.atk_3 not in attack_dict:
+#             print(str(pokemon.atk_3))
+#         if pokemon.atk_4 not in attack_dict:
+#             print(str(pokemon.atk_4))
+
