@@ -137,7 +137,7 @@ def swap_out(current, opo_mon, you, opo):
 
 
 
-def pokemon_battle(your_mon, opo_mon, you, opo):
+def pokemon_battle_4trainer(your_mon, opo_mon, you, opo):
     while your_mon.health > 0 and opo_mon.health > 0:
         print("=" * 100)
         your_hp_str = f"{your_mon.health}/{your_mon.max_health}"
@@ -187,7 +187,7 @@ def pokemon_battle(your_mon, opo_mon, you, opo):
                 break
             print(f"Go, {replacement.name}!")
             your_mon = replacement
-        elif your_mon.health > 0 and opo_mon.health < 0:
+        elif your_mon.health > 0 and opo_mon.health <= 0:
             healthy_opo_team = team_health_check(opo)
             your_healthy_team = team_health_check(you)
             if len(healthy_opo_team) > 0:
@@ -211,7 +211,7 @@ def trainer_battle(you, opo):
     while len(healthy_opo_team) > 0 and len(your_healthy_team) > 0:
         healthy_opo_team = team_health_check(opo)
         your_healthy_team = team_health_check(you)
-        pokemon_battle(you.team[0], opo.team[0], you, opo)
+        pokemon_battle_4trainer(you.team[0], opo.team[0], you, opo)
 
 
     if len(healthy_opo_team) <= 0:
@@ -219,6 +219,77 @@ def trainer_battle(you, opo):
     elif len(your_healthy_team) <= 0:
         print("You Lost!")
 
+
+
+def pokemon_battle_4wild(your_mon, wild_mon, you):
+    opo_mon = wild_mon
+    while your_mon.health > 0 and opo_mon.health > 0:
+        print("=" * 100)
+        your_hp_str = f"{your_mon.health}/{your_mon.max_health}"
+        opo_hp_str = f"{opo_mon.health}/{opo_mon.max_health}"
+        print(f"{str(your_mon.name) + " [Lv." + str(your_mon.lvl) + "]":<40} "
+              f"{str(opo_mon.name) + " [Lv." + str(opo_mon.lvl)}]")
+        print(f"{type_display(your_mon):<41}" + type_display(opo_mon))
+        print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
+        print(f"HP:{your_hp_str:<38}HP:{opo_hp_str}" )
+        print("")
+        print("")
+        print("")
+        print("Your Moves: ")
+        print(f"[{your_mon.atk_1:^20}][{your_mon.atk_2:^20}]")
+        print(f"[{your_mon.atk_3:^20}][{your_mon.atk_4:^20}]")
+        if your_mon.spd >= opo_mon.spd:
+            if your_mon.health > 0:
+                battle_input = your_battle_turn(your_mon, opo_mon, you, None)
+                if battle_input[0] == "switch":
+                    your_mon = battle_input[1]
+            if opo_mon.health > 0:
+                print("Opponent's turn!")
+                opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
+                input("Press Enter to continue")
+        else:
+            if opo_mon.health > 0:
+                print("Your opponent is fast!")
+                opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
+                input("Press Enter to continue")
+            if your_mon.health > 0:
+                battle_input = your_battle_turn(your_mon, opo_mon, you, None)
+                if battle_input[0] == "switch":
+                    your_mon = battle_input[1]
+
+        if your_mon.health <= 0:
+            print("=" * 100)
+            print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
+                  f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
+            print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
+            print(f"HP:{"0":<38}HP:{opo_hp_str}")
+            print(f"Your {your_mon.name} fainted!")
+            replacement = choose_switch_from_team(you.team, exclude=your_mon,
+            prompt = "Who will you send out next?! ")
+            if replacement is None:
+                print("You have no Pokemon left..")
+                print("That's okay, you can get em next time!")
+                break
+            print(f"Go, {replacement.name}!")
+            your_mon = replacement
+        elif your_mon.health > 0 and opo_mon.health <= 0:
+            your_healthy_team = team_health_check(you)
+            print("=" * 100)
+            print(f"{str(your_mon.name) + " [lv." + str(your_mon.lvl) + "]":<40} "
+                  f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
+            print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
+            print(f"HP:{your_hp_str:<38}HP:0/{opo_mon.max_health}")
+            print("The opposing Pokémon is knocked out!")
+            print("You won!")
+
+def wild_encounter_battle(your_mon, you, wild_pokemon_list):
+    wild_mon = random.choice(wild_pokemon_list)
+    print(wild_mon.name)
+    pokemon_battle_4wild(your_mon, wild_mon, you)
+
+# def wild_encounter(you, wild_poke_list):
+#     wild = random.choice(wild_poke_list)
+#     pokemon_battle(you.team[0], wild, you, None) # THIS DOES NOT BELONG HERE, MAKE A NEW FILE FO RWILD ENCOUNTERS
 
 
 from  villain_npc import Sam
@@ -232,9 +303,12 @@ print(sam_list)
 meeri_list = []
 for pokemon in Meeri.team:
     meeri_list.append(pokemon.name)
-
-# for pokemon in Meeri.team:
-#     opo_bonus(pokemon)
-
 print(meeri_list)
+
 trainer_battle(Sam, Meeri)
+
+# from random_pokemon_encounter import wild_poke
+#
+#
+#
+# wild_encounter_battle(Sam.team[0], Sam, wild_poke)
