@@ -6,7 +6,6 @@ from all_pokemon_list import OU_Poke
 
 class Villain:
 
-
     def __init__(self, name: str, rank: str):
         self.name = name
         self.rank = rank
@@ -52,8 +51,6 @@ class Villain:
             print("Hold up, check class Villain")
 
 
-Sam = Villain("Sam", "manager")
-Meeri = Villain("Meeri", "manager")
 
 
 

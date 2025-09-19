@@ -67,6 +67,9 @@ attack_dict = {
     "Iron Tail": ("Steel", 100),
     "Slash": ("Normal", 70),
     "Headlong Rush": ("Ground", 120),
+    "Gyro Ball": ("Steel", 60),
+    "Acid Spray": ("Poison", 60),
+    "Explosion": ("Noraml", 200),
     "Anchor Shot": ("Steel", 80), #Everything from here onwards was written by chat gpt
     "Ancient Power": ("Rock", 60),
     "Aqua Jet": ("Water", 40),

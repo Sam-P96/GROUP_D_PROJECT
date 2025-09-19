@@ -1,18 +1,17 @@
 import random
-
-from AMALGAMATION.all_pokemon_list import Mega_Aggron, Azumarill, Avalugg
 from type_chart_factor import type_bonus_dict
 from attack_dict import attack_dict
 from all_pokemon_list import Arceus
+from all_pokemon_list import LC_Poke
 from all_pokemon_list import NU_Poke
 from all_pokemon_list import OU_Poke
 from all_pokemon_list import Uber_Poke
 
+# Include these at the top of the program
 
 arceus_list = [Arceus]
 wild_poke = []
 evil_poke = []
-
 
 
 class Player:
@@ -63,7 +62,7 @@ class Villain:
                 evil_poke.append(poke)
         elif rank == "exec":
             for team_no in range(6):
-                uber_rate = random.randint(1,3)
+                uber_rate = random.randint(1,2)
                 available_poke = []
                 if uber_rate == 1:
                     for poke in Uber_Poke:
@@ -85,6 +84,9 @@ class Villain:
             print("Hold up, check class Villain")
 
 def wild_pokemon_assigner(player, evil):
+    for pokemon in LC_Poke:
+        if pokemon not in evil and pokemon not in player.team:
+            wild_poke.append(pokemon)
     for pokemon in NU_Poke:
         if pokemon not in evil and pokemon not in player.team:
             wild_poke.append(pokemon)
@@ -94,25 +96,6 @@ def wild_pokemon_assigner(player, evil):
     for pokemon in Uber_Poke:
         if pokemon not in evil and pokemon not in player.team:
             wild_poke.append(pokemon)
-
-Ethan = Player("Ethan")
-Sam = Villain("Sam", "exec")
-Meeri = Villain("Meeri", "manager")
-Saara = Villain("Saara", "grunt")
-Kari = Villain("Kari", "exec")
-Kari_2 = Villain("Kari", "exec")
-Kari_3 = Villain("Kari", "exec")
-Kari_4 = Villain("Kari", "exec")
-Ethan.capture(Mega_Aggron)
-Ethan.capture(Azumarill)
-Ethan.capture(Avalugg)
-wild_pokemon_assigner(Ethan, evil_poke)
-print(len(Ethan.team))
-print(len(wild_poke))
-print(len(evil_poke))
-
-
-
 
 
 
@@ -132,6 +115,8 @@ def type_bonus(key: str, defender) -> int:
     else:
         return 1
 
+
+
 def team_health_check(trainer):
     """
     Checks the Trainer's team, returns a list of Pokemon in that team who
@@ -144,6 +129,8 @@ def team_health_check(trainer):
         if poke.health > 0:
             healthy_trainer_team.append(poke)
     return healthy_trainer_team
+
+
 
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
@@ -227,7 +214,7 @@ def poke_hp_bar(pokemon_a):
     return output
 
 
- #PROPERLY DOCUMENT THIS FUNCTION PLS
+
 def alive_team(teammates, exclude=None):
     """
     Takes in your team via you.team format and returns your alive team
@@ -280,6 +267,8 @@ def swap_out(current, you):
     :return: The Pokemon you chose to swap to
     """
     return choose_switch_from_team(you.team, exclude = current, prompt = "Who do you want to swap to?")
+
+
 
 def your_battle_turn(your_mon, opo_mon, you, opo):
     """
@@ -498,7 +487,7 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
     :return:
     """
     wild_mon = random.choice(wild_pokemon_list)
-    print(wild_mon.name)
+    print(f"A wild {wild_mon.name} appeared!!")
     pokemon_battle_4wild(your_mon, wild_mon, you)
 
 
@@ -515,6 +504,23 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
 
 
 
+print(len(Uber_Poke))
+Ethan = Player("Ethan")
+Sam = Villain("Sam", "exec")
+Meeri = Villain("Meeri", "manager")
+Saara = Villain("Saara", "grunt")
+Kari = Villain("Kari", "exec")
+Kari_2 = Villain("Kari", "exec")
+Kari_3 = Villain("Kari", "exec")
+Kari_4 = Villain("Kari", "exec")
+Kari_5 = Villain("Kari", "exec")
+Kari_6 = Villain("Kari", "exec")
+for i in range(3):
+    Ethan.team.append(OU_Poke)
+wild_pokemon_assigner(Ethan, evil_poke)
+print(len(Ethan.team))
+print(len(wild_poke))
+print(len(evil_poke))
 
 
 

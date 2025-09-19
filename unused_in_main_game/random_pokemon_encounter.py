@@ -1,5 +1,3 @@
-import random
-from pokedex_player import Pokemon
 # from attack_dict import attack_dict # ONLY USE WHEN CHECKING ATTACK DICT
 
 #
