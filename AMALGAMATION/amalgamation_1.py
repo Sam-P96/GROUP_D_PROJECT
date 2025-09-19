@@ -1,6 +1,120 @@
 import random
+
+from AMALGAMATION.all_pokemon_list import Mega_Aggron, Azumarill, Avalugg
 from type_chart_factor import type_bonus_dict
 from attack_dict import attack_dict
+from all_pokemon_list import Arceus
+from all_pokemon_list import NU_Poke
+from all_pokemon_list import OU_Poke
+from all_pokemon_list import Uber_Poke
+
+
+arceus_list = [Arceus]
+wild_poke = []
+evil_poke = []
+
+
+
+class Player:
+    def __init__(self, name: str):
+        self.name = name
+        self.team = []
+        self.exclude = set()
+
+    def capture(self, pokemon):
+        self.team.append(pokemon)
+
+
+class Villain:
+    def __init__(self, name: str, rank: str):
+        self.name = name
+        self.rank = rank
+        self.team = []
+        self.exclude = set()
+        if rank == "intern":
+            for team_no in range(1):
+                available_poke = []
+                for poke in NU_Poke:
+                    if poke not in self.exclude:
+                        available_poke.append(poke)
+                poke = random.choice(available_poke)
+                self.team.append(poke)
+                self.exclude.add(poke)
+                evil_poke.append(poke)
+        elif rank == "grunt":
+            for team_no in range(2):
+                available_poke = []
+                for poke in NU_Poke:
+                    if poke not in self.exclude:
+                        available_poke.append(poke)
+                poke = random.choice(available_poke)
+                self.team.append(poke)
+                self.exclude.add(poke)
+                evil_poke.append(poke)
+        elif rank == "manager":
+            for team_no in range(3):
+                available_poke = []
+                for poke in OU_Poke:
+                    if poke not in self.exclude:
+                        available_poke.append(poke)
+                poke = random.choice(available_poke)
+                self.team.append(poke)
+                self.exclude.add(poke)
+                evil_poke.append(poke)
+        elif rank == "exec":
+            for team_no in range(6):
+                uber_rate = random.randint(1,3)
+                available_poke = []
+                if uber_rate == 1:
+                    for poke in Uber_Poke:
+                        if poke not in self.exclude:
+                            available_poke.append(poke)
+                    poke = random.choice(available_poke)
+                    self.team.append(poke)
+                    self.exclude.add(poke)
+                    evil_poke.append(poke)
+                else:
+                    for poke in OU_Poke:
+                        if poke not in self.exclude:
+                            available_poke.append(poke)
+                    poke = random.choice(available_poke)
+                    self.team.append(poke)
+                    self.exclude.add(poke)
+                    evil_poke.append(poke)
+        else:
+            print("Hold up, check class Villain")
+
+def wild_pokemon_assigner(player, evil):
+    for pokemon in NU_Poke:
+        if pokemon not in evil and pokemon not in player.team:
+            wild_poke.append(pokemon)
+    for pokemon in OU_Poke:
+        if pokemon not in evil and pokemon not in player.team:
+            wild_poke.append(pokemon)
+    for pokemon in Uber_Poke:
+        if pokemon not in evil and pokemon not in player.team:
+            wild_poke.append(pokemon)
+
+Ethan = Player("Ethan")
+Sam = Villain("Sam", "exec")
+Meeri = Villain("Meeri", "manager")
+Saara = Villain("Saara", "grunt")
+Kari = Villain("Kari", "exec")
+Kari_2 = Villain("Kari", "exec")
+Kari_3 = Villain("Kari", "exec")
+Kari_4 = Villain("Kari", "exec")
+Ethan.capture(Mega_Aggron)
+Ethan.capture(Azumarill)
+Ethan.capture(Avalugg)
+wild_pokemon_assigner(Ethan, evil_poke)
+print(len(Ethan.team))
+print(len(wild_poke))
+print(len(evil_poke))
+
+
+
+
+
 
 def type_bonus(key: str, defender) -> int:
     """
@@ -387,28 +501,37 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
     print(wild_mon.name)
     pokemon_battle_4wild(your_mon, wild_mon, you)
 
-# def wild_encounter(you, wild_poke_list):
-#     wild = random.choice(wild_poke_list)
-#     pokemon_battle(you.team[0], wild, you, None) # THIS DOES NOT BELONG HERE, MAKE A NEW FILE FO RWILD ENCOUNTERS
 
 
-from  villain_npc import Sam
-from villain_npc import Meeri
 
-sam_list = []
-for pokemon in Sam.team:
-    sam_list.append(pokemon.name)
-print(sam_list)
 
-meeri_list = []
-for pokemon in Meeri.team:
-    meeri_list.append(pokemon.name)
-print(meeri_list)
 
-trainer_battle(Sam, Meeri)
 
-# from random_pokemon_encounter import wild_poke
+
+
+
+
+
+
+
+
+
+
+
+# from  villain_npc import Sam
+# from villain_npc import Meeri
 #
+# sam_list = []
+# for pokemon in Sam.team:
+#     sam_list.append(pokemon.name)
+# print(sam_list)
 #
-#
-# wild_encounter_battle(Sam.team[0], Sam, wild_poke)
+# meeri_list = []
+# for pokemon in Meeri.team:
+#     meeri_list.append(pokemon.name)
+# print(meeri_list)
+
+# trainer_battle(Sam, Meeri)
+
+
+wild_encounter_battle(Sam.team[0], Sam, wild_poke)

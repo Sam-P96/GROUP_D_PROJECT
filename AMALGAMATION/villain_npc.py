@@ -1,24 +1,8 @@
 import random
 import pokedex_player
-from random_pokemon_encounter import wild_poke
+from all_pokemon_list import wild_poke
+from all_pokemon_list import OU_Poke
 
-your_pc = []
-your_team =[]
-
-intern_team = [pokedex_player.Charmander, pokedex_player.Cramorant, pokedex_player.Blaziken]  # Basic Pokemon 1x
-
-grunt_team = [pokedex_player.Vespiquen, pokedex_player.Charmeleon, pokedex_player.Sylveon, pokedex_player.Ceruledge,]  # Mid Stage Evo 2x
-
-# manager_team = [pokedex_player.Iron_Crown, pokedex_player.Regice, pokedex_player.Mega_Scizor, pokedex_player.Mega_Blaziken, pokedex_player.Mega_Mewtwo_Y,
-#              pokedex_player.Mega_Charizard_X, pokedex_player.Glastrier, pokedex_player.Giratina_O, pokedex_player.Dialga_O, pokedex_player.Raging_Bolt,
-#              pokedex_player.Landorus_T ,pokedex_player.Blaziken, pokedex_player.Charizard, pokedex_player.Venusaur, pokedex_player.Blastoise, pokedex_player.Lapras, pokedex_player.Torterra]  # Final Forms 3x
-
-manager_team = [pokedex_player.Arceus, pokedex_player.Mega_Charizard_X, pokedex_player.Glastrier, pokedex_player.Giratina_O]
-
-exec_team = [pokedex_player.Iron_Crown, pokedex_player.Regice, pokedex_player.Giratina_O,
-             pokedex_player.Mega_Scizor, pokedex_player.Mega_Blaziken, pokedex_player.Mega_Mewtwo_Y,
-             pokedex_player.Mega_Charizard_X, pokedex_player.Glastrier, pokedex_player.Giratina_O, pokedex_player.Dialga_O, pokedex_player.Raging_Bolt,
-             pokedex_player.Landorus_T]  # Legendary & Mega 6x
 
 class Villain:
 
