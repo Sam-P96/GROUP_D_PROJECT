@@ -202,6 +202,16 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
 
 
 def pokemon_battle_4trainer(your_mon, opo_mon, you, opo):
+    """
+    The inner function for the trainer battle function. Requires you to enter
+    the player's first Pokemon, the Opponent's first Pokemon, the player, and
+    the opponent.
+    :param your_mon: Player's Pokemon
+    :param opo_mon: Opponent's Pokemon
+    :param you: The Player
+    :param opo: The Opponent
+    :return: None
+    """
     while your_mon.health > 0 and opo_mon.health > 0:
         print("=" * 100)
         your_hp_str = f"{your_mon.health}/{your_mon.max_health}"
@@ -269,6 +279,14 @@ def pokemon_battle_4trainer(your_mon, opo_mon, you, opo):
 
 
 def trainer_battle(you, opo):
+    """
+    The outer function for trainer battles, takes in the player and the
+    TRAINER opponent, then automatically runs the pokemon_battle_4trainer
+    function, with the appropriate prompts when winning or losing.
+    :param you: Player
+    :param opo: Trainer Opponent
+    :return:
+    """
     healthy_opo_team = team_health_check(opo)
     your_healthy_team = team_health_check(you)
     print(f"You send out {you.team[0].name}")
@@ -286,6 +304,13 @@ def trainer_battle(you, opo):
 
 
 def pokemon_battle_4wild(your_mon, wild_mon, you):
+    """
+    The inner function for the wild encounter battle with wild Pokemon.
+    :param your_mon: Your first Pokemon in your team
+    :param wild_mon: The wild Pokemon
+    :param you: The player
+    :return:
+    """
     opo_mon = wild_mon
     while your_mon.health > 0 and opo_mon.health > 0:
         print("=" * 100)
@@ -349,6 +374,15 @@ def pokemon_battle_4wild(your_mon, wild_mon, you):
 
 
 def wild_encounter_battle(your_mon, you, wild_pokemon_list):
+    """
+    Takes in your first Pokemon, you, and the wild Pokemon list (wild Poke)
+    or you can change the wild Poke list to be randomly selected from, then
+    runs the wild Pokemon Battle Function
+    :param your_mon: Your first Pokemon in you.team format
+    :param you: The player
+    :param wild_pokemon_list: the list of wild Pokemon to be randomly selected
+    :return:
+    """
     wild_mon = random.choice(wild_pokemon_list)
     print(wild_mon.name)
     pokemon_battle_4wild(your_mon, wild_mon, you)
