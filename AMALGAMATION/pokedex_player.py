@@ -4,6 +4,12 @@ from type_chart_factor import type_bonus_dict
 
 
 def type_bonus(key, defender):
+    """
+    Returns the integer of the type bonus an attack has on any specific Pokemon.
+    :param key: The attack key for the attack dictionary
+    :param defender: The defending Pokemon
+    :return: Integer of percentage bonus, 1 = 100%
+    """
     if str(attack_dict[key][0]) + str(defender.type_1) in type_bonus_dict:
         bonus_1 = type_bonus_dict[str(attack_dict[key][0]) + str(defender.type_1)]
         if str(attack_dict[key][0]) + str(defender.type_2) in type_bonus_dict:
