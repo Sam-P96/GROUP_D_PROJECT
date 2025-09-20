@@ -302,95 +302,7 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
         input("Press Enter to continue")
         return "no switch"
 
-#######################################################################3
 
-
-
-def into_team(player, opo, wild):
-    if wild == None:
-        while True:
-            print("Which Pokemon would you like to add to your team?")
-            for index_o, poke_o in enumerate(opo.team):
-                print(f"{index_o + 1}. {poke_o.name}")
-            print(f"0. End")
-            user_input_opo = int(input("Select your choice: "))
-            if 0 < int(user_input_opo) <= len(opo.team):
-                print("Which Pokemon from your team would you like to release?")
-                for index_p, poke_p in enumerate(player.team):
-                    print(f"{index_p + 1}. {poke_p.name}")
-                print(f"0. End")
-                user_input_player = int(input("Select your choice: "))
-                if 0 < int(user_input_player) <= len(player.team):
-                    player.team[int(user_input_player) - 1] = opo.team[int(user_input_opo) - 1]
-                    opo.team.remove(opo.team[int(user_input_opo) - 1])
-                    wild_poke.append(player.team[int(user_input_player) - 1])
-                elif user_input_player == 0:
-                    print("Stealing ended")
-                    break
-                else:
-                    print("Invalid input")
-            elif user_input_opo == 0:
-                print("Stealing ended")
-                break
-            else:
-                print("Invalid input")
-    elif opo == None:
-        while True:
-            print("Which Pokemon from your team would you like to release?")
-            for index_p, poke_p in enumerate(player.team):
-                print(f"{index_p + 1}. {poke_p.name}")
-            print(f"0. End")
-            user_input_player = int(input("Select your choice: "))
-            if 0 < int(user_input_player) <= len(player.team):
-                player.team[int(user_input_player) - 1] = wild
-                wild_poke.remove(wild)
-                wild_poke.append(player.team[int(user_input_player) - 1])
-                break
-            elif user_input_player == 0:
-                print("Capture ended")
-                break
-            else:
-                print("Invalid input")
-
-
-
-def wild_capture(wild, player):
-    while True:
-        if len(player.team) < 6:
-            print(f"You defeated the {wild.name}, it started following you.")
-            player.team.append(wild)
-            break
-        else:
-            print("""You cannot have more than 6 Pokemon, and you do not have 
-            legal access to a PC to store excess Pokemon.""")
-            print("Would you like to capture this Pokemon?")
-            print("1. Yes")
-            print("2. No")
-            y_n = int(input("Select your choice:"))
-            if y_n == 1:
-                into_team(player, None, wild)
-                break
-            if y_n == 2:
-                break
-            else:
-                print("Invalid input")
-
-
-
-def battle_steal(player, opo):
-    first_time = 1
-    while first_time >= 1 and len(player.team) >= 6:
-        print("""You won! In the Sacred Book of Criminal Law Section 4.213, rules all 
-        hardened criminals abide by, you may take their Pokemon. Since you 
-        are an outlaw you do not have access to a PC. So if you have more than 
-        6 Pokemon, you must choose one Pokemon to release when adding one 
-        to your team.""")
-        first_time -= 1
-        into_team(player, opo, None)
-
-
-
-#################################################################3
 
 def pokemon_battle_4trainer(your_mon, opo_mon, you, opo):
     """
@@ -489,12 +401,8 @@ def trainer_battle(you, opo):
 
     if len(healthy_opo_team) <= 0:
         print("You Won!")
-        battle_steal(you, opo)
     elif len(your_healthy_team) <= 0:
         print("You Lost!")
-
-    for poke in you.team:
-        print(poke.name)
 
 
 
@@ -581,13 +489,7 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
     wild_mon = random.choice(wild_pokemon_list)
     print(f"A wild {wild_mon.name} appeared!!")
     pokemon_battle_4wild(your_mon, wild_mon, you)
-    your_healthy_team = team_health_check(you)
-    if len(your_healthy_team) <= 0:
-        print("You Lost!")
-    else:
-        wild_capture(wild_mon, you)
-    for poke in you.team:
-        print(poke.name)
+
 
 
 
@@ -635,7 +537,7 @@ print(len(evil_poke))
 #     meeri_list.append(pokemon.name)
 # print(meeri_list)
 
-# trainer_battle(Sam, Meeri)
+trainer_battle(Sam, Meeri)
 
 
-wild_encounter_battle(Sam.team[0], Sam, wild_poke)
+# wild_encounter_battle(Sam.team[0], Sam, wild_poke)
