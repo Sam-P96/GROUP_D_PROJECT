@@ -1250,28 +1250,28 @@ Mega_Charizard_Y = Pokemon("Mega Charizard Y", None, "Fire", "Flying",
                            "Air Slash", "Ancient Power", "Dragon Pulse")
 
 Mega_Garchomp = Pokemon("Mega Garchomp", None, "Dragon", "Ground",
-                        108, 170, 115, 92, "Dragon Rush",
-                        "Stone Edge", "Fire Fang", "Bulldoze")
+                        108, 170, 115, 92, "Outrage",
+                        "Stone Edge", "Overheat", "Earthquake")
 
 Mega_Salamence = Pokemon("Mega Salamence", None, "Dragon", "Flying",
-                         95, 145, 130, 120, "Dragon Rush",
-                         "Fly", "Stone Edge", "Bulldoze")
+                         95, 145, 130, 120, "Outrage",
+                         "Fly", "Stone Edge", "Earthquake")
 
 Mega_Metagross = Pokemon("Mega Metagross", None, "Steel", "Psychic",
-                         80, 145, 150, 110, "Iron Head",
-                         "Zen Headbutt", "Brick Break", "Rock Slide")
+                         80, 145, 150, 110, "Meteor Mash",
+                         "Zen Headbutt", "Dynamic Punch", "Rock Slide")
 
 Mega_Mawile = Pokemon("Mega Mawile", None, "Steel", "Fairy",
                       50, 105, 125, 50, "Play Rough",
-                      "Iron Head", "Sucker Punch", "Brick Break")
+                      "Iron Head", "Sucker Punch", "Focus Punch")
 
 Mega_Medicham = Pokemon("Mega Medicham", None, "Fighting", "Psychic",
                         60, 100, 85, 100, "High Jump Kick",
-                        "Zen Headbutt", "Drain Punch", "Brick Break")
+                        "Zen Headbutt", "Drain Punch", "Shadow Ball")
 
 Mega_Lopunny = Pokemon("Mega Lopunny", None, "Normal", "Fighting",
                        65, 136, 96, 135, "High Jump Kick",
-                       "Double-Edge", "Quick Attack", "Brick Break")
+                       "Double-Edge", "Ice Punch", "Thunder Punch")
 
 Mega_Kangaskhan = Pokemon("Mega Kangaskhan", None, "Normal", None,
                           105, 125, 100, 100, "Double-Edge",
@@ -1279,23 +1279,23 @@ Mega_Kangaskhan = Pokemon("Mega Kangaskhan", None, "Normal", None,
 
 Mega_Gyarados = Pokemon("Mega Gyarados", None, "Water", "Dark",
                         95, 155, 130, 81, "Waterfall",
-                        "Crunch", "Aqua Tail", "Ice Fang")
+                        "Crunch", "Dragon Tail", "Ice Fang")
 
 Mega_Diancie = Pokemon("Mega Diancie", None, "Rock", "Fairy",
                        50, 160, 110, 110, "Diamond Storm",
-                       "Power Gem", "Dazzling Gleam", "Ancient Power")
+                       "Dark Pulse", "Dazzling Gleam", "Ancient Power")
 
 Mega_Gallade = Pokemon("Mega Gallade", None, "Psychic", "Fighting",
                        68, 165, 115, 110, "Psycho Cut",
-                       "Sacred Sword", "Brick Break", "Night Slash")
+                       "Close Combat", "Magical Leaf", "Night Slash")
 
 Mega_Gardevoir = Pokemon("Mega Gardevoir", None, "Psychic", "Fairy",
                          68, 165, 135, 100, "Dazzling Gleam",
-                         "Psyshock", "Hyper Voice", "Mystical Fire")
+                         "Shadow Ball", "Hyper Voice", "Mystical Fire")
 
 Mega_Alakazam = Pokemon("Mega Alakazam", None, "Psychic", None,
                         55, 175, 95, 150, "Psychic",
-                        "Psyshock", "Dazzling Gleam", "Energy Ball")
+                        "Shadow Ball", "Dazzling Gleam", "Energy Ball")
 
 Mega_Aerodactyl = Pokemon("Mega Aerodactyl", None, "Rock", "Flying",
                           80, 135, 95, 150, "Stone Edge",
@@ -1319,7 +1319,7 @@ Mega_Altaria = Pokemon("Mega Altaria", None, "Dragon", "Fairy",
 
 Mega_Banette = Pokemon("Mega Banette", None, "Ghost", None,
                        64, 165, 83, 75, "Shadow Punch",
-                       "Sucker Punch", "Knock Off", "Night Slash")
+                       "Gunk Shot", "Dazzling Gleam", "Foul Play")
 
 Mega_Absol = Pokemon("Mega Absol", None, "Dark", None,
                      65, 150, 60, 115, "Night Slash",
@@ -1351,7 +1351,7 @@ Mega_Houndoom = Pokemon("Mega Houndoom", None, "Dark", "Fire",
 
 Mega_Tyranitar = Pokemon("Mega Tyranitar", None, "Rock", "Dark",
                          100, 164, 150, 71, "Stone Edge",
-                         "Crunch", "Fire Fang", "Brick Break")
+                         "Crunch", "Fire Fang", "Earthquake")
 
 Mega_Pidgeot = Pokemon("Mega Pidgeot", None, "Normal", "Flying",
                        83, 135, 80, 121, "Hurricane",
@@ -1367,39 +1367,39 @@ Mega_Latias = Pokemon("Mega Latias", None, "Dragon", "Psychic",
 
 Mega_Steelix = Pokemon("Mega Steelix", None, "Steel", "Ground",
                        75, 125, 230, 30, "Iron Head",
-                       "Rock Slide", "Earth Power", "Smack Down")
+                       "Rock Slide", "Earthquake", "Smack Down")
 
 Mega_Swampert = Pokemon("Mega Swampert", None, "Water", "Ground",
-                        100, 150, 110, 70, "Waterfall",
-                        "Mud Shot", "Ice Fang", "Brick Break")
+                        100, 150, 110, 70, "Hydro Cannon",
+                        "Earthquake", "Ice Fang", "Focus Punch")
 
 Mega_Sceptile = Pokemon("Mega Sceptile", None, "Grass", "Dragon",
-                        70, 145, 85, 145, "Energy Ball",
-                        "Leaf Blade", "Dragon Pulse", "Dual Chop")
+                        70, 145, 85, 145, "Focus Punch",
+                        "Leaf Storm", "Outrage", "X-Scissor")
 
 Mega_Ampharos = Pokemon("Mega Ampharos", None, "Electric", "Dragon",
-                        90, 165, 110, 45, "Discharge",
-                        "Volt Switch", "Dragon Pulse", "Power Gem")
+                        90, 165, 110, 45, "Thunder",
+                        "Volt Switch", "Dragon Pulse", "Stone Edge")
 
 Mega_Abomasnow = Pokemon("Mega Abomasnow", None, "Grass", "Ice",
                          90, 132, 105, 30, "Blizzard",
-                         "Giga Drain", "Ice Shard", "Energy Ball")
+                         "Giga Impact", "Ice Shard", "Solar Beam")
 
 Mega_Gengar = Pokemon("Mega Gengar", None, "Ghost", "Poison",
-                      60, 170, 95, 130, "Hex",
-                      "Dark Pulse", "Shadow Sneak", "Dazzling Gleam")
+                      60, 170, 95, 130, "Hyper Beam",
+                      "Dark Pulse", "Sludge Bomb", "Dazzling Gleam")
 
 Mega_Glalie = Pokemon("Mega Glalie", None, "Ice", None,
                       80, 120, 80, 100, "Freeze-Dry",
-                      "Ice Fang", "Body Slam", "Crunch")
+                      "Ice Fang", "Hyper Beam", "Crunch")
 
 Mega_Slowbro = Pokemon("Mega Slowbro", None, "Water", "Psychic",
                        95, 130, 180, 30, "Scald",
-                       "Psyshock", "Icy Wind", "Body Slam")
+                       "Psyshock", "Icy Wind", "Hyper Beam")
 
 Mega_Lucario = Pokemon("Mega Lucario", None, "Fighting", "Steel",
-                       70, 145, 88, 112, "Brick Break",
-                       "Aura Sphere", "Flash Cannon", "Extreme Speed")
+                       70, 145, 88, 112, "Close Combat",
+                       "Bone Rush", "Flash Cannon", "Extreme Speed")
 
 
 # ----------------------------
@@ -1436,18 +1436,18 @@ Uber_Poke = [
 
 
 
-# print(len(LC_Poke))
-# print(len(OU_Poke))
-# print(len(NU_Poke))
-# print(len(Uber_Poke))
-# print(57 + 80 + 96 + 77)
-#
-# for pokemon in LC_Poke:  # THIS CODE IS FOR TESTING GENERATED POKEMON ATTACKS ARE IN THE ATTACK DICT
-#         if pokemon.atk_1 not in attack_dict:
-#             print(str(pokemon.atk_1))
-#         if pokemon.atk_2 not in attack_dict:
-#             print(str(pokemon.atk_2))
-#         if pokemon.atk_3 not in attack_dict:
-#             print(str(pokemon.atk_3))
-#         if pokemon.atk_4 not in attack_dict:
-#             print(str(pokemon.atk_4))
+print(len(LC_Poke))
+print(len(OU_Poke))
+print(len(NU_Poke))
+print(len(Uber_Poke))
+print(57 + 80 + 96 + 77)
+
+for pokemon in LC_Poke:  # THIS CODE IS FOR TESTING GENERATED POKEMON ATTACKS ARE IN THE ATTACK DICT
+        if pokemon.atk_1 not in attack_dict:
+            print(str(pokemon.atk_1))
+        if pokemon.atk_2 not in attack_dict:
+            print(str(pokemon.atk_2))
+        if pokemon.atk_3 not in attack_dict:
+            print(str(pokemon.atk_3))
+        if pokemon.atk_4 not in attack_dict:
+            print(str(pokemon.atk_4))

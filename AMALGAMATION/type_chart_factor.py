@@ -160,7 +160,7 @@ type_bonus_dict = {
                     "GroundDragon": 1,
                     "GroundDark": 1,
                     "GroundSteel": 2,
-                    "GroundFairy": 1, # THIS IS WHERE I LAST LEFT OFF
+                    "GroundFairy": 1,
                     "FlyingNormal": 1,
                     "FlyingFire": 1,
                     "FlyingWater": 1,
