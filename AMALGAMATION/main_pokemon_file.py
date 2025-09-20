@@ -303,11 +303,18 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
         input("Press Enter to continue")
         return "no switch"
 
-#######################################################################3
 
-# Add STR so players can better understand what is happening. Also, add a warning that capture Pokemon is at 0 health, take it to an airport to heal.
 
 def into_team(player, opo, wild):
+    """
+    The inner function used for stealing or capturing Pokemon, the function
+    creates a loop until you enter 0 that allows you to move the opposing
+    pokemon into your team
+    :param player: player
+    :param opo: opponent whose team to check, write None if capturing wild Pokemon
+    :param wild: wild pokemon, write None if battling human NPC
+    :return: None
+    """
     if wild == None:
         while True:
             print("Which Pokemon would you like to add to your team?")
@@ -356,6 +363,13 @@ def into_team(player, opo, wild):
 
 
 def wild_capture(wild, player):
+    """
+    Takes in wild Pokemon and Player, and asks you if you want to add it to
+    your team. If you select yes, it will run the into_team function
+    :param wild:
+    :param player:
+    :return:
+    """
     while True:
         if len(player.team) < 6:
             print(f"You defeated the {wild.name}, it started following you.")
@@ -363,7 +377,7 @@ def wild_capture(wild, player):
             break
         else:
             print("""You cannot have more than 6 Pokemon, and you do not have 
-            legal access to a PC to store excess Pokemon.""")
+legal access to a PC to store excess Pokemon.""")
             print("Would you like to capture this Pokemon?")
             print("1. Yes")
             print("2. No")
@@ -379,21 +393,37 @@ def wild_capture(wild, player):
 
 
 def battle_steal(player, opo):
+    """
+    Takes in Opponent and Player, and asks you if you want to add pokemon from
+    the opponent's team to your team. If you select yes, it will run the
+    into_team function. If it is the first time you are running this function it
+    will present an extra prompt
+    :param player: player
+    :param opo: opponent
+    :return:
+    """
     first_time = 1
     while first_time >= 1 and len(player.team) >= 6:
         print("""You won! In the Sacred Book of Criminal Law Section 4.213, rules all 
-        hardened criminals abide by, you may take their Pokemon. Since you 
-        are an outlaw you do not have access to a PC. So if you have more than 
-        6 Pokemon, you must choose one Pokemon to release when adding one 
-        to your team.""")
+hardened criminals abide by, you may take their Pokemon. Since you 
+are an outlaw you do not have access to a PC. So if you have more than 
+6 Pokemon, you must choose one Pokemon to release when adding one 
+to your team.""")
         first_time -= 1
         into_team(player, opo, None)
 
+
+
 def all_poke_heal(player):
+    """
+    Heals all Pokemon in the team, can be used for any trainer class.
+    :param player:
+    :return:
+    """
     for pokemon in player.team:
         pokemon.health = round((1 + ((pokemon.lvl - 1) /10)) *150 * (pokemon.hp_1/100))
 
-#################################################################3
+
 
 def pokemon_battle_4trainer(your_mon, opo_mon, you, opo):
     """
@@ -608,7 +638,7 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
 print(len(Uber_Poke))
 Ethan = Player("Ethan")
 Sam = Villain("Sam", "exec")
-Meeri = Villain("Meeri", "manager")
+Meeri = Villain("Meeri", "grunt")
 Saara = Villain("Saara", "grunt")
 Kari = Villain("Kari", "exec")
 Kari_2 = Villain("Kari", "exec")
@@ -638,10 +668,10 @@ print(len(evil_poke))
 #     meeri_list.append(pokemon.name)
 # print(meeri_list)
 
-# trainer_battle(Sam, Meeri)
+trainer_battle(Sam, Meeri)
 
 
-wild_encounter_battle(Sam.team[0], Sam, wild_poke)
+# wild_encounter_battle(Sam.team[0]
 all_poke_heal(Sam)
 wild_encounter_battle(Sam.team[0], Sam, wild_poke)
 
