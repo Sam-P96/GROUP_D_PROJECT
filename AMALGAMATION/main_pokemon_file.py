@@ -83,6 +83,7 @@ class Villain:
         else:
             print("Hold up, check class Villain")
 
+
 def wild_pokemon_assigner(player, evil):
     for pokemon in LC_Poke:
         if pokemon not in evil and pokemon not in player.team:
@@ -304,7 +305,7 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
 
 #######################################################################3
 
-
+# Add STR so players can better understand what is happening. Also, add a warning that capture Pokemon is at 0 health, take it to an airport to heal.
 
 def into_team(player, opo, wild):
     if wild == None:
@@ -388,7 +389,9 @@ def battle_steal(player, opo):
         first_time -= 1
         into_team(player, opo, None)
 
-
+def all_poke_heal(player):
+    for pokemon in player.team:
+        pokemon.health = round((1 + ((pokemon.lvl - 1) /10)) *150 * (pokemon.hp_1/100))
 
 #################################################################3
 
@@ -639,3 +642,7 @@ print(len(evil_poke))
 
 
 wild_encounter_battle(Sam.team[0], Sam, wild_poke)
+all_poke_heal(Sam)
+wild_encounter_battle(Sam.team[0], Sam, wild_poke)
+
+
