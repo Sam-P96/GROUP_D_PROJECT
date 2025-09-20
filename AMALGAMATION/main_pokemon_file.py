@@ -84,6 +84,44 @@ class Villain:
             print("Hold up, check class Villain")
 
 
+class Pokemon:
+    def __init__(self, name, evo, type_1, type_2, hp, att,
+                 deff, spd, a1, a2, a3, a4):
+        self.name = name
+        self.evo = evo
+        self.type_1 = type_1
+        self.type_2 = type_2
+        self.hp_1 = hp
+        self.atk_stat = att
+        self.deff = deff
+        self.spd = spd
+        self.lvl = 1
+        self.health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
+        self.max_health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
+        self.atk_1 = a1
+        self.atk_2 = a2
+        self.atk_3 = a3
+        self.atk_4 = a4
+        self.att_key = [a1, a2, a3, a4]
+
+
+
+    def attack(self, player_2, key):
+        dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
+        dmg_out = round(((1 + ((self.lvl - 1) /10)) * (dmg_pre * 0.5) + (dmg_pre * (0.5 * (player_2.deff/300)))) * float(type_bonus(key, player_2)))
+        player_2.health -= dmg_out
+        # print(dmg_pre)
+        # print(dmg_out)
+        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
+        if float(type_bonus(key, player_2)) > 1.5:
+            print("Its super effective!")
+        elif float(type_bonus(key, player_2)) == 0:
+            print(f"{player_2.name} is immune to {key}")
+        elif float(type_bonus(key, player_2)) < 1:
+            print("Its not very effective!")
+        # + str(player_2.health) + " " + str(dmg_out))
+
+
 def wild_pokemon_assigner(player, evil):
     for pokemon in LC_Poke:
         if pokemon not in evil and pokemon not in player.team:
@@ -130,45 +168,6 @@ def team_health_check(trainer):
         if poke.health > 0:
             healthy_trainer_team.append(poke)
     return healthy_trainer_team
-
-
-
-class Pokemon:
-    def __init__(self, name, evo, type_1, type_2, hp, att,
-                 deff, spd, a1, a2, a3, a4):
-        self.name = name
-        self.evo = evo
-        self.type_1 = type_1
-        self.type_2 = type_2
-        self.hp_1 = hp
-        self.atk_stat = att
-        self.deff = deff
-        self.spd = spd
-        self.lvl = 1
-        self.health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
-        self.max_health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
-        self.atk_1 = a1
-        self.atk_2 = a2
-        self.atk_3 = a3
-        self.atk_4 = a4
-        self.att_key = [a1, a2, a3, a4]
-
-
-
-    def attack(self, player_2, key):
-        dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
-        dmg_out = round(((1 + ((self.lvl - 1) /10)) * (dmg_pre * 0.5) + (dmg_pre * (0.5 * (player_2.deff/300)))) * float(type_bonus(key, player_2)))
-        player_2.health -= dmg_out
-        # print(dmg_pre)
-        # print(dmg_out)
-        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
-        if float(type_bonus(key, player_2)) > 1.5:
-            print("Its super effective!")
-        elif float(type_bonus(key, player_2)) == 0:
-            print(f"{player_2.name} is immune to {key}")
-        elif float(type_bonus(key, player_2)) < 1:
-            print("Its not very effective!")
-        # + str(player_2.health) + " " + str(dmg_out))
 
 
 
@@ -309,7 +308,7 @@ def into_team(player, opo, wild):
     """
     The inner function used for stealing or capturing Pokemon, the function
     creates a loop until you enter 0 that allows you to move the opposing
-    pokemon into your team
+    pokemon into your team, and moves excess Pokemon into the wild list
     :param player: player
     :param opo: opponent whose team to check, write None if capturing wild Pokemon
     :param wild: wild pokemon, write None if battling human NPC
@@ -361,7 +360,7 @@ def into_team(player, opo, wild):
                 print("Invalid input")
 
 
-
+# Ignore the highlight here
 def wild_capture(wild, player):
     """
     Takes in wild Pokemon and Player, and asks you if you want to add it to
@@ -391,7 +390,7 @@ legal access to a PC to store excess Pokemon.""")
                 print("Invalid input")
 
 
-
+# Ignore the highlight here
 def battle_steal(player, opo):
     """
     Takes in Opponent and Player, and asks you if you want to add pokemon from
@@ -526,8 +525,8 @@ def trainer_battle(you, opo):
     elif len(your_healthy_team) <= 0:
         print("You Lost!")
 
-    for poke in you.team:
-        print(poke.name)
+    # for poke in you.team: # Code for testing team modification
+    #     print(poke.name)
 
 
 
@@ -619,8 +618,8 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
         print("You Lost!")
     else:
         wild_capture(wild_mon, you)
-    for poke in you.team:
-        print(poke.name)
+    # for poke in you.team: # Code for testing team modification
+    #     print(poke.name)
 
 
 

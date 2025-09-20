@@ -504,25 +504,6 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
 
 
 
-print(len(Uber_Poke))
-Ethan = Player("Ethan")
-Sam = Villain("Sam", "exec")
-Meeri = Villain("Meeri", "manager")
-Saara = Villain("Saara", "grunt")
-Kari = Villain("Kari", "exec")
-Kari_2 = Villain("Kari", "exec")
-Kari_3 = Villain("Kari", "exec")
-Kari_4 = Villain("Kari", "exec")
-Kari_5 = Villain("Kari", "exec")
-Kari_6 = Villain("Kari", "exec")
-for i in range(3):
-    Ethan.team.append(OU_Poke)
-wild_pokemon_assigner(Ethan, evil_poke)
-print(len(Ethan.team))
-print(len(wild_poke))
-print(len(evil_poke))
-
-
 
 # from  villain_npc import Sam
 # from villain_npc import Meeri
