@@ -95,10 +95,16 @@ def game_russian(self, player_2):
     while len(player_team_hp) > 0 and len(opo_team_hp) > 0:
         player_team_hp = team_health_check(self)
         opo_team_hp = team_health_check(player_2)
+        sacrifice = 0
         print("You must select a Pokemon to play for you.")
         for index, pokemon in enumerate(self.team):
             print(f"{index + 1}. {pokemon.name}")
-        sacrifice = self.team[int(input("Select your Pokemon: ")) - 1]
+        while sacrifice not in self.team:
+            p_select = input("Select your Pokemon")
+            if self.team[int(p_select) - 1] in self.team:
+                sacrifice = self.team[int(p_select) - 1]
+            else:
+                print("Invalid input")
         shot = 1
         player_list = [self, player_2]
         print(f"{sacrifice.name} will stand in for {self.name}")
@@ -118,8 +124,10 @@ def game_russian(self, player_2):
                         wild_poke.append(sacrifice)
                         self.team.remove(sacrifice)
                         print("=" * 100)
-                        print(f"Bang! {sacrifice.name} gave you everything and fell.")
+                        print(f"Bang! {sacrifice.name} fell giving you everything.")
                         input("Press enter to continue.")
+                        player_team_hp = team_health_check(self)
+                        opo_team_hp = team_health_check(player_2)
                         break
                 elif turn == player_2:
                     print(f"{player_2.name}'s turn. Click.")
@@ -135,12 +143,14 @@ def game_russian(self, player_2):
                         player_2.team.remove(player_2.team[0])
                         print(f"{player_2.team[0].name} steps up in its trainer's place.")
                         input("Press enter to continue")
+                        player_team_hp = team_health_check(self)
+                        opo_team_hp = team_health_check(player_2)
                         break
 
     if len(player_team_hp) > 0:
         print("You get to walk away.")
     else:
-        print("Game Over")
+        print("You made a lot of bad choices. Game Over.")
 
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
@@ -683,19 +693,27 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
 
 
 def start_rr_game(player, opo):
+    """
+    For starting the Russian roulette game.
+    :param player: Player
+    :param opo: Opponent NPC
+    :return:
+    """
     print("""You are about to initiate a game of Russian Roulette. There's no
 turning back if you decide to start until either you or your opponent are out
 of Pokemon. Are you sure you want to continue?""")
     print("1. Yes")
     print("2. No")
     while True:
-        y_n = int(input("Select your choice:"))
+        y_n = int(input("Select your choice: "))
         if y_n == 1:
             game_russian(Sam, Meeri)
-
-        else:
-            print("You left")
             break
+        elif y_n == 2:
+            print("You left the interaction.")
+            break
+        else:
+            print("Invalid input")
 
 
 
