@@ -1436,18 +1436,18 @@ Uber_Poke = [
 
 
 
-print(len(LC_Poke))
-print(len(OU_Poke))
-print(len(NU_Poke))
-print(len(Uber_Poke))
-print(57 + 80 + 96 + 77)
-
-for pokemon in LC_Poke:  # THIS CODE IS FOR TESTING GENERATED POKEMON ATTACKS ARE IN THE ATTACK DICT
-        if pokemon.atk_1 not in attack_dict:
-            print(str(pokemon.atk_1))
-        if pokemon.atk_2 not in attack_dict:
-            print(str(pokemon.atk_2))
-        if pokemon.atk_3 not in attack_dict:
-            print(str(pokemon.atk_3))
-        if pokemon.atk_4 not in attack_dict:
-            print(str(pokemon.atk_4))
+# print(len(LC_Poke))
+# print(len(OU_Poke))
+# print(len(NU_Poke))
+# print(len(Uber_Poke))
+# print(57 + 80 + 96 + 77)
+#
+# for pokemon in LC_Poke:  # THIS CODE IS FOR TESTING GENERATED POKEMON ATTACKS ARE IN THE ATTACK DICT
+#         if pokemon.atk_1 not in attack_dict:
+#             print(str(pokemon.atk_1))
+#         if pokemon.atk_2 not in attack_dict:
+#             print(str(pokemon.atk_2))
+#         if pokemon.atk_3 not in attack_dict:
+#             print(str(pokemon.atk_3))
+#         if pokemon.atk_4 not in attack_dict:
+#             print(str(pokemon.atk_4))

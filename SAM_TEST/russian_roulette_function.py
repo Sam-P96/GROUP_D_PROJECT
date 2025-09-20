@@ -1,9 +1,18 @@
 import random
 
-def rou_g(player):
-    print("hi")
-
-
+def start_rr_game(player, opo):
+    print("""You are about to initiate a game of Russian Roulette. There's no
+turning back if you decide to start until either you or your opponent are out
+of Pokemon. Are you sure you want to continue?""")
+    print("1. Yes")
+    print("2. No")
+    while True:
+        y_n = int(input("Select your choice:"))
+        if y_n == 1:
+            player.game_russian(opo)
+        else:
+            print("You left")
+            break
 
 class Player:
     def __init__(self, name):
@@ -62,5 +71,8 @@ class Player:
 player1 = Player("Meeri")
 player2 = Player("Sam")
 
-input("Press Enter to play Russian Roulette.")
-player1.game_russian(player2)
+start_rr_game(player1, player2)
+
+
+# input("Press Enter to play Russian Roulette.")
+# player1.game_russian(player2)

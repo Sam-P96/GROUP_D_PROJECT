@@ -14,22 +14,23 @@ wild_poke = []
 evil_poke = []
 
 
-class Player:
-    def __init__(self, name: str):
-        self.name = name
-        self.team = []
-        self.exclude = set()
-
-    def capture(self, pokemon):
-        self.team.append(pokemon)
+# class Player:
+#     def __init__(self, name: str):
+#         self.name = name
+#         self.team = []
+#         self.exclude = set()
 
 
-class Villain:
+
+class Human:
     def __init__(self, name: str, rank: str):
         self.name = name
         self.rank = rank
+        self.health = 100
         self.team = []
         self.exclude = set()
+        self.team_p = []
+        self.exclude_p = set()
         if rank == "intern":
             for team_no in range(1):
                 available_poke = []
@@ -80,9 +81,66 @@ class Villain:
                     self.team.append(poke)
                     self.exclude.add(poke)
                     evil_poke.append(poke)
-        else:
-            print("Hold up, check class Villain")
 
+
+    def capture(self, pokemon):
+        self.team.append(pokemon)
+
+
+
+def game_russian(self, player_2):
+    player_team_hp = team_health_check(self)
+    opo_team_hp = team_health_check(player_2)
+    print(f"{self.name} challenged {player_2.name} to Russian Roulette!")
+    while len(player_team_hp) > 0 and len(opo_team_hp) > 0:
+        player_team_hp = team_health_check(self)
+        opo_team_hp = team_health_check(player_2)
+        print("You must select a Pokemon to play for you.")
+        for index, pokemon in enumerate(self.team):
+            print(f"{index + 1}. {pokemon.name}")
+        sacrifice = self.team[int(input("Select your Pokemon: ")) - 1]
+        shot = 1
+        player_list = [self, player_2]
+        print(f"{sacrifice.name} will stand in for {self.name}")
+        while sacrifice in self.team and player_2.team[0] in player_2.team:
+            for turn in player_list:
+                print("*Spinning the barrel*")
+                bullet = random.randint(1, 6)
+                # print(f"Bullet is {bullet}") #remove later after testing
+                if turn == self:
+                    print(f"{self.name}'s turn. Click.")
+                    if shot != bullet:
+                        input("Press Enter to shoot")
+                        print("Nothing happened.")
+                        input("Press Enter to continue")
+                    else:
+                        input("Press Enter to shoot")
+                        wild_poke.append(sacrifice)
+                        self.team.remove(sacrifice)
+                        print("=" * 100)
+                        print(f"Bang! {sacrifice.name} gave you everything and fell.")
+                        input("Press enter to continue.")
+                        break
+                elif turn == player_2:
+                    print(f"{player_2.name}'s turn. Click.")
+                    if shot != bullet:
+                        input("Press Enter to shoot")
+                        print("Nothing happened.")
+                        input("Press Enter to continue")
+                    else:
+                        input("Press Enter to shoot")
+                        print("=" * 100)
+                        print(f"Bang! {player_2.team[0].name} fell abruptly.")
+                        wild_poke.append(player_2.team[0])
+                        player_2.team.remove(player_2.team[0])
+                        print(f"{player_2.team[0].name} steps up in its trainer's place.")
+                        input("Press enter to continue")
+                        break
+
+    if len(player_team_hp) > 0:
+        print("You get to walk away.")
+    else:
+        print("Game Over")
 
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
@@ -624,6 +682,20 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
 
 
 
+def start_rr_game(player, opo):
+    print("""You are about to initiate a game of Russian Roulette. There's no
+turning back if you decide to start until either you or your opponent are out
+of Pokemon. Are you sure you want to continue?""")
+    print("1. Yes")
+    print("2. No")
+    while True:
+        y_n = int(input("Select your choice:"))
+        if y_n == 1:
+            game_russian(Sam, Meeri)
+
+        else:
+            print("You left")
+            break
 
 
 
@@ -634,26 +706,26 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
 
 
 
-print(len(Uber_Poke))
-Ethan = Player("Ethan")
-Sam = Villain("Sam", "exec")
-Meeri = Villain("Meeri", "grunt")
-Saara = Villain("Saara", "grunt")
-Kari = Villain("Kari", "exec")
-Kari_2 = Villain("Kari", "exec")
-Kari_3 = Villain("Kari", "exec")
-Kari_4 = Villain("Kari", "exec")
-Kari_5 = Villain("Kari", "exec")
-Kari_6 = Villain("Kari", "exec")
-for i in range(3):
-    Ethan.team.append(OU_Poke)
-wild_pokemon_assigner(Ethan, evil_poke)
-print(len(Ethan.team))
-print(len(wild_poke))
-print(len(evil_poke))
 
 
 
+
+# print(len(Uber_Poke))
+Ethan = Human("Ethan", "player")
+Sam = Human("Sam", "grunt")
+Meeri = Human("Meeri", "grunt")
+Saara = Human("Saara", "grunt")
+Kari = Human("Kari", "exec")
+
+# for i in range(3):
+#     Ethan.team.append(OU_Poke)
+# wild_pokemon_assigner(Ethan, evil_poke)
+# print(len(Ethan.team))
+# print(len(wild_poke))
+# print(len(evil_poke))
+
+
+start_rr_game(Sam, Meeri)
 # from  villain_npc import Sam
 # from villain_npc import Meeri
 #
@@ -667,11 +739,11 @@ print(len(evil_poke))
 #     meeri_list.append(pokemon.name)
 # print(meeri_list)
 
-trainer_battle(Sam, Meeri)
-
-
+# trainer_battle(Sam, Meeri)
+#
+#
 # wild_encounter_battle(Sam.team[0]
-all_poke_heal(Sam)
-wild_encounter_battle(Sam.team[0], Sam, wild_poke)
+# all_poke_heal(Sam)
+# wild_encounter_battle(Sam.team[0], Sam, wild_poke)
 
 
