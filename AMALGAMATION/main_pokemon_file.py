@@ -14,14 +14,6 @@ wild_poke = []
 evil_poke = []
 
 
-# class Player:
-#     def __init__(self, name: str):
-#         self.name = name
-#         self.team = []
-#         self.exclude = set()
-
-
-
 class Human:
     def __init__(self, name: str, rank: str):
         self.name = name
@@ -101,6 +93,12 @@ def game_russian(self, player_2):
             print(f"{index + 1}. {pokemon.name}")
         while sacrifice not in self.team:
             p_select = input("Select your Pokemon")
+            try:
+                test_1 = int(p_select)
+            except ValueError:
+                print("Invalid input")
+                continue
+
             if self.team[int(p_select) - 1] in self.team:
                 sacrifice = self.team[int(p_select) - 1]
             else:
@@ -111,7 +109,7 @@ def game_russian(self, player_2):
         while sacrifice in self.team and player_2.team[0] in player_2.team:
             for turn in player_list:
                 print("*Spinning the barrel*")
-                bullet = random.randint(1, 6)
+                bullet = random.randint(1, 2)
                 # print(f"Bullet is {bullet}") #remove later after testing
                 if turn == self:
                     print(f"{self.name}'s turn. Click.")
@@ -141,11 +139,16 @@ def game_russian(self, player_2):
                         print(f"Bang! {player_2.team[0].name} fell abruptly.")
                         wild_poke.append(player_2.team[0])
                         player_2.team.remove(player_2.team[0])
-                        print(f"{player_2.team[0].name} steps up in its trainer's place.")
-                        input("Press enter to continue")
-                        player_team_hp = team_health_check(self)
-                        opo_team_hp = team_health_check(player_2)
-                        break
+                        try:
+                            print(f"{player_2.team[0].name} steps up in its trainer's place.")
+                        except:
+                            print(f"{player_2.name} is out of Pokemon.")
+                    input("Press enter to continue")
+                    print("=" * 100)
+                    player_team_hp = team_health_check(self)
+                    opo_team_hp = team_health_check(player_2)
+                    break
+            break
 
     if len(player_team_hp) > 0:
         print("You get to walk away.")
@@ -191,6 +194,12 @@ class Pokemon:
 
 
 def wild_pokemon_assigner(player, evil):
+    """
+    A function to move all the unused pokemon into the wild pool
+    :param player:
+    :param evil:
+    :return:
+    """
     for pokemon in LC_Poke:
         if pokemon not in evil and pokemon not in player.team:
             wild_poke.append(pokemon)
@@ -388,23 +397,33 @@ def into_team(player, opo, wild):
             for index_o, poke_o in enumerate(opo.team):
                 print(f"{index_o + 1}. {poke_o.name}")
             print(f"0. End")
-            user_input_opo = int(input("Select your choice: "))
+            user_input_opo = input("Select your choice: ")
+            try:
+                test_1 = int(user_input_opo)
+            except ValueError:
+                print("Invalid input")
+                continue
             if 0 < int(user_input_opo) <= len(opo.team):
                 print("Which Pokemon from your team would you like to release?")
                 for index_p, poke_p in enumerate(player.team):
                     print(f"{index_p + 1}. {poke_p.name}")
                 print(f"0. End")
-                user_input_player = int(input("Select your choice: "))
+                user_input_player = input("Select your choice: ")
+                try:
+                    test_01 = int(user_input_player)
+                except ValueError:
+                    print("Invalid input")
+                    continue
                 if 0 < int(user_input_player) <= len(player.team):
                     player.team[int(user_input_player) - 1] = opo.team[int(user_input_opo) - 1]
                     opo.team.remove(opo.team[int(user_input_opo) - 1])
                     wild_poke.append(player.team[int(user_input_player) - 1])
-                elif user_input_player == 0:
+                elif int(user_input_player) == 0:
                     print("Stealing ended")
                     break
                 else:
                     print("Invalid input")
-            elif user_input_opo == 0:
+            elif int(user_input_opo) == 0:
                 print("Stealing ended")
                 break
             else:
@@ -415,13 +434,18 @@ def into_team(player, opo, wild):
             for index_p, poke_p in enumerate(player.team):
                 print(f"{index_p + 1}. {poke_p.name}")
             print(f"0. End")
-            user_input_player = int(input("Select your choice: "))
+            user_input_player = input("Select your choice: ")
+            try:
+                test_01 = int(user_input_player)
+            except ValueError:
+                print("Invalid input")
+                continue
             if 0 < int(user_input_player) <= len(player.team):
                 player.team[int(user_input_player) - 1] = wild
                 wild_poke.remove(wild)
                 wild_poke.append(player.team[int(user_input_player) - 1])
                 break
-            elif user_input_player == 0:
+            elif int(user_input_player) == 0:
                 print("Capture ended")
                 break
             else:
@@ -705,7 +729,12 @@ of Pokemon. Are you sure you want to continue?""")
     print("1. Yes")
     print("2. No")
     while True:
-        y_n = int(input("Select your choice: "))
+        choice = input("Select your choice: ")
+        try:
+            y_n = int(choice)
+        except ValueError:
+            print("Invalid input.")
+            continue
         if y_n == 1:
             game_russian(Sam, Meeri)
             break
@@ -730,8 +759,8 @@ of Pokemon. Are you sure you want to continue?""")
 
 # print(len(Uber_Poke))
 Ethan = Human("Ethan", "player")
-Sam = Human("Sam", "grunt")
-Meeri = Human("Meeri", "grunt")
+Sam = Human("Sam", "exec")
+Meeri = Human("Meeri", "intern")
 Saara = Human("Saara", "grunt")
 Kari = Human("Kari", "exec")
 
