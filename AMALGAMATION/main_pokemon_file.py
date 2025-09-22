@@ -79,6 +79,44 @@ class Human:
         self.team.append(pokemon)
 
 
+class Pokemon:
+    def __init__(self, name, evo, type_1, type_2, hp, att,
+                 deff, spd, a1, a2, a3, a4):
+        self.name = name
+        self.evo = evo
+        self.type_1 = type_1
+        self.type_2 = type_2
+        self.hp_1 = hp
+        self.atk_stat = att
+        self.deff = deff
+        self.spd = spd
+        self.lvl = 1
+        self.health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
+        self.max_health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
+        self.atk_1 = a1
+        self.atk_2 = a2
+        self.atk_3 = a3
+        self.atk_4 = a4
+        self.att_key = [a1, a2, a3, a4]
+
+
+
+    def attack(self, player_2, key):
+        dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
+        dmg_out = round(((1 + ((self.lvl - 1) /10)) * (dmg_pre * 0.5) + (dmg_pre * (0.5 * (player_2.deff/300)))) * float(type_bonus(key, player_2)))
+        player_2.health -= dmg_out
+        # print(dmg_pre)
+        # print(dmg_out)
+        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
+        if float(type_bonus(key, player_2)) > 1.5:
+            print("Its super effective!")
+        elif float(type_bonus(key, player_2)) == 0:
+            print(f"{player_2.name} is immune to {key}")
+        elif float(type_bonus(key, player_2)) < 1:
+            print("Its not very effective!")
+        # + str(player_2.health) + " " + str(dmg_out))
+
+
 
 def game_russian(self, player_2):
     player_team_hp = team_health_check(self)
@@ -155,42 +193,6 @@ def game_russian(self, player_2):
     else:
         print("You made a lot of bad choices. Game Over.")
 
-class Pokemon:
-    def __init__(self, name, evo, type_1, type_2, hp, att,
-                 deff, spd, a1, a2, a3, a4):
-        self.name = name
-        self.evo = evo
-        self.type_1 = type_1
-        self.type_2 = type_2
-        self.hp_1 = hp
-        self.atk_stat = att
-        self.deff = deff
-        self.spd = spd
-        self.lvl = 1
-        self.health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
-        self.max_health = round((1 + ((self.lvl - 1) /10)) *150 * (hp/100))
-        self.atk_1 = a1
-        self.atk_2 = a2
-        self.atk_3 = a3
-        self.atk_4 = a4
-        self.att_key = [a1, a2, a3, a4]
-
-
-
-    def attack(self, player_2, key):
-        dmg_pre = round(self.atk_stat * attack_dict[key][1] / random.randint(200, 300))
-        dmg_out = round(((1 + ((self.lvl - 1) /10)) * (dmg_pre * 0.5) + (dmg_pre * (0.5 * (player_2.deff/300)))) * float(type_bonus(key, player_2)))
-        player_2.health -= dmg_out
-        # print(dmg_pre)
-        # print(dmg_out)
-        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
-        if float(type_bonus(key, player_2)) > 1.5:
-            print("Its super effective!")
-        elif float(type_bonus(key, player_2)) == 0:
-            print(f"{player_2.name} is immune to {key}")
-        elif float(type_bonus(key, player_2)) < 1:
-            print("Its not very effective!")
-        # + str(player_2.health) + " " + str(dmg_out))
 
 
 def wild_pokemon_assigner(player, evil):
@@ -772,19 +774,23 @@ Kari = Human("Kari", "exec")
 # print(len(evil_poke))
 
 
-start_rr_game(Sam, Meeri)
+
 # from  villain_npc import Sam
 # from villain_npc import Meeri
 #
-# sam_list = []
-# for pokemon in Sam.team:
-#     sam_list.append(pokemon.name)
-# print(sam_list)
+sam_list = []
+for pokemon in Sam.team:
+    sam_list.append(pokemon.name)
+print(sam_list)
 #
 # meeri_list = []
 # for pokemon in Meeri.team:
 #     meeri_list.append(pokemon.name)
 # print(meeri_list)
+
+
+
+# start_rr_game(Sam, Meeri)
 
 # trainer_battle(Sam, Meeri)
 #
@@ -793,4 +799,7 @@ start_rr_game(Sam, Meeri)
 # all_poke_heal(Sam)
 # wild_encounter_battle(Sam.team[0], Sam, wild_poke)
 
-
+sam_list = []
+for pokemon in Sam.team:
+    sam_list.append(pokemon.name)
+print(sam_list)
