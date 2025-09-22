@@ -109,13 +109,13 @@ class Pokemon:
         player_2.health -= dmg_out
         # print(dmg_pre)
         # print(dmg_out)
-        d_print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
+        d_print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}\n]")
         if float(type_bonus(key, player_2)) > 1.5:
-            d_print("Its super effective!")
+            d_print("Its super effective!\n")
         elif float(type_bonus(key, player_2)) == 0:
-            d_print(f"{player_2.name} is immune to {key}")
+            d_print(f"{player_2.name} is immune to {key}\n")
         elif float(type_bonus(key, player_2)) < 1:
-            d_print("Its not very effective!")
+            d_print("Its not very effective!\n")
         # + str(player_2.health) + " " + str(dmg_out))
 
 
@@ -408,7 +408,7 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
         if new_mon is None:
             print("No other healthy Pokemon!!")
         else:
-            d_print(f"{your_mon.name} come back! Go, {new_mon.name}!")
+            d_print(f"{your_mon.name} come back! Go, {new_mon.name}\n!")
             return "switch", new_mon
     # your_att = "Flamethrower"
     if your_att in your_mon.att_key:
@@ -416,7 +416,7 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
         input("Press Enter to continue")
         return "no switch"
     elif your_att != "SWAP" and your_att not in your_mon.att_key:
-        d_print(f"You fumbled your command, {your_mon.name} froze in confusion!")
+        d_print(f"You fumbled your command, {your_mon.name} froze in confusion!\n")
         input("Press Enter to continue")
         return "no switch"
     else:
@@ -437,7 +437,7 @@ def into_team(player, opo, wild):
     """
     if wild == None:
         while True:
-            print("Which Pokemon would you like to add to your team?")
+            d_print("Which Pokemon would you like to add to your team?")
             for index_o, poke_o in enumerate(opo.team):
                 print(f"{index_o + 1}. {poke_o.name}")
             print(f"0. End")
@@ -448,7 +448,7 @@ def into_team(player, opo, wild):
                 print("Invalid input")
                 continue
             if 0 < int(user_input_opo) <= len(opo.team):
-                print("Which Pokemon from your team would you like to release?")
+                d_print("Which Pokemon from your team would you like to release?")
                 for index_p, poke_p in enumerate(player.team):
                     print(f"{index_p + 1}. {poke_p.name}")
                 print(f"0. End")
@@ -463,18 +463,18 @@ def into_team(player, opo, wild):
                     opo.team.remove(opo.team[int(user_input_opo) - 1])
                     wild_poke.append(player.team[int(user_input_player) - 1])
                 elif int(user_input_player) == 0:
-                    print("Stealing ended")
+                    d_print("Stealing ended")
                     break
                 else:
                     print("Invalid input")
             elif int(user_input_opo) == 0:
-                print("Stealing ended")
+                d_print("Stealing ended")
                 break
             else:
                 print("Invalid input")
     elif opo == None:
         while True:
-            print("Which Pokemon from your team would you like to release?")
+            d_print("Which Pokemon from your team would you like to release?")
             for index_p, poke_p in enumerate(player.team):
                 print(f"{index_p + 1}. {poke_p.name}")
             print(f"0. End")
@@ -511,7 +511,7 @@ def wild_capture(wild, player):
             player.team.append(wild)
             break
         else:
-            print("""You cannot have more than 6 Pokemon, and you do not have 
+            d_print("""You cannot have more than 6 Pokemon, and you do not have 
 legal access to a PC to store excess Pokemon.""")
             print("Would you like to capture this Pokemon?")
             print("1. Yes")
@@ -539,7 +539,7 @@ def battle_steal(player, opo):
     """
     first_time = 1
     while first_time >= 1 and len(player.team) >= 6:
-        print("""You won! In the Sacred Book of Criminal Law Section 4.213, rules all 
+        d_print("""You won! In the Sacred Book of Criminal Law Section 4.213, rules all 
 hardened criminals abide by, you may take their Pokemon. Since you 
 are an outlaw you do not have access to a PC. So if you have more than 
 6 Pokemon, you must choose one Pokemon to release when adding one 
@@ -592,12 +592,12 @@ def pokemon_battle_4trainer(your_mon, opo_mon, you, opo):
                 if battle_input[0] == "switch":
                     your_mon = battle_input[1]
             if opo_mon.health > 0:
-                print("Opponent's turn!")
+                d_print("Opponent's turn!\n")
                 opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
         else:
             if opo_mon.health > 0:
-                d_print("Your opponent is fast!")
+                d_print("Your opponent is fast!\n")
                 opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
             if your_mon.health > 0:
@@ -611,20 +611,21 @@ def pokemon_battle_4trainer(your_mon, opo_mon, you, opo):
                   f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
             print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
             print(f"HP:{"0":<38}HP:{opo_hp_str}")
-            print(f"Your {your_mon.name} fainted!")
+            d_print(f"Your {your_mon.name} is knocked out!\n")
             replacement = choose_switch_from_team(you.team, exclude=your_mon,
             prompt = "Who will you send out next?! ")
             if replacement is None:
-                print("You have no Pokemon left..")
-                print("That's okay, you can get em next time!")
+                d_print("You have no Pokemon left..\n")
+                d_print("That's okay, you can get em next time!\n")
                 break
-            print(f"Go, {replacement.name}!")
+            d_print(f"Go, {replacement.name}!\n")
             your_mon = replacement
         elif your_mon.health > 0 and opo_mon.health <= 0:
             healthy_opo_team = team_health_check(opo)
             your_healthy_team = team_health_check(you)
+            d_print(f"{opo_mon.name} is knocked out!\n")
             if len(healthy_opo_team) > 0:
-                print(f"Opponent sends out {healthy_opo_team[0].name}!")
+                d_print(f"Opponent sends out {healthy_opo_team[0].name}!\n")
                 opo_mon = healthy_opo_team[0]
                 input("Press Enter to continue")
             # print("=" * 100)
@@ -696,12 +697,12 @@ def pokemon_battle_4wild(your_mon, wild_mon, you):
                 if battle_input[0] == "switch":
                     your_mon = battle_input[1]
             if opo_mon.health > 0:
-                print("Opponent's turn!")
+                d_print("Opponent's turn!")
                 opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
         else:
             if opo_mon.health > 0:
-                print("Your opponent is fast!")
+                d_print("Your opponent is fast!")
                 opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
             if your_mon.health > 0:
@@ -715,12 +716,12 @@ def pokemon_battle_4wild(your_mon, wild_mon, you):
                   f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
             print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
             print(f"HP:{"0":<38}HP:{opo_hp_str}")
-            print(f"Your {your_mon.name} fainted!")
+            print(f"Your {your_mon.name} is knocked out!")
             replacement = choose_switch_from_team(you.team, exclude=your_mon,
             prompt = "Who will you send out next?! ")
             if replacement is None:
-                print("You have no Pokemon left..")
-                print("That's okay, you can get em next time!")
+                d_print("You have no Pokemon left..")
+                d_print("That's okay, you can get em next time!")
                 break
             print(f"Go, {replacement.name}!")
             your_mon = replacement
@@ -731,7 +732,7 @@ def pokemon_battle_4wild(your_mon, wild_mon, you):
                   f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
             print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
             print(f"HP:{your_hp_str:<38}HP:0/{opo_mon.max_health}")
-            print("The opposing Pokémon is knocked out!")
+            d_print("The opposing Pokémon is knocked out!")
             print("You won!")
 
 
@@ -747,7 +748,7 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
     :return:
     """
     wild_mon = random.choice(wild_pokemon_list)
-    print(f"A wild {wild_mon.name} appeared!!")
+    d_print(f"A wild {wild_mon.name} appeared!!\n")
     pokemon_battle_4wild(your_mon, wild_mon, you)
     your_healthy_team = team_health_check(you)
     if len(your_healthy_team) <= 0:
@@ -810,7 +811,7 @@ Kari = Human("Kari", "exec")
 
 # for i in range(3):
 #     Ethan.team.append(OU_Poke)
-# wild_pokemon_assigner(Ethan, evil_poke)
+wild_pokemon_assigner(Ethan, evil_poke)
 # print(len(Ethan.team))
 # print(len(wild_poke))
 # print(len(evil_poke))
@@ -837,7 +838,7 @@ print(sam_list)
 trainer_battle(Sam, Meeri)
 #
 #
-# wild_encounter_battle(Sam.team[0]
+
 # all_poke_heal(Sam)
 # wild_encounter_battle(Sam.team[0], Sam, wild_poke)
 

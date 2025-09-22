@@ -1,4 +1,6 @@
 import random
+import sys
+import time
 from attack_dict import attack_dict
 from type_chart_factor import type_bonus_dict
 
@@ -17,6 +19,16 @@ def type_bonus(key: str, defender) -> int:
         return bonus_1
     else:
         return 1
+
+
+
+def d_print(s): # CHANGE time.sleep to 0 when testing code.
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(0.05)
+
+
 
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
@@ -46,13 +58,13 @@ class Pokemon:
         player_2.health -= dmg_out
         # print(dmg_pre)
         # print(dmg_out)
-        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
+        d_print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]\n")
         if float(type_bonus(key, player_2)) > 1.5:
-            print("Its super effective!")
+            d_print("Its super effective!\n")
         elif float(type_bonus(key, player_2)) == 0:
-            print(f"{player_2.name} is immune to {key}")
+            d_print(f"{player_2.name} is immune to {key}\n")
         elif float(type_bonus(key, player_2)) < 1:
-            print("Its not very effective!")
+            d_print("Its not very effective!\n")
         # + str(player_2.health) + " " + str(dmg_out))
 
 
