@@ -1,6 +1,6 @@
 def helper(context):
     user_input = input("Enter your choice: ")
-    if user_input == "/HELP":
+    if user_input.casefold == "/help":
         if context == "rr_game":
             print("You're on your own now. You signed up for this.")
             user_input_2 = input("Select your choice: ")

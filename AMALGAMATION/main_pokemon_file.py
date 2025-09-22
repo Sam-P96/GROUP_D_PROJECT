@@ -1,4 +1,6 @@
 import random
+import sys
+import time
 from type_chart_factor import type_bonus_dict
 from attack_dict import attack_dict
 from all_pokemon_list import Arceus
@@ -107,14 +109,54 @@ class Pokemon:
         player_2.health -= dmg_out
         # print(dmg_pre)
         # print(dmg_out)
-        print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
+        d_print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]")
         if float(type_bonus(key, player_2)) > 1.5:
-            print("Its super effective!")
+            d_print("Its super effective!")
         elif float(type_bonus(key, player_2)) == 0:
-            print(f"{player_2.name} is immune to {key}")
+            d_print(f"{player_2.name} is immune to {key}")
         elif float(type_bonus(key, player_2)) < 1:
-            print("Its not very effective!")
+            d_print("Its not very effective!")
         # + str(player_2.health) + " " + str(dmg_out))
+
+
+def d_print(s): # CHANGE time.sleep to 0 when testing code.
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(0.05)
+
+
+
+def helper(context):
+    if context == "rr_game":
+        user_input = input("Press enter to continue")
+        if user_input == "/HELP":
+            print("You're on your own now. You signed up for this.")
+            user_input_2 = input("Press enter to continue")
+            return user_input_2
+        return user_input
+    elif context == "trainer_battle":
+        user_input = input("Enter your attack: ")
+        if user_input == "/HELP":
+            print("In a Pokemon Battle, you command your Pokemon by writing their attacks correctly.")
+            print("Remember that attack commands are case sensitive. So pay attention to capital letters.")
+            print("Swap out your Pokemon during battle by entering 'SWAP' then select the Pokemon you with to swap out")
+            print("Once you defeated the opponent, you can choose to add that Pokemon to your Team.")
+            print("Remember, you are a criminal on the run, and will not be able to have more than 6 Pokemon.")
+            print("That means, you wont store excess Pokemon in a PC, your only option is to release them.")
+            user_input_2 = input("Select your attack: ")
+            return user_input_2
+        return user_input
+    elif context == "Poker": ### I dont know what to do here yet
+        user_input = input("Enter your choice: ")
+        if user_input == "/HELP":
+            print("Play Poker, bet your Pokemon on the line. Remember.")
+            user_input_2 = input("Select your choice: ")
+            return user_input_2
+        return user_input
+    else:
+        user_input_2 = input("Select your choice: ")
+        return user_input_2
 
 
 
@@ -360,13 +402,13 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
     :param opo: The opponent
     :return:
     """
-    your_att = input("Select your attack: ")
+    your_att = helper("trainer_battle")
     if your_att == "SWAP":
         new_mon = swap_out(your_mon, you)
         if new_mon is None:
             print("No other healthy Pokemon!!")
         else:
-            print(f"{your_mon.name} come back! Go, {new_mon.name}!")
+            d_print(f"{your_mon.name} come back! Go, {new_mon.name}!")
             return "switch", new_mon
     # your_att = "Flamethrower"
     if your_att in your_mon.att_key:
@@ -374,7 +416,7 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
         input("Press Enter to continue")
         return "no switch"
     elif your_att != "SWAP" and your_att not in your_mon.att_key:
-        print(f"You fumbled your command, {your_mon.name} froze in confusion!")
+        d_print(f"You fumbled your command, {your_mon.name} froze in confusion!")
         input("Press Enter to continue")
         return "no switch"
     else:
@@ -555,7 +597,7 @@ def pokemon_battle_4trainer(your_mon, opo_mon, you, opo):
                 input("Press Enter to continue")
         else:
             if opo_mon.health > 0:
-                print("Your opponent is fast!")
+                d_print("Your opponent is fast!")
                 opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
             if your_mon.health > 0:
@@ -762,7 +804,7 @@ of Pokemon. Are you sure you want to continue?""")
 # print(len(Uber_Poke))
 Ethan = Human("Ethan", "player")
 Sam = Human("Sam", "exec")
-Meeri = Human("Meeri", "intern")
+Meeri = Human("Meeri", "manager")
 Saara = Human("Saara", "grunt")
 Kari = Human("Kari", "exec")
 
@@ -792,7 +834,7 @@ print(sam_list)
 
 # start_rr_game(Sam, Meeri)
 
-# trainer_battle(Sam, Meeri)
+trainer_battle(Sam, Meeri)
 #
 #
 # wild_encounter_battle(Sam.team[0]
