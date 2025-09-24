@@ -1224,7 +1224,14 @@ def into_team2(player, opo, wild):
         for index_o, poke_o in enumerate(opo.team):
             print(f"{index_o + 1}. {poke_o.name}")
         # print(f"0. End")
-        user_input_opo = input("Select your choice: ")
+        while True:
+            user_input_opo = input("Select your choice: ")
+            try:
+                gaga = int(user_input_opo)
+                break
+            except ValueError:
+                print("Invalid input")
+                continue
 
         if user_input_opo.isdigit(): ##.isdigit is used to check if user_input_opo is a number or not (don't care about Error value)
             user_input_opo = int(user_input_opo)
