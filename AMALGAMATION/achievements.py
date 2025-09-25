@@ -7,8 +7,3 @@ achv_dict = {
 "defeat god": ["One Above All", 1],
 "free god": ["Father's Blessing", 1],
 }
-
-
-
-
-

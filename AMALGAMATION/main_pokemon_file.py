@@ -8,13 +8,22 @@ from all_pokemon_list import LC_Poke
 from all_pokemon_list import NU_Poke
 from all_pokemon_list import OU_Poke
 from all_pokemon_list import Uber_Poke
+from achievements import achv_dict
+from dialogues import villain_intro
+from dialogues import wdyw_line
+from dialogues import battle_intro_line
+from dialogues import poker_intro_line
+from dialogues import roulette_intro_line
+from dialogues import invalid_selection_line
+from dialogues import leave_chat_line
 
 # Include these at the top of the program
 
+villain_list = []
 arceus_list = [Arceus]
 wild_poke = []
 evil_poke = []
-
+player_achv = []
 
 class Human:
     def __init__(self, name: str, rank: str):
@@ -120,6 +129,31 @@ class Pokemon:
         elif float(type_bonus(key, player_2)) < 1:
             d_print("Its not very effective!\n")
         # + str(player_2.health) + " " + str(dmg_out))
+
+
+
+def achievement_check():
+    if achv_dict["co2"][1] <= 0:
+        achv_dict["co2"][1] = 9999999999999999999999999999999999999999999
+        player_achv.append(achv_dict["co2"][0])
+    if achv_dict["rr"][1] <= 0:
+        achv_dict["rr"][1] = 99999999999999999999999999999999999999999999
+        player_achv.append(achv_dict["rr"][0])
+    if achv_dict["poker"][1] <= 0:
+        achv_dict["poker"][1] = 99999999999999999999999999999999999999999999
+        player_achv.append(achv_dict["poker"][0])
+    if achv_dict["continent"][1] <= 0:
+        achv_dict["continent"][1] = 99999999999999999999999999999999999999999999
+        player_achv.append(achv_dict["continent"][0])
+    if achv_dict["polar"][1] <= 0:
+        achv_dict["polar"][1] = 99999999999999999999999999999999999999999999
+        player_achv.append(achv_dict["polar"][0])
+    if achv_dict["defeat god"][1] <= 0:
+        achv_dict["defeat god"][1] = 99999999999999999999999999999999999999999999
+        player_achv.append(achv_dict["defeat god"][0])
+    if achv_dict["free god"][1] <= 0:
+        achv_dict["free god"][1] = 99999999999999999999999999999999999999999999
+        player_achv.append(achv_dict["free god"][0])
 
 
 
@@ -413,7 +447,7 @@ def your_battle_turn(your_mon, opo_mon, you, opo):
         if new_mon is None:
             print("No other healthy Pokemon!!")
         else:
-            d_print(f"{your_mon.name} come back! Go, {new_mon.name}\n!")
+            d_print(f"{your_mon.name} come back! Go, {new_mon.name}!\n")
             return "switch", new_mon
     # your_att = "Flamethrower"
     if your_att in your_mon.att_key:
@@ -1273,16 +1307,11 @@ def lose_poke(player,opo):
         opo.team.append(take)
         wild_poke.append(take)
 
-villain_intro = ["ahahahaha!", "hohohoho", "pervert"]
-battle_intro_line = ["Come get some!", "Please don't hurt me..", "Yo mama fat!"]
-poker_intro_line = ["Ooh, gambling, I love gambling!", "My mom told me this is inappropriate.", "Howdy, partner."]
-roulette_intro_line = ["You sick son of a Mismagius", "This aint gonna end well.", "Sick bug.. catcher.."]
-invalid_selection_line = ["What are you even talking about?!", "Come on, pick something or get lost.", "Were you dropped as a baby?"]
-leave_chat_line = ["Well, thanks for nothing..", "So long, sucker!", "Good, you smell bad.", "Are you a criminal, or a coward?!"]
+
 
 def villain_interaction(player, villain):
-    print(f"{villain.name}: {random.choice(villain_intro)}")
-    print(f"{villain.name}: What do you want?!\n")
+    d_print(f"{villain.name}: {random.choice(villain_intro)}\n")
+    d_print(f"{villain.name}: {random.choice(wdyw_line)}\n")
     print("""1. Battle
 2. Play Poker
 3. Play Russian Roulette
@@ -1299,14 +1328,22 @@ def villain_interaction(player, villain):
         if user_input == "1": # Battle
             d_print(random.choice(battle_intro_line) + "\n")
             trainer_battle(player, villain)
+            if len(villain.team) <= 0:
+                d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
             break
         elif user_input == "2": # Poker
             d_print(random.choice(poker_intro_line) + "\n")
             poker(player, villain)
+            if len(villain.team) <= 0:
+                d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
+                achv_dict("poker")[1] -= 1
             break
         elif user_input == "3": # Roulette
             d_print(random.choice(roulette_intro_line) + "\n")
             start_rr_game(player, villain)
+            if len(villain.team) <= 0:
+                d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
+                achv_dict("rr")[1] -= 1
             break
         elif user_input == "0":
             d_print(random.choice(leave_chat_line) + "\n")
@@ -1315,21 +1352,22 @@ def villain_interaction(player, villain):
             print(random.choice(invalid_selection_line))
 
 
+
 def villain_gen():
-    villain_1 = Human("Lady Gaga", "manager")
-    villain_2 = Human("Zandaya", "manager")
-    villain_3 = Human("Beyonce", "manager")
+    villain_1 = Human("Lady Gaga", "intern")
+    villain_2 = Human("Zandaya", "grunt")
+    villain_3 = Human("Beyonce", "grunt")
     villain_4 = Human("P Diddy", "manager")
-    villain_5 = Human("Taylor Swift", "exec")
+    villain_5 = Human("Taylor Swift", "manager")
     villain_6 = Human("Elon Musk", "exec")
     villain_7 = Human("Sydney Sweeney", "exec")
     villain_8 = Human("Ed Sheeran", "exec")
     villain_human_list = [villain_1, villain_2, villain_3, villain_4, villain_5, villain_6, villain_7, villain_8]
-
     return villain_list
 
 
-villain_list = villain_gen()
+
+
 
 
 
