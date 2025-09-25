@@ -1366,7 +1366,7 @@ def villain_gen():
     return villain_list
 
 
-
+villain_list = villain_gen()
 
 
 
