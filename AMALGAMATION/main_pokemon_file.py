@@ -468,11 +468,19 @@ def into_team(player, opo, wild):
                     player.team[int(user_input_player) - 1] = opo.team[int(user_input_opo) - 1]
                     opo.team.remove(opo.team[int(user_input_opo) - 1])
                 elif int(user_input_player) == 0:
+                    if len(opo.team) > 0:
+                        for index, poke in enumerate(opo.team):
+                            wild_poke.append(opo.team[index])
+                            opo.team.remove(opo.team[index])
                     d_print("Stealing ended\n")
                     break
                 else:
                     print("Invalid input")
             elif int(user_input_opo) == 0:
+                if len(opo.team) > 0:
+                    for index, poke in enumerate(opo.team):
+                        wild_poke.append(opo.team[index])
+                        opo.team.remove(opo.team[index])
                 d_print("Stealing ended\n")
                 break
             else:
@@ -1251,6 +1259,9 @@ def into_team2(player, opo, wild):
                     wild_poke.append(player.team[user_input_player - 1])
                     player.team[user_input_player - 1] = opo.team[user_input_opo - 1]
                     opo.team.remove(opo.team[user_input_opo - 1])
+                    for index, poke in enumerate(opo.team):
+                        wild_poke.append(opo.team[index])
+                        opo.team.remove(opo.team[index])
 
 
 
@@ -1262,20 +1273,63 @@ def lose_poke(player,opo):
         opo.team.append(take)
         wild_poke.append(take)
 
-
+villain_intro = ["ahahahaha!", "hohohoho", "pervert"]
+battle_intro_line = ["Come get some!", "Please don't hurt me..", "Yo mama fat!"]
+poker_intro_line = ["Ooh, gambling, I love gambling!", "My mom told me this is inappropriate.", "Howdy, partner."]
+roulette_intro_line = ["You sick son of a Mismagius", "This aint gonna end well.", "Sick bug.. catcher.."]
+invalid_selection_line = ["What are you even talking about?!", "Come on, pick something or get lost.", "Were you dropped as a baby?"]
+leave_chat_line = ["Well, thanks for nothing..", "So long, sucker!", "Good, you smell bad.", "Are you a criminal, or a coward?!"]
 
 def villain_interaction(player, villain):
-    print(random.choice(villain_intro))
-    print("What do you want?!")
+    print(f"{villain.name}: {random.choice(villain_intro)}")
+    print(f"{villain.name}: What do you want?!\n")
     print("""1. Battle
-    2. Play Poker
-    3. Play Russian Roulette
-    0. Exit""")
-    user_input = input("Select your choice: ")
+2. Play Poker
+3. Play Russian Roulette
+0. Exit""")
+    while True:
+        while True:
+            user_input = input("Select your choice: ")
+            try:
+                input_check = int(user_input)
+                break
+            except ValueError:
+                print("Invalid input")
+                continue
+        if user_input == "1": # Battle
+            d_print(random.choice(battle_intro_line) + "\n")
+            trainer_battle(player, villain)
+            break
+        elif user_input == "2": # Poker
+            d_print(random.choice(poker_intro_line) + "\n")
+            poker(player, villain)
+            break
+        elif user_input == "3": # Roulette
+            d_print(random.choice(roulette_intro_line) + "\n")
+            start_rr_game(player, villain)
+            break
+        elif user_input == "0":
+            d_print(random.choice(leave_chat_line) + "\n")
+            break
+        else:
+            print(random.choice(invalid_selection_line))
 
 
+def villain_gen():
+    villain_1 = Human("Lady Gaga", "manager")
+    villain_2 = Human("Zandaya", "manager")
+    villain_3 = Human("Beyonce", "manager")
+    villain_4 = Human("P Diddy", "manager")
+    villain_5 = Human("Taylor Swift", "exec")
+    villain_6 = Human("Elon Musk", "exec")
+    villain_7 = Human("Sydney Sweeney", "exec")
+    villain_8 = Human("Ed Sheeran", "exec")
+    villain_human_list = [villain_1, villain_2, villain_3, villain_4, villain_5, villain_6, villain_7, villain_8]
+
+    return villain_list
 
 
+villain_list = villain_gen()
 
 
 
@@ -1290,12 +1344,12 @@ Kari = Human("Kari", "exec")
 
 # for i in range(3):
 #     Ethan.team.append(OU_Poke)
-wild_pokemon_assigner(Ethan, evil_poke)
+# wild_pokemon_assigner(Ethan, evil_poke)
 # print(len(Ethan.team))
 # print(len(wild_poke))
 # print(len(evil_poke))
 
-
+villain_interaction(Sam, Meeri)
 
 
 # from  villain_npc import Sam
