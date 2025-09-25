@@ -1,4 +1,6 @@
-def second_menu(input_sec):
+from main_pokemon_file import Sam
+
+def second_menu(input_sec, player):
     choice = str(input_sec).strip().casefold()
 
     if choice == "a" or choice.casefold() == "menu":
@@ -17,7 +19,11 @@ def second_menu(input_sec):
         return None
     elif choice == "c" or choice.casefold() == "stats":
         print("=" * 120)
-        print("PLACE HOLDER MENU FOR STATS")
+        print("Pokemon List:")
+        for index, pokemon in enumerate(player.team):
+            print(f"{index + 1}. {pokemon.name} "
+                  f"[{pokemon.health}/{pokemon.max_health}"
+                  f"")
         input("Press Enter to continue")
         print("=" * 120)
         return None
@@ -41,7 +47,8 @@ def second_menu(input_sec):
         return None
 
 
-def travel_menu(input_travel):
+
+def travel_menu(input_travel, player):
     choice = int(input_travel)
     if choice == 1:
         print("=" * 120)
@@ -93,23 +100,17 @@ def main_menu(player):
         print("-" * 120)
         print("A. Open Menu")
         print("B. Open Bag")
-        print("C. Player & Pokemon Stats")
+        print("C. Pokemon Stats")
         print("D. Open Achievements")
         main_input = input("Enter choice: ")
         if main_input.isdigit():
-            travel_menu(main_input)
+            travel_menu(main_input, player)
         else:
-            if second_menu((main_input)) == "exit":
+            if second_menu(main_input, player) == "exit":
                 print("-Session Ended-")
                 break
 
 
-
-class Player:
-    def __init__(self, name):
-        self.health = 300
-        self.fuel = 100
-        self.location = ["60.3179° N", "24.9496° E"]
 
 
 
@@ -121,6 +122,5 @@ airport_range_list = ["Thailand, Suvarnabhumi International Airport [Longitude, 
 
 distress_list = []
 
-Sam = Player("Sam")
 
 main_menu(Sam)

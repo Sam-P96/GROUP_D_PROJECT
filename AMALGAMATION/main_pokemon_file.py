@@ -20,7 +20,10 @@ class Human:
     def __init__(self, name: str, rank: str):
         self.name = name
         self.rank = rank
-        self.health = 100
+        self.health = 300
+        self.max_health = 300
+        self.fuel = 100
+        self.location = ["60.3179° N", "24.9496° E"]
         self.team = []
         self.exclude = set()
         self.team_p = []
@@ -109,7 +112,7 @@ class Pokemon:
         player_2.health -= dmg_out
         # print(dmg_pre)
         # print(dmg_out)
-        d_print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}\n]")
+        d_print(f"{self.name} used {key} on {player_2.name}! [{dmg_out}]\n")
         if float(type_bonus(key, player_2)) > 1.5:
             d_print("Its super effective!\n")
         elif float(type_bonus(key, player_2)) == 0:
@@ -119,11 +122,13 @@ class Pokemon:
         # + str(player_2.health) + " " + str(dmg_out))
 
 
+
 def d_print(s): # CHANGE time.sleep to 0 when testing code.
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
         time.sleep(0.05)
+    # print(s)
 
 
 
@@ -437,7 +442,7 @@ def into_team(player, opo, wild):
     """
     if wild == None:
         while True:
-            d_print("Which Pokemon would you like to add to your team?")
+            d_print("Which Pokemon would you like to add to your team?\n")
             for index_o, poke_o in enumerate(opo.team):
                 print(f"{index_o + 1}. {poke_o.name}")
             print(f"0. End")
@@ -448,7 +453,7 @@ def into_team(player, opo, wild):
                 print("Invalid input")
                 continue
             if 0 < int(user_input_opo) <= len(opo.team):
-                d_print("Which Pokemon from your team would you like to release?")
+                d_print("Which Pokemon from your team would you like to release?\n")
                 for index_p, poke_p in enumerate(player.team):
                     print(f"{index_p + 1}. {poke_p.name}")
                 print(f"0. End")
@@ -463,18 +468,18 @@ def into_team(player, opo, wild):
                     player.team[int(user_input_player) - 1] = opo.team[int(user_input_opo) - 1]
                     opo.team.remove(opo.team[int(user_input_opo) - 1])
                 elif int(user_input_player) == 0:
-                    d_print("Stealing ended")
+                    d_print("Stealing ended\n")
                     break
                 else:
                     print("Invalid input")
             elif int(user_input_opo) == 0:
-                d_print("Stealing ended")
+                d_print("Stealing ended\n")
                 break
             else:
                 print("Invalid input")
     elif opo == None:
         while True:
-            d_print("Which Pokemon from your team would you like to release?")
+            d_print("Which Pokemon from your team would you like to release?\n")
             for index_p, poke_p in enumerate(player.team):
                 print(f"{index_p + 1}. {poke_p.name}")
             print(f"0. End")
@@ -512,7 +517,7 @@ def wild_capture(wild, player):
             break
         else:
             d_print("""You cannot have more than 6 Pokemon, and you do not have 
-legal access to a PC to store excess Pokemon.""")
+legal access to a PC to store excess Pokemon.\n""")
             print("Would you like to capture this Pokemon?")
             print("1. Yes")
             print("2. No")
@@ -543,7 +548,7 @@ def battle_steal(player, opo):
 hardened criminals abide by, you may take their Pokemon. Since you 
 are an outlaw you do not have access to a PC. So if you have more than 
 6 Pokemon, you must choose one Pokemon to release when adding one 
-to your team.""")
+to your team.\n""")
         first_time -= 1
         into_team(player, opo, None)
 
@@ -697,12 +702,12 @@ def pokemon_battle_4wild(your_mon, wild_mon, you):
                 if battle_input[0] == "switch":
                     your_mon = battle_input[1]
             if opo_mon.health > 0:
-                d_print("Opponent's turn!")
+                d_print("Opponent's turn!\n")
                 opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
         else:
             if opo_mon.health > 0:
-                d_print("Your opponent is fast!")
+                d_print("Your opponent is fast!\n")
                 opo_mon.attack(your_mon, random.choice(opo_mon.att_key))
                 input("Press Enter to continue")
             if your_mon.health > 0:
@@ -720,8 +725,8 @@ def pokemon_battle_4wild(your_mon, wild_mon, you):
             replacement = choose_switch_from_team(you.team, exclude=your_mon,
             prompt = "Who will you send out next?! ")
             if replacement is None:
-                d_print("You have no Pokemon left..")
-                d_print("That's okay, you can get em next time!")
+                d_print("You have no Pokemon left..\n")
+                d_print("That's okay, you can get em next time!\n")
                 break
             print(f"Go, {replacement.name}!")
             your_mon = replacement
@@ -732,7 +737,7 @@ def pokemon_battle_4wild(your_mon, wild_mon, you):
                   f"{str(opo_mon.name) + " [lv." + str(opo_mon.lvl)}]")
             print(f"{poke_hp_bar(your_mon):<41}{poke_hp_bar(opo_mon)}")
             print(f"HP:{your_hp_str:<38}HP:0/{opo_mon.max_health}")
-            d_print("The opposing Pokémon is knocked out!")
+            d_print("The opposing Pokémon is knocked out!\n")
             print("You won!")
 
 
@@ -1220,7 +1225,7 @@ def into_team2(player, opo, wild):
     :return: None
     """
     if wild == None:
-        print("Which Pokemon would you like to add to your team?")
+        print("Which Pokemon would you like to add to your team?\n")
         for index_o, poke_o in enumerate(opo.team):
             print(f"{index_o + 1}. {poke_o.name}")
         # print(f"0. End")
@@ -1259,6 +1264,14 @@ def lose_poke(player,opo):
 
 
 
+def villain_interaction(player, villain):
+    print(random.choice(villain_intro))
+    print("What do you want?!")
+    print("""1. Battle
+    2. Play Poker
+    3. Play Russian Roulette
+    0. Exit""")
+    user_input = input("Select your choice: ")
 
 
 
@@ -1271,7 +1284,7 @@ def lose_poke(player,opo):
 # print(len(Uber_Poke))
 Ethan = Human("Ethan", "player")
 Sam = Human("Sam", "exec")
-Meeri = Human("Meeri", "manager")
+Meeri = Human("Meeri", "grunt")
 Saara = Human("Saara", "grunt")
 Kari = Human("Kari", "exec")
 
@@ -1288,13 +1301,13 @@ wild_pokemon_assigner(Ethan, evil_poke)
 # from  villain_npc import Sam
 # from villain_npc import Meeri
 #
-sam_list = []
-for pokemon in Sam.team:
-    sam_list.append(pokemon.name)
-print("Sam")
-print(sam_list)
+# sam_list = []
+# for pokemon in Sam.team:
+#     sam_list.append(pokemon.name)
+# print("Sam")
+# print(sam_list)
 
-poker(Sam, Meeri)
+# poker(Sam, Meeri)
 
 # meeri_list = []
 # for pokemon in Meeri.team:
@@ -1312,8 +1325,8 @@ poker(Sam, Meeri)
 # all_poke_heal(Sam)
 # wild_encounter_battle(Sam.team[0], Sam, wild_poke)
 
-sam_list = []
-for pokemon in Sam.team:
-    sam_list.append(pokemon.name)
-print("Sam")
-print(sam_list)
+# sam_list = []
+# for pokemon in Sam.team:
+#     sam_list.append(pokemon.name)
+# print("Sam")
+# print(sam_list)

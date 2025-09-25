@@ -29,6 +29,8 @@ def achievement_check():
         achv_dict["free god"][1] = 99999999999999999999999999999999999999999999
 
 
-print(achv_dict["co2"][1])
+for key in achv_dict:
+    print(achv_dict[key])
 achievement_check()
-print(achv_dict["co2"][1])
+for key in achv_dict:
+    print(achv_dict[key])
