@@ -1330,6 +1330,7 @@ def villain_interaction(player, villain):
             trainer_battle(player, villain)
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
+                villain_list.remove(villain)
             break
         elif user_input == "2": # Poker
             d_print(random.choice(poker_intro_line) + "\n")
@@ -1337,6 +1338,7 @@ def villain_interaction(player, villain):
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
                 achv_dict("poker")[1] -= 1
+                villain_list.remove(villain)
             break
         elif user_input == "3": # Roulette
             d_print(random.choice(roulette_intro_line) + "\n")
@@ -1344,6 +1346,7 @@ def villain_interaction(player, villain):
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
                 achv_dict("rr")[1] -= 1
+                villain_list.remove(villain)
             break
         elif user_input == "0":
             d_print(random.choice(leave_chat_line) + "\n")
