@@ -1093,7 +1093,7 @@ OU_Poke = [
     Breloom, Scovillain, Maushold, Hippowdon, Hisuian_Zoroark, Zoroark,
     Charizard, Mega_Charizard_X, Dialga_O, Mega_Mewtwo_Y, Landorus_T,
     Torterra, Blaziken, Mega_Blaziken, Rhyperior, Cramorant, Vaporeon,
-    Ceruledge, Giratina_O, Sylveon, Venusaur, Blastoise, Iron_Crown,
+    Ceruledge, Giratina_O, Sylveon, Blastoise, Iron_Crown,
     Regice, Lapras, Glastrier, Vespiquen, Mega_Scizor
 
 ]

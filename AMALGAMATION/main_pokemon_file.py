@@ -1,6 +1,7 @@
 import random
 import sys
 import time
+import all_pokemon_list
 from type_chart_factor import type_bonus_dict
 from attack_dict import attack_dict
 from all_pokemon_list import Arceus
@@ -1369,6 +1370,127 @@ def villain_gen():
     return villain_list
 
 
+def character_creator():
+    player_name = input("Enter Your Name: ")
+    player = Human(str(player_name), "player")
+    d_print(f"Welcome, {player.name}.\n")
+    print("""Select your partner Pokemon:
+    1. Venusaur
+    2. Charizard
+    3. Blastoise
+    """)
+    while True:
+        while True:
+            no_select = input("Choose your starter: ")
+            try:
+                test = int(no_select)
+                break
+            except ValueError:
+                print("Invalid input")
+        if int(no_select) == 1:
+            poke_select = all_pokemon_list.Venusaur
+            d_print(f"You chose {poke_select.name}.\n")
+            player.team.append(poke_select)
+            d_print(f"{player.team[0].name} have been added to your party\n")
+            break
+        elif int(no_select) == 2:
+            poke_select = all_pokemon_list.Charizard
+            d_print(f"You chose {poke_select.name}.\n")
+            player.team.append(poke_select)
+            d_print(f"{player.team[0].name} have been added to your party\n")
+            break
+        elif int(no_select) == 3:
+            poke_select = all_pokemon_list.Blastoise
+            d_print(f"You chose {poke_select.name}.\n")
+            player.team.append(poke_select)
+            d_print(f"{player.team[0].name} have been added to your party\n")
+            break
+        else:
+            print("Invalid selection")
+            continue
+    return player
+
+
+
+def tutorial():
+    d_print("=" * 100)
+    print("")
+    d_print(f"""News Anchor: This just in, 8 airports around the world have been
+reported to being attacked by a terrorist organisation. We dont know their
+motives but the international police have apprehended a 23 year old former 
+Pokemon Champion, {player.name}, now stripped of their title, suspected to
+be the criminal mastermind behind these attacks.\n""")
+    print("")
+    d_print(f"""News Anchor: {player.name}'s PC has been disabled, and their Pokemon
+confiscated. Police found a device that lets a trainer steal another trainer's 
+Pokemon, called a 'Snag Em' gear, and  will begin interroga... wait! What's this? 
+I've just received a report that a {player.team[0].name} just burst out of its 
+Pokeball in the police department where {player.name} is being held.\n""")
+    # SLEEP
+    print("")
+    d_print("""You escaped the detention center with only one Pokemon in your 
+party and the Snag Em gear.\n""")
+    #SLEEP
+    print("")
+    input("--Press Enter to continue--")
+    d_print("=" * 100)
+    print("\n")
+    d_print("""You somehow made it to the airport. It's empty, everyone had been
+evacuated due to the terrorist threats. They upped the the security, but you 
+were able to make it past most of the guards. If only you could get to your
+plane then you would be able to...\n""")
+    #SLEEP
+    print("")
+    print("Police Officer Jeffrey Dahmer: HOLD IT RIGHT THERE!!!")
+    print("")
+    d_print("Oh no...\n")
+    print()
+    input("--Press Enter to continue--")
+    print("")
+    d_print(f"""Dahmer: {player.name}, you are under arrest! Unlike other criminals
+like you, I'm not playing by the rules. I won't accept a challenge in a game
+of Poker, or Russian Roulette. Don't bother with the command /HELP either,
+that's only useful once you played past the tutorial.\n""")
+    print()
+    d_print("How will you respond?\n")
+    print("""1. Challenge the Police Officer Jeffrey Dahmer to a Pokemon Battle.
+2. Tell Dahmer that he is legally obligated to battle you before arresting you.
+3. He's a cop, he is probably crooked anyway, so as a criminal, he has moral 
+obligations to comply with the criminal code of conduct and accept a game of
+Russian Roulette or Poker.""")
+    input("Select your choice: ")
+    d_print("""Dahmer: Dont underestimate me, I am aware that when battling, 
+that my command to my Pokemon is case sensitive, or my Pokemon will get confused 
+and freeze.""")
+    d_print("=" * 100)
+    trainer_battle(player, Dahmer)
+    if len(player.team) > 0:
+        d_print("""Dahmer: If I had more Pokemon, I could have swapped out 
+Pokemon by using the SWAP command when it was my turn.\n""")
+    all_poke_heal(player)
+    print()
+    print("=" * 100)
+    print()
+    d_print("""You quickly make your way to your airplane, the runway is empty
+so you easily took off without worrying about collision with another
+plane in the area.\n""")
+    print()
+    d_print("=" * 100)
+    print("\n")
+    print("-beep beep-")
+    d_print(f"""Ed Sheeran: Hey man, I saw what happened to you on the news, this
+is so unfair. I think you should lay low for now, don't draw any 
+attention to yourself and go into hiding.\n-bzz- *click*""")
+    print("\n")
+    d_print("""I guess he got cut off.. You can either take your friend's 
+advice, or... you can clear your name and defeat all 8 terrorists scattered
+throughout the world. Surely, if you defeat all 8 of them, you will be 
+pardoned of all misunderstandings.\n""")
+    d_print("=" * 100)
+
+
+
+
 villain_list = villain_gen()
 
 
@@ -1382,7 +1504,10 @@ Sam = Human("Sam", "exec")
 Meeri = Human("Meeri", "grunt")
 Saara = Human("Saara", "grunt")
 Kari = Human("Kari", "exec")
+Dahmer = Human("Police Officer Dahmer", "intern")
 
+player = character_creator()
+tutorial()
 # for i in range(3):
 #     Ethan.team.append(OU_Poke)
 # wild_pokemon_assigner(Ethan, evil_poke)
@@ -1390,7 +1515,7 @@ Kari = Human("Kari", "exec")
 # print(len(wild_poke))
 # print(len(evil_poke))
 
-villain_interaction(Sam, Meeri)
+# villain_interaction(Sam, Meeri)
 
 
 # from  villain_npc import Sam
