@@ -18,13 +18,7 @@ from dialogues import roulette_intro_line
 from dialogues import invalid_selection_line
 from dialogues import leave_chat_line
 
-# Include these at the top of the program
 
-villain_list = []
-arceus_list = [Arceus]
-wild_poke = []
-evil_poke = []
-player_achv = []
 
 class Human:
     def __init__(self, name: str, rank: str):
@@ -38,7 +32,7 @@ class Human:
         self.exclude = set()
         self.team_p = []
         self.exclude_p = set()
-        if rank == "intern":
+        if rank == "cop":
             for team_no in range(1):
                 available_poke = []
                 for poke in NU_Poke:
@@ -94,6 +88,7 @@ class Human:
         self.team.append(pokemon)
 
 
+
 class Pokemon:
     def __init__(self, name, evo, type_1, type_2, hp, att,
                  deff, spd, a1, a2, a3, a4):
@@ -133,27 +128,27 @@ class Pokemon:
 
 
 
-def achievement_check():
+def achievement_check(achv_dict, player_achv):
     if achv_dict["co2"][1] <= 0:
-        achv_dict["co2"][1] = 9999999999999999999999999999999999999999999
+        achv_dict["co2"][1] = 999 ** 99
         player_achv.append(achv_dict["co2"][0])
     if achv_dict["rr"][1] <= 0:
-        achv_dict["rr"][1] = 99999999999999999999999999999999999999999999
+        achv_dict["rr"][1] = 999 ** 99
         player_achv.append(achv_dict["rr"][0])
     if achv_dict["poker"][1] <= 0:
-        achv_dict["poker"][1] = 99999999999999999999999999999999999999999999
+        achv_dict["poker"][1] = 999 ** 99
         player_achv.append(achv_dict["poker"][0])
     if achv_dict["continent"][1] <= 0:
-        achv_dict["continent"][1] = 99999999999999999999999999999999999999999999
+        achv_dict["continent"][1] = 999 ** 99
         player_achv.append(achv_dict["continent"][0])
     if achv_dict["polar"][1] <= 0:
-        achv_dict["polar"][1] = 99999999999999999999999999999999999999999999
+        achv_dict["polar"][1] = 999 ** 99
         player_achv.append(achv_dict["polar"][0])
     if achv_dict["defeat god"][1] <= 0:
-        achv_dict["defeat god"][1] = 99999999999999999999999999999999999999999999
+        achv_dict["defeat god"][1] = 999 ** 99
         player_achv.append(achv_dict["defeat god"][0])
     if achv_dict["free god"][1] <= 0:
-        achv_dict["free god"][1] = 99999999999999999999999999999999999999999999
+        achv_dict["free god"][1] = 999 ** 99
         player_achv.append(achv_dict["free god"][0])
 
 
@@ -212,7 +207,7 @@ def game_russian(self, player_2):
         for index, pokemon in enumerate(self.team):
             print(f"{index + 1}. {pokemon.name}")
         while sacrifice not in self.team:
-            p_select = input("Select your Pokemon")
+            p_select = input("Select your Pokemon: ")
             try:
                 test_1 = int(p_select)
             except ValueError:
@@ -226,10 +221,10 @@ def game_russian(self, player_2):
         shot = 1
         player_list = [self, player_2]
         print(f"{sacrifice.name} will stand in for {self.name}")
-        while sacrifice in self.team and player_2.team[0] in player_2.team:
+        while sacrifice in self.team and len(player_2.team) > 0:
             for turn in player_list:
                 print("*Spinning the barrel*")
-                bullet = random.randint(1, 2)
+                bullet = random.randint(1, 6)
                 # print(f"Bullet is {bullet}") #remove later after testing
                 if turn == self:
                     print(f"{self.name}'s turn. Click.")
@@ -259,16 +254,17 @@ def game_russian(self, player_2):
                         print(f"Bang! {player_2.team[0].name} fell abruptly.")
                         wild_poke.append(player_2.team[0])
                         player_2.team.remove(player_2.team[0])
-                        try:
+                        player_team_hp = team_health_check(self)
+                        opo_team_hp = team_health_check(player_2)
+                        if len(player_2.team) > 0:
                             print(f"{player_2.team[0].name} steps up in its trainer's place.")
-                        except:
+                        else:
                             print(f"{player_2.name} is out of Pokemon.")
-                    input("Press enter to continue")
+                            break
                     print("=" * 100)
                     player_team_hp = team_health_check(self)
                     opo_team_hp = team_health_check(player_2)
-                    break
-            break
+
 
     if len(player_team_hp) > 0:
         print("You get to walk away.")
@@ -477,32 +473,48 @@ def into_team(player, opo, wild):
     """
     if wild == None:
         while True:
-            d_print("Which Pokemon would you like to add to your team?\n")
-            for index_o, poke_o in enumerate(opo.team):
-                print(f"{index_o + 1}. {poke_o.name}")
-            print(f"0. End")
-            user_input_opo = input("Select your choice: ")
-            try:
-                test_1 = int(user_input_opo)
-            except ValueError:
-                print("Invalid input")
-                continue
-            if 0 < int(user_input_opo) <= len(opo.team):
-                d_print("Which Pokemon from your team would you like to release?\n")
-                for index_p, poke_p in enumerate(player.team):
-                    print(f"{index_p + 1}. {poke_p.name}")
+            if len(player.team) < 6:
+                while len(player.team) < 6:
+                    for pokemon in opo.team:
+                        player.team.append(pokemon)
+                    break
+                break
+            else:
+                d_print("Which Pokemon would you like to add to your team?\n")
+                for index_o, poke_o in enumerate(opo.team):
+                    print(f"{index_o + 1}. {poke_o.name}")
                 print(f"0. End")
-                user_input_player = input("Select your choice: ")
+                user_input_opo = input("Select your choice: ")
                 try:
-                    test_01 = int(user_input_player)
+                    test_1 = int(user_input_opo)
                 except ValueError:
                     print("Invalid input")
                     continue
-                if 0 < int(user_input_player) <= len(player.team):
-                    wild_poke.append(player.team[int(user_input_player) - 1])
-                    player.team[int(user_input_player) - 1] = opo.team[int(user_input_opo) - 1]
-                    opo.team.remove(opo.team[int(user_input_opo) - 1])
-                elif int(user_input_player) == 0:
+                if 0 < int(user_input_opo) <= len(opo.team):
+                    d_print("Which Pokemon from your team would you like to release?\n")
+                    for index_p, poke_p in enumerate(player.team):
+                        print(f"{index_p + 1}. {poke_p.name}")
+                    print(f"0. End")
+                    user_input_player = input("Select your choice: ")
+                    try:
+                        test_01 = int(user_input_player)
+                    except ValueError:
+                        print("Invalid input")
+                        continue
+                    if 0 < int(user_input_player) <= len(player.team):
+                        wild_poke.append(player.team[int(user_input_player) - 1])
+                        player.team[int(user_input_player) - 1] = opo.team[int(user_input_opo) - 1]
+                        opo.team.remove(opo.team[int(user_input_opo) - 1])
+                    elif int(user_input_player) == 0:
+                        if len(opo.team) > 0:
+                            for index, poke in enumerate(opo.team):
+                                wild_poke.append(opo.team[index])
+                                opo.team.remove(opo.team[index])
+                        d_print("Stealing ended\n")
+                        break
+                    else:
+                        print("Invalid input")
+                elif int(user_input_opo) == 0:
                     if len(opo.team) > 0:
                         for index, poke in enumerate(opo.team):
                             wild_poke.append(opo.team[index])
@@ -511,15 +523,6 @@ def into_team(player, opo, wild):
                     break
                 else:
                     print("Invalid input")
-            elif int(user_input_opo) == 0:
-                if len(opo.team) > 0:
-                    for index, poke in enumerate(opo.team):
-                        wild_poke.append(opo.team[index])
-                        opo.team.remove(opo.team[index])
-                d_print("Stealing ended\n")
-                break
-            else:
-                print("Invalid input")
     elif opo == None:
         while True:
             d_print("Which Pokemon from your team would you like to release?\n")
@@ -587,13 +590,10 @@ def battle_steal(player, opo):
     """
     first_time = 1
     while first_time >= 1 and len(player.team) >= 6:
-        d_print("""You won! In the Sacred Book of Criminal Law Section 4.213, rules all 
-hardened criminals abide by, you may take their Pokemon. Since you 
-are an outlaw you do not have access to a PC. So if you have more than 
-6 Pokemon, you must choose one Pokemon to release when adding one 
-to your team.\n""")
+        d_print("""You won! But you're only able to carry 6 Pokemon at all times.\n""")
         first_time -= 1
-        into_team(player, opo, None)
+
+    into_team(player, opo, None)
 
 
 
@@ -697,7 +697,8 @@ def trainer_battle(you, opo):
     """
     healthy_opo_team = team_health_check(opo)
     your_healthy_team = team_health_check(you)
-    print(f"You send out {you.team[0].name}")
+    print(f"\n{opo.name} sends out {opo.team[0].name}")
+    print(f"\nYou send out {you.team[0].name}")
     while len(healthy_opo_team) > 0 and len(your_healthy_team) > 0:
         healthy_opo_team = team_health_check(opo)
         your_healthy_team = team_health_check(you)
@@ -796,7 +797,7 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
     :return:
     """
     wild_mon = random.choice(wild_pokemon_list)
-    d_print(f"A wild {wild_mon.name} appeared!!\n")
+    d_print(f"\nA wild {wild_mon.name} appeared!!\n")
     pokemon_battle_4wild(your_mon, wild_mon, you)
     your_healthy_team = team_health_check(you)
     if len(your_healthy_team) <= 0:
@@ -805,7 +806,6 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
         wild_capture(wild_mon, you)
     # for poke in you.team: # Code for testing team modification
     #     print(poke.name)
-
 
 
 
@@ -829,7 +829,7 @@ of Pokemon. Are you sure you want to continue?""")
             print("Invalid input.")
             continue
         if y_n == 1:
-            game_russian(Sam, Meeri)
+            game_russian(player, opo)
             break
         elif y_n == 2:
             print("You left the interaction.")
@@ -1239,6 +1239,7 @@ def poker(player1,player2):
     #Comparison
     if rank[0:] > rankbot[0:]:
         print("Congratulations! You won!")
+        achv_dict["poker"][1] -= 1
         into_team2( player1, player2,None)
         # show_poke(main_pokemon_file.Sam)
         # print('Kari')
@@ -1256,7 +1257,6 @@ def poker(player1,player2):
             print("Fine")
 
 
-
 def into_team2(player, opo, wild):
     """
     The inner function used for stealing or capturing Pokemon, the function
@@ -1268,35 +1268,79 @@ def into_team2(player, opo, wild):
     :return: None
     """
     if wild == None:
-        print("Which Pokemon would you like to add to your team?\n")
-        for index_o, poke_o in enumerate(opo.team):
-            print(f"{index_o + 1}. {poke_o.name}")
-        # print(f"0. End")
         while True:
-            user_input_opo = input("Select your choice: ")
-            try:
-                gaga = int(user_input_opo)
+            if len(player.team) < 6:
+                while len(player.team) < 6:
+                    for pokemon in opo.team:
+                        player.team.append(pokemon)
+                    break
                 break
+            else:
+                d_print("Which Pokemon would you like to add to your team?\n")
+                for index_o, poke_o in enumerate(opo.team):
+                    print(f"{index_o + 1}. {poke_o.name}")
+                print(f"0. End")
+                user_input_opo = input("Select your choice: ")
+                try:
+                    test_1 = int(user_input_opo)
+                except ValueError:
+                    print("Invalid input")
+                    continue
+                if 0 < int(user_input_opo) <= len(opo.team):
+                    d_print("Which Pokemon from your team would you like to release?\n")
+                    for index_p, poke_p in enumerate(player.team):
+                        print(f"{index_p + 1}. {poke_p.name}")
+                    print(f"0. End")
+                    user_input_player = input("Select your choice: ")
+                    try:
+                        test_01 = int(user_input_player)
+                    except ValueError:
+                        print("Invalid input")
+                        continue
+                    if 0 < int(user_input_player) <= len(player.team):
+                        wild_poke.append(player.team[int(user_input_player) - 1])
+                        player.team[int(user_input_player) - 1] = opo.team[int(user_input_opo) - 1]
+                        opo.team.remove(opo.team[int(user_input_opo) - 1])
+                    elif int(user_input_player) == 0:
+                        if len(opo.team) > 0:
+                            for index, poke in enumerate(opo.team):
+                                wild_poke.append(opo.team[index])
+                                opo.team.remove(opo.team[index])
+                        d_print("Stealing ended\n")
+                        break
+                    else:
+                        print("Invalid input")
+                elif int(user_input_opo) == 0:
+                    if len(opo.team) > 0:
+                        for index, poke in enumerate(opo.team):
+                            wild_poke.append(opo.team[index])
+                            opo.team.remove(opo.team[index])
+                    d_print("Stealing ended\n")
+                    break
+                else:
+                    print("Invalid input")
+    elif opo == None:
+        while True:
+            d_print("Which Pokemon from your team would you like to release?\n")
+            for index_p, poke_p in enumerate(player.team):
+                print(f"{index_p + 1}. {poke_p.name}")
+            print(f"0. End")
+            user_input_player = input("Select your choice: ")
+            try:
+                test_01 = int(user_input_player)
             except ValueError:
                 print("Invalid input")
                 continue
-
-        if user_input_opo.isdigit(): ##.isdigit is used to check if user_input_opo is a number or not (don't care about Error value)
-            user_input_opo = int(user_input_opo)
-            if 0 < user_input_opo <= len(opo.team):
-                print("Which Pokemon from your team would you like to release?")
-                for index_p, poke_p in enumerate(player.team):
-                    print(f"{index_p + 1}. {poke_p.name}")
-                # print(f"0. End")
-                user_input_player = int(input("Select your choice: "))
-
-                if 0 < user_input_player <= len(player.team):
-                    wild_poke.append(player.team[user_input_player - 1])
-                    player.team[user_input_player - 1] = opo.team[user_input_opo - 1]
-                    opo.team.remove(opo.team[user_input_opo - 1])
-                    for index, poke in enumerate(opo.team):
-                        wild_poke.append(opo.team[index])
-                        opo.team.remove(opo.team[index])
+            if 0 < int(user_input_player) <= len(player.team):
+                wild_poke.append(player.team[int(user_input_player) - 1])
+                player.team[int(user_input_player) - 1] = wild
+                wild_poke.remove(wild)
+                break
+            elif int(user_input_player) == 0:
+                print("Capture ended")
+                break
+            else:
+                print("Invalid input")
 
 
 
@@ -1331,23 +1375,29 @@ def villain_interaction(player, villain):
             trainer_battle(player, villain)
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
-                villain_list.remove(villain)
+                if len(villain.team) < 0:
+                    villain_list.remove(villain)
+                    wild_pokemon_assigner(player, evil_poke)
             break
         elif user_input == "2": # Poker
             d_print(random.choice(poker_intro_line) + "\n")
             poker(player, villain)
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
-                achv_dict("poker")[1] -= 1
-                villain_list.remove(villain)
+                # ACHV DICT ALREADY MODIFIED IN THE POKER FUNCTION
+                if len(villain.team) < 0:
+                    villain_list.remove(villain)
+                    wild_pokemon_assigner(player, evil_poke)
             break
         elif user_input == "3": # Roulette
             d_print(random.choice(roulette_intro_line) + "\n")
             start_rr_game(player, villain)
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
-                achv_dict("rr")[1] -= 1
-                villain_list.remove(villain)
+                if len(villain.team) < 0:
+                    achv_dict["rr"][1] -= 1
+                    villain_list.remove(villain)
+                    wild_pokemon_assigner(player, evil_poke)
             break
         elif user_input == "0":
             d_print(random.choice(leave_chat_line) + "\n")
@@ -1368,6 +1418,7 @@ def villain_gen():
     villain_8 = Human("Ed Sheeran", "exec")
     villain_human_list = [villain_1, villain_2, villain_3, villain_4, villain_5, villain_6, villain_7, villain_8]
     return villain_list
+
 
 
 def character_creator():
@@ -1391,7 +1442,7 @@ def character_creator():
             poke_select = all_pokemon_list.Venusaur
             d_print(f"You chose {poke_select.name}.\n")
             player.team.append(poke_select)
-            d_print(f"{player.team[0].name} have been added to your party\n")
+            d_print(f"{player.team[0].name} has been added to your party\n")
             break
         elif int(no_select) == 2:
             poke_select = all_pokemon_list.Charizard
@@ -1412,7 +1463,7 @@ def character_creator():
 
 
 
-def tutorial():
+def tutorial(player):
     d_print("=" * 100)
     print("")
     d_print(f"""News Anchor: This just in, 8 airports around the world have been
@@ -1459,9 +1510,9 @@ that's only useful once you played past the tutorial.\n""")
 obligations to comply with the criminal code of conduct and accept a game of
 Russian Roulette or Poker.""")
     input("Select your choice: ")
-    d_print("""Dahmer: Dont underestimate me, I am aware that when battling, 
+    d_print("""\nDahmer: Dont underestimate me, I am aware that when battling, 
 that my command to my Pokemon is case sensitive, or my Pokemon will get confused 
-and freeze.""")
+and freeze.\n""")
     d_print("=" * 100)
     trainer_battle(player, Dahmer)
     if len(player.team) > 0:
@@ -1469,7 +1520,7 @@ and freeze.""")
 Pokemon by using the SWAP command when it was my turn.\n""")
     all_poke_heal(player)
     print()
-    print("=" * 100)
+    d_print("=" * 100 + "\n")
     print()
     d_print("""You quickly make your way to your airplane, the runway is empty
 so you easily took off without worrying about collision with another
@@ -1486,67 +1537,25 @@ attention to yourself and go into hiding.\n-bzz- *click*""")
 advice, or... you can clear your name and defeat all 8 terrorists scattered
 throughout the world. Surely, if you defeat all 8 of them, you will be 
 pardoned of all misunderstandings.\n""")
-    d_print("=" * 100)
+    d_print("=" * 100 + "\n")
 
 
 
 
+arceus_list = [Arceus]
+wild_poke = []
+evil_poke = []
+player_achv = []
+villain_list = []
 villain_list = villain_gen()
-
-
-
-
-
-
-# print(len(Uber_Poke))
-Ethan = Human("Ethan", "player")
 Sam = Human("Sam", "exec")
-Meeri = Human("Meeri", "grunt")
-Saara = Human("Saara", "grunt")
-Kari = Human("Kari", "exec")
-Dahmer = Human("Police Officer Dahmer", "intern")
-
+Meeri = Human("Meeri", "cop")
+Dahmer = Human("Police Officer Dahmer", "cop")
 player = character_creator()
-tutorial()
-# for i in range(3):
-#     Ethan.team.append(OU_Poke)
-# wild_pokemon_assigner(Ethan, evil_poke)
-# print(len(Ethan.team))
-# print(len(wild_poke))
-# print(len(evil_poke))
-
-# villain_interaction(Sam, Meeri)
-
-
-# from  villain_npc import Sam
-# from villain_npc import Meeri
-#
-# sam_list = []
-# for pokemon in Sam.team:
-#     sam_list.append(pokemon.name)
-# print("Sam")
-# print(sam_list)
-
-# poker(Sam, Meeri)
-
-# meeri_list = []
-# for pokemon in Meeri.team:
-#     meeri_list.append(pokemon.name)
-# print(meeri_list)
+tutorial(player)
+villain_interaction(Sam, Meeri)
+print(player_achv)
+print(achv_dict["poker"][1])
 
 
 
-# start_rr_game(Sam, Meeri)
-
-# trainer_battle(Sam, Meeri)
-#
-#
-
-# all_poke_heal(Sam)
-# wild_encounter_battle(Sam.team[0], Sam, wild_poke)
-
-# sam_list = []
-# for pokemon in Sam.team:
-#     sam_list.append(pokemon.name)
-# print("Sam")
-# print(sam_list)

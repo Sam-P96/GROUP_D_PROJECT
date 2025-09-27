@@ -9,7 +9,7 @@ or Russian Roulette when challenged by another criminal!""",
                  "This is the best job ever! You know what I hate more than airplanes? Infrastructure!",
                  """You have to command your Pokemon with 'GUSTO,' or they’ll get confused, but if you 
 are too excited about it, they’ll also get confused. So actually, you just command then with 'Gusto.'""",
-                 """Back where I’m from, we play 5 Card Draw. But from what I heard, the leader of this "
+                 """Back where I’m from, we play 5 Card Draw. But from what I heard, the leader of this 
 organization is from Vegas, hence Texas Hold’em. Alas, I must adhere to our code of 
 conduct, I don’t like breaking rules.""",
                  "Well, since you’re also a criminal, I’ll let you go without having my Gigantamax Pokemon stomp you.",

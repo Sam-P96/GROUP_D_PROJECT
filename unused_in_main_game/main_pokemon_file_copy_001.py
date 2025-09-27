@@ -518,7 +518,7 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
 #     meeri_list.append(pokemon.name)
 # print(meeri_list)
 
-trainer_battle(Sam, Meeri)
+
 
 
 # wild_encounter_battle(Sam.team[0], Sam, wild_poke)

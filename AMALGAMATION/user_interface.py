@@ -1,4 +1,4 @@
-from main_pokemon_file import Sam
+from main_pokemon_file import player
 
 def second_menu(input_sec, player):
     choice = str(input_sec).strip().casefold()
@@ -123,5 +123,5 @@ airport_range_list = ["Thailand, Suvarnabhumi International Airport [Longitude, 
 distress_list = []
 
 
-main_menu(Sam)
+main_menu(player)
 
