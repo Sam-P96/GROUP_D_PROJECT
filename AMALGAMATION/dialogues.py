@@ -37,7 +37,9 @@ you look around you, nobody is after you. Oh, whats this?""",
 that it even attracted a little bit of attention of a Pokemon.""",
              """You saw a Rayquaza on your way down, no other planes are flying right now,
 makes sense, you gotta respect a flying dragon enough not to enter its
-airspace, it might get territorial. Oh, another less threatening Pokemon"""
+airspace, it might get territorial. Oh, another less threatening Pokemon""",
+             """There might be some interesting Pokemon in this area, nobody is apprehending
+you, so why not take a look around?""",
              ]
 
 
@@ -59,6 +61,15 @@ conduct, I don’t like breaking rules.""",
                  "Well, since you’re also a criminal, I’ll let you go without having my Gigantamax Pokemon stomp you.",
                  """Since I don’t have any orders from the boss to stomp criminals in particular, 
 I won’t stop you from leaving. Law-abiding citizens are my only target""",
+                 """Sometimes you make mistakes, other times you're just choosing to ruin your
+own life, its a choice this time.""",
+                 """I'd ask you who you are, but I dont care.. Anyway... I'm a little busy here.""",
+                 """If only I paid attention in Python class, I'd be working an ethical job somewhere
+siphoning money from the bank whenever a transaction is made.""",
+                 """Did you have a dream growing up? I had one, now I'm grown up.""",
+                 """Happiness is an illusion, we're all slaves to the elites. And when they
+don't need us anymore, we'll all just wither away and die.""",
+                 """I've never known love, I spent all my time on Reddit being a master debater.""",
 
                  ]
 
@@ -90,6 +101,8 @@ code. I will accept your challenge!""",
                      "If you spend all your money on Pokemon cards, you wont have money left for drugs!",
                      "I think this is better than regular gambling.",
                      "Please go easy on me, it's my first time. UwU",
+                     "This was a mistake, just like me.",
+                     "Loser kisses the winner, alright?",
                      ]
 
 poker_intro_line = ["Ooh, gambling, I love gambling!",
@@ -125,9 +138,8 @@ roulette_intro_line = ["You sick son of a Mismagius",
 
 
 invalid_selection_line = ["What are you even talking about?!",
-                          "Come on, pick something or get lost.",
+                          "Come on, do something or get lost.",
                           "Were you dropped as a baby?",
-                          "Waste of my time, rubbish person."
                           "Didn't your parents teach you any manners?",
                           "Idiot.",
                           ]

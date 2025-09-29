@@ -493,10 +493,10 @@ def into_team(player, opo, wild):
     if wild == None:
         while True:
             if len(player.team) < 6:
-                while len(player.team) < 6:
-                    for pokemon in opo.team:
-                        player.team.append(pokemon)
-                    break
+                while len(player.team) < 6 and len(opo.team) > 0:
+                    print(f"{opo.team[0].name} was added to your team.")
+                    player.team.append(opo.team[0])
+                    opo.team.remove(opo.team[0])
                 break
             else:
                 d_print("Which Pokemon would you like to add to your team?\n")
@@ -1290,7 +1290,7 @@ def into_team2(player, opo, wild):
         while True:
             if len(player.team) < 6:
                 while len(player.team) < 6 and len(opo.team) > 0:
-                    print(f"{opo.team[0]} was added to your team.")
+                    print(f"{opo.team[0].name} was added to your team.")
                     player.team.append(opo.team[0])
                     opo.team.remove(opo.team[0])
                 break
@@ -1503,7 +1503,7 @@ def tutorial(player):
     :param player:
     :return:
     """
-    d_print("=" * 100)
+    print("=" * 100)
     print("")
     d_print(f"""News Anchor: This just in, 8 airports around the world have been
 reported to being attacked by a terrorist organisation. We dont know their
@@ -1523,7 +1523,7 @@ party and the Snag Em gear.\n""")
     #SLEEP
     print("")
     input("--Press Enter to continue--")
-    d_print("=" * 100)
+    print("=" * 100)
     print("\n")
     d_print("""You somehow made it to the airport. It's empty, everyone had been
 evacuated due to the terrorist threats. They upped the the security, but you 
@@ -1532,6 +1532,7 @@ plane then you would be able to...\n""")
     #SLEEP
     print("")
     print("Police Officer Jeffrey Dahmer: HOLD IT RIGHT THERE!!!")
+    time.sleep(2) #################################################################################3333 CHECK IF THIS BREAKS THE CODE "####################################################
     print("")
     d_print("Oh no...\n")
     print()
@@ -1546,13 +1547,13 @@ that's only useful once you played past the tutorial.\n""")
     print("""1. Challenge the Police Officer Jeffrey Dahmer to a Pokemon Battle.
 2. Tell Dahmer that he is legally obligated to battle you before arresting you.
 3. He's a cop, he is probably crooked anyway, so as a criminal, he has moral 
-obligations to comply with the criminal code of conduct and accept a game of
-Russian Roulette or Poker.""")
+obligations to comply with the criminal code of conduct but hes so crooked, he 
+probably doesn't care.""")
     input("Select your choice: ")
     d_print("""\nDahmer: Dont underestimate me, I am aware that when battling, 
 that my command to my Pokemon is case sensitive, or my Pokemon will get confused 
 and freeze.\n""")
-    d_print("=" * 100)
+    print("=" * 100)
     trainer_battle(player, Dahmer)
     if len(player.team) > 0:
         d_print("""Dahmer: If I had more Pokemon, I could have swapped out 
@@ -1576,7 +1577,8 @@ attention to yourself and go into hiding.\n-bzz- *click*""")
 advice, or... you can clear your name and defeat all 8 terrorists scattered
 throughout the world. Surely, if you defeat all 8 of them, you will be 
 pardoned of all misunderstandings.\n""")
-    d_print("=" * 100 + "\n")
+    print("=" * 100 + "\n")
+    # USE DUY'S FLIGHT AIMATION HERE 3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 
 
 
@@ -1596,11 +1598,13 @@ wild_poke = []
 evil_poke = []
 player_achv = []
 villain_list = villain_gen()
+
+
 Sam = Human("Sam", "exec")
 Meeri = Human("Meeri", "cop")
 Dahmer = Human("Police Officer Dahmer", "cop")
 player = character_creator()
-# tutorial(player)
+tutorial(player)
 # print(villain_list[0].name)
 # print(villain_list[0].team)
 # for pokemon in villain_list[4].team:
@@ -1630,3 +1634,144 @@ distance = 5000
 #     print(player.fuel)
 
 ###############################################################3 TEST
+
+def second_menu(input_sec, player):
+    choice = str(input_sec).strip().casefold()
+
+    if choice == "a" or choice.casefold() == "menu":
+        print("=" * 120)
+        print("PLACE HOLDER MENU FOR MENU")
+        a_menu = input("Press Enter to continue")
+        print("=" * 120)
+        if a_menu.casefold() == "exit":
+            return "exit"
+        return None
+    elif choice == "b" or choice.casefold() == "bag":
+        print("=" * 120)
+        print("PLACE HOLDER MENU FOR BAG")
+        input("Press Enter to continue")
+        print("=" * 120)
+        return None
+    elif choice == "c" or choice.casefold() == "stats":
+        print("=" * 120)
+        print("Pokemon List:")
+        for index, pokemon in enumerate(player.team):
+            print(f"{index + 1}. {pokemon.name} "
+                  f"[{pokemon.health}/{pokemon.max_health}]"
+                  f" - Attacks: [{pokemon.atk_1:^16}] [{pokemon.atk_2:^16}]"
+                  f" [{pokemon.atk_3:^16}] [{pokemon.atk_4:^16}]")
+        input("Press Enter to continue")
+        print("=" * 120)
+        return None
+    elif choice == "d" or choice.casefold() == "achievements":
+        print("=" * 120)
+        for index, achv in enumerate(player_achv):
+            print(f"{index + 1}. {achv}")
+        input("Press Enter to continue")
+        print("=" * 120)
+        return None
+    elif input_sec == "PAYDAY" and Meowth not in player.team:
+        print("=" * 120)
+        print("[YOU RECEIVED MEOWTH]") # Saved for later MIGHT REMOVE
+        if len(player.team) == 6:
+            into_team(player, None, Meowth)
+        else:
+            wild_capture(Meowth, player)
+        input("Press Enter to continue")
+        print("=" * 120)
+        return None
+    elif input_sec == "I choose you!" and Pikachu not in player.team:
+        print("=" * 120)
+        print("[YOU RECEIVED PIKACHU]") # Saved for later MIGHT REMOVE
+        if len(player.team) == 6:
+            into_team(player, None, Pikachu)
+        else:
+            wild_capture(Pikachu, player)
+        input("Press Enter to continue")
+        print("=" * 120)
+        return None
+    else:
+        print("=" * 120)
+        print("Please enter a valid input.")
+        input("Press Enter to continue")
+        print("=" * 120)
+        return None
+
+
+
+def travel_menu(input_travel, player):
+    choice = int(input_travel)
+    if choice == 1:
+        print("=" * 120)
+        print("PLACE HOLDER MENU FOR TRAVEL OPTION 1")
+        villain_interaction(player, villain_list[0])
+        input("Press Enter to continue")
+        print("=" * 120)
+    elif choice == 2:
+        print("=" * 120)
+        print("PLACE HOLDER MENU FOR TRAVEL OPTION 2")
+        input("Press Enter to continue")
+        print("=" * 120)
+    elif choice == 3:
+        print("=" * 120)
+        print("PLACE HOLDER MENU FOR TRAVEL OPTION 3")
+        input("Press Enter to continue")
+        print("=" * 120)
+    elif choice == 0 or choice == "FREE FLIGHT":
+        print("=" * 120)
+        print("PLACE HOLDER MENU FOR FREE FLIGHT")
+        input("Press Enter to continue")
+        print("=" * 120)
+    else:
+        print("=" * 120)
+        print("Please enter a valid input.")
+        input("Press Enter to continue")
+        print("=" * 120)
+
+
+
+def main_menu(player):
+    while True:
+        print("Airplane: " + str(player.health) + "/300")
+        print("Fuel: " + str(player.fuel) + "/100")
+        print("Location: " + str(player.location))
+        print("Airport Distress Signals: ")
+        if len(distress_list) > 0:
+            for index, distress in enumerate(distress_list[0:3]):
+                print(str(index) + distress_list[distress])
+        else:
+            print("[None]")
+        print("\n" * 4)
+        print("Travel: ")
+        if len(airport_range_list) > 0:
+            for index, airport in enumerate(airport_range_list[0:3]):
+                print(str(index +1) + ". " + airport)
+        else:
+            print("[No airport within landing range]")
+        print("0. Free Flight")
+        print("-" * 120)
+        print("A. Open Menu")
+        print("B. Open Bag")
+        print("C. Pokemon Stats")
+        print("D. Open Achievements")
+        main_input = input("Enter choice: ")
+        if main_input.isdigit():
+            travel_menu(main_input, player)
+        else:
+            if second_menu(main_input, player) == "exit":
+                print("-Session Ended-")
+                break
+
+
+
+
+
+airport_range_list = ["Thailand, Suvarnabhumi International Airport [Longitude, Latitude] NW 354°",
+                "Cambodia, Phnom Penh International Airport [Longitude, Latitude] NW 340°",
+                "Vietnam, Noi Bai International Airport [Longitude, Latitude] NE 112°",
+                "Singapore, Changi Airport [Longitude, Latitude] NE 170°",
+]
+
+distress_list = []
+
+main_menu(player)
