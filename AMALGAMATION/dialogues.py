@@ -1,3 +1,47 @@
+landed_evil = ["""It was a rough landing, you hear the sound of terrified people screaming
+as they run for their lives. You run towards the danger and see a 
+figure at the center of all the commotion.""",
+               """The landing was smoother than you expected, the airport is empty but you
+see a person and their Pokemon, just attacking the infrastructure.
+You approach them.""",
+               """After landed, you made some repairs to your plane and siphoned the fuel 
+from another aircraft. I was easy with all the commotion. You are then 
+approached by someone, this looks like trouble.""",
+               """You landed safely, while refilling your tank, someone approached you.""",
+               """It's not everyday you see something like this, but recently it feels like
+it's every other hour.""",
+               """Mistakes were made, now you're framed for something someone else did,
+in all the chaos, you approach one of the culprit at the airport 
+while civilians flee in terror.""",
+               """That was a smooth landing, not bad for a criminal on the run,
+you wonder if you were more handsome, girls would fond over 
+you like the serial killers on TV. Your thought was cut short
+when an idiot approach you.""",
+               """There hasn't been a moment this week where your landing was pleasant,
+just one criminal after another, or a crazed Pokemon attacking you.
+This time, it's the former...""",
+                """You heard a *thud* when you landed, you could've sworn you saw something
+on the runway... You landed safely, but a person approaches you.""",
+               ]
+
+land_safe = ["""You landed safely, but... why is there a Pokemon on the runway???""",
+             """Smooth landing, but you just noticed there was a Pokemon chasing your plane.
+Here it comes!!!""",
+             """You landed safely, nobody realises yat you are a criminal on the loose,
+hey, whats that over there?""",
+             """If only all your landings could be this smooth, this place might
+have some strong Pokemon. You look around the area. """,
+             """The landing was bumpier than usual, but you made it safely to the ground
+you look around you, nobody is after you. Oh, whats this?""",
+             """Easier than stealing candy from a baby! Your landing was flawless, so great
+that it even attracted a little bit of attention of a Pokemon.""",
+             """You saw a Rayquaza on your way down, no other planes are flying right now,
+makes sense, you gotta respect a flying dragon enough not to enter its
+airspace, it might get territorial. Oh, another less threatening Pokemon"""
+             ]
+
+
+
 villain_intro = ["""Stop what I am doing? A true criminal would never agree to such a simple
 and polite request!""",
                  "Team Rocket?! Don’t lump me in with those Bozos!!",
