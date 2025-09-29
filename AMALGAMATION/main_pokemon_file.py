@@ -5,6 +5,8 @@ import all_pokemon_list
 from type_chart_factor import type_bonus_dict
 from attack_dict import attack_dict
 from all_pokemon_list import Arceus
+from all_pokemon_list import Pikachu
+from all_pokemon_list import Meowth
 from all_pokemon_list import LC_Poke
 from all_pokemon_list import NU_Poke
 from all_pokemon_list import OU_Poke
@@ -32,6 +34,7 @@ class Human:
         self.exclude = set()
         self.team_p = []
         self.exclude_p = set()
+        self.achv = []
         if rank == "cop":
             for team_no in range(1):
                 available_poke = []
@@ -125,6 +128,22 @@ class Pokemon:
         elif float(type_bonus(key, player_2)) < 1:
             d_print("Its not very effective!\n")
         # + str(player_2.health) + " " + str(dmg_out))
+
+
+
+def police_attack():
+    "function to place at the beginning of every flight selection"
+    if "Global Warming" in  player_achv:
+        player.health -= 50
+        print("Global ")
+
+
+
+def flight_cost(distance):
+    fuel_cost = (distance / 7500) * 100
+    player.fuel -= int(fuel_cost)
+    co2_cost = int(distance * 0.246)
+    achv_dict["co2"][1] -= co2_cost
 
 
 
@@ -558,7 +577,7 @@ def wild_capture(wild, player):
     """
     while True:
         if len(player.team) < 6:
-            print(f"You defeated the {wild.name}, it started following you.")
+            print(f"{wild.name}, started following you.")
             player.team.append(wild)
             break
         else:
@@ -836,7 +855,6 @@ of Pokemon. Are you sure you want to continue?""")
             break
         else:
             print("Invalid input")
-
 
 
 
@@ -1257,11 +1275,12 @@ def poker(player1,player2):
             print("Fine")
 
 
+
 def into_team2(player, opo, wild):
     """
     The inner function used for stealing or capturing Pokemon, the function
     creates a loop until you enter 0 that allows you to move the opposing
-    pokemon into your team, and moves excess Pokemon into the wild list
+    Pokemon into your team, and moves excess Pokemon into the wild list
     :param player: player
     :param opo: opponent whose team to check, write None if capturing wild Pokemon
     :param wild: wild pokemon, write None if battling human NPC
@@ -1270,10 +1289,10 @@ def into_team2(player, opo, wild):
     if wild == None:
         while True:
             if len(player.team) < 6:
-                while len(player.team) < 6:
-                    for pokemon in opo.team:
-                        player.team.append(pokemon)
-                    break
+                while len(player.team) < 6 and len(opo.team) > 0:
+                    print(f"{opo.team[0]} was added to your team.")
+                    player.team.append(opo.team[0])
+                    opo.team.remove(opo.team[0])
                 break
             else:
                 d_print("Which Pokemon would you like to add to your team?\n")
@@ -1345,7 +1364,7 @@ def into_team2(player, opo, wild):
 
 
 def lose_poke(player,opo):
-    print("The opponent gonna take 1 pokemon from your team")
+    d_print("The opponent stole one od your Pokemon, you ran off!")
     if len(player.team) > 0:
         take = random.choice(player.team)
         player.team.remove(take)
@@ -1355,6 +1374,13 @@ def lose_poke(player,opo):
 
 
 def villain_interaction(player, villain):
+    """
+    Function for interacting with a villain when player lands on an airport
+    with an anomaly.
+    :param player:
+    :param villain:
+    :return:
+    """
     d_print(f"{villain.name}: {random.choice(villain_intro)}\n")
     d_print(f"{villain.name}: {random.choice(wdyw_line)}\n")
     print("""1. Battle
@@ -1407,8 +1433,12 @@ def villain_interaction(player, villain):
 
 
 
-def villain_gen():
-    villain_1 = Human("Lady Gaga", "intern")
+def villain_gen() -> list:
+    """
+    Generates a list of villains
+    :return: list of villains
+    """
+    villain_1 = Human("Lady Gaga", "grunt")
     villain_2 = Human("Zandaya", "grunt")
     villain_3 = Human("Beyonce", "grunt")
     villain_4 = Human("P Diddy", "manager")
@@ -1417,11 +1447,15 @@ def villain_gen():
     villain_7 = Human("Sydney Sweeney", "exec")
     villain_8 = Human("Ed Sheeran", "exec")
     villain_human_list = [villain_1, villain_2, villain_3, villain_4, villain_5, villain_6, villain_7, villain_8]
-    return villain_list
+    return villain_human_list
 
 
 
 def character_creator():
+    """
+    Creates the player and assigns them their first Pokemon
+    :return:
+    """
     player_name = input("Enter Your Name: ")
     player = Human(str(player_name), "player")
     d_print(f"Welcome, {player.name}.\n")
@@ -1464,6 +1498,11 @@ def character_creator():
 
 
 def tutorial(player):
+    """
+    Tutorial scenario to be run at the beginning of the game after character_creator
+    :param player:
+    :return:
+    """
     d_print("=" * 100)
     print("")
     d_print(f"""News Anchor: This just in, 8 airports around the world have been
@@ -1541,21 +1580,53 @@ pardoned of all misunderstandings.\n""")
 
 
 
+def arceus_encounter():
+    """
+    Used for when the player triggers an Arceus encounter after playing
+    Russian Roulette 2 times.
+    :return: None
+    """
+    if Arceus not in wild_poke and Arceus not in player.team:
+        wild_encounter_battle(player.team[0], player, arceus_list)
+
+
 
 arceus_list = [Arceus]
 wild_poke = []
 evil_poke = []
 player_achv = []
-villain_list = []
 villain_list = villain_gen()
 Sam = Human("Sam", "exec")
 Meeri = Human("Meeri", "cop")
 Dahmer = Human("Police Officer Dahmer", "cop")
 player = character_creator()
-tutorial(player)
-villain_interaction(Sam, Meeri)
-print(player_achv)
-print(achv_dict["poker"][1])
+# tutorial(player)
+# print(villain_list[0].name)
+# print(villain_list[0].team)
+# for pokemon in villain_list[4].team:
+#     print(pokemon.name)
+# villain_interaction(player, villain_list[0])
+#
+# for pokemon in player.team:
+#     print(pokemon.name)
+# # print(player_achv)
+# print(achv_dict["poker"][1])
+
+# all_poke_heal(player)
+# villain_interaction(player, villain_list[0])
+#
+# all_poke_heal(player)
+# wild_encounter_battle(player.team[0], player, wild_poke)
 
 
+# distance = "calculate_distance(A,B,C,D)"
+distance = 5000
 
+
+# for i in range(10):
+#     flight_cost(distance)
+#     achievement_check(achv_dict, player_achv)
+#     print(player_achv)
+#     print(player.fuel)
+
+###############################################################3 TEST

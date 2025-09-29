@@ -1,5 +1,5 @@
 achv_dict = {
-"co2": ["Global Warming", 5000],
+"co2": ["Global Warming", 10000],
 "rr": ["Sinful Transgression", 2],
 "poker": ["Heart of The Cards", 1],
 "continent": ["Sightseer", 7],

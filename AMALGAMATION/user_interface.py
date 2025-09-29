@@ -1,4 +1,13 @@
 from main_pokemon_file import player
+from main_pokemon_file import player_achv
+from main_pokemon_file import into_team
+from all_pokemon_list import Meowth
+from all_pokemon_list import Pikachu
+from main_pokemon_file import wild_capture
+from main_pokemon_file import villain_interaction
+from main_pokemon_file import Meeri
+from main_pokemon_file import villain_list
+import main_pokemon_file
 
 def second_menu(input_sec, player):
     choice = str(input_sec).strip().casefold()
@@ -22,20 +31,36 @@ def second_menu(input_sec, player):
         print("Pokemon List:")
         for index, pokemon in enumerate(player.team):
             print(f"{index + 1}. {pokemon.name} "
-                  f"[{pokemon.health}/{pokemon.max_health}"
-                  f"")
+                  f"[{pokemon.health}/{pokemon.max_health}]"
+                  f" - Attacks: [{pokemon.atk_1:^16}] [{pokemon.atk_2:^16}]"
+                  f" [{pokemon.atk_3:^16}] [{pokemon.atk_4:^16}]")
         input("Press Enter to continue")
         print("=" * 120)
         return None
     elif choice == "d" or choice.casefold() == "achievements":
         print("=" * 120)
-        print("PLACE HOLDER MENU FOR ACHIEVEMENTS")
+        for index, achv in enumerate(player_achv):
+            print(f"{index + 1}. {achv}")
         input("Press Enter to continue")
         print("=" * 120)
         return None
-    elif input_sec == "PAYDAY":
+    elif input_sec == "PAYDAY" and Meowth not in player.team:
         print("=" * 120)
         print("[YOU RECEIVED MEOWTH]") # Saved for later MIGHT REMOVE
+        if len(player.team) == 6:
+            into_team(player, None, Meowth)
+        else:
+            wild_capture(Meowth, player)
+        input("Press Enter to continue")
+        print("=" * 120)
+        return None
+    elif input_sec == "I choose you!" and Pikachu not in player.team:
+        print("=" * 120)
+        print("[YOU RECEIVED PIKACHU]") # Saved for later MIGHT REMOVE
+        if len(player.team) == 6:
+            into_team(player, None, Pikachu)
+        else:
+            wild_capture(Pikachu, player)
         input("Press Enter to continue")
         print("=" * 120)
         return None
@@ -53,6 +78,7 @@ def travel_menu(input_travel, player):
     if choice == 1:
         print("=" * 120)
         print("PLACE HOLDER MENU FOR TRAVEL OPTION 1")
+        villain_interaction(player, villain_list[0])
         input("Press Enter to continue")
         print("=" * 120)
     elif choice == 2:
@@ -123,5 +149,5 @@ airport_range_list = ["Thailand, Suvarnabhumi International Airport [Longitude, 
 distress_list = []
 
 
-main_menu(player)
-
+# main_menu(player)
+print(villain_list)

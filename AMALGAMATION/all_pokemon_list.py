@@ -1434,11 +1434,20 @@ Uber_Poke = [
     Mega_Lucario
 ]
 
+# ----------------------------
+# OTHERS
+# ----------------------------
+
+Pikachu = Pokemon("Pikachu", None, "Electric", None,
+                      80, 120, 80, 100, "Volt Tackle",
+                      "Iron Tail", "Giga Impact", "1000万ボルト")
+
+Meowth = Pokemon("Meowth", None, "Normal", None,
+                      80, 120, 80, 100, "Shadow Claw",
+                      "Pay Day", "Dream Eater", "Water Pulse")
 
 
-
-
-
+special = [Pikachu, Meowth, Arceus]
 
 
 
@@ -1454,7 +1463,7 @@ Uber_Poke = [
 # print(len(Uber_Poke))
 # print(57 + 80 + 96 + 77)
 #
-# for pokemon in LC_Poke:  # THIS CODE IS FOR TESTING GENERATED POKEMON ATTACKS ARE IN THE ATTACK DICT
+# for pokemon in special:  # THIS CODE IS FOR TESTING GENERATED POKEMON ATTACKS ARE IN THE ATTACK DICT
 #         if pokemon.atk_1 not in attack_dict:
 #             print(str(pokemon.atk_1))
 #         if pokemon.atk_2 not in attack_dict:

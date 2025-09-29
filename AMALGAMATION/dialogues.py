@@ -1,4 +1,4 @@
-villain_intro = ["""Stop what I am doing? A true criminal would never agree to such a simple "
+villain_intro = ["""Stop what I am doing? A true criminal would never agree to such a simple
 and polite request!""",
                  "Team Rocket?! Don’t lump me in with those Bozos!!",
                  """According to criminal law, you must oblige to either a Pokemon Battle, a Game of Poker,
@@ -38,8 +38,8 @@ wdyw_line = ["What do you want?",
 
 battle_intro_line = ["Come get some!",
                      "Please don't hurt me..",
-                     """I am a true criminal, despite my evil actions, I still have honor and live by our "
-                     code. I will accept your challenge!""",
+                     """I am a true criminal, despite my evil actions, I still have honor and live by our 
+code. I will accept your challenge!""",
                      "Check out my scary Pokemon!!",
                      "My girlfriend left me because my Pokemon were weak, now look at them!",
                      "I cant believe you challenged me, I am so excited!",
@@ -51,14 +51,15 @@ battle_intro_line = ["Come get some!",
 poker_intro_line = ["Ooh, gambling, I love gambling!",
                     "My mom told me this is inappropriate.",
                     "Howdy, partner.",
-                    """Cheat?! I would never! I only cheat against goodie two shoe’d law abiding citizens, "
+                    """Cheat?! I would never! I only cheat against goodie two shoe’d law abiding citizens, 
 I will honor our clash of ill intent like a true villain.""",
                     "I use psychic Pokemon to cheat at Poker!",
                     "I have the fast hands in the west.. but where are we?",
-                    "My wife left me with out kids because I had a problem. Let me show you!",
+                    "My wife left me with our kids because I had a problem. Let me show you!",
                     "Since when did playing Poker become law?",
                     "Well, I definitely wont break any rules or cheat!",
-                    "Stop it!! Lets play!"
+                    "Stop it!! Lets play!",
+                    "I don't have a problem, YOU have a problem!"
                     ]
 
 
@@ -96,5 +97,6 @@ leave_chat_line = ["Well, thanks for nothing..",
                    "Go back to Reddit, stinky face!",
                    "Voldemort had a nicer nose.",
                    "Ever heard of a shower?",
-                   ""
+                   "Wow, just go then..",
+                   "You broke my heart!"
                    ]
