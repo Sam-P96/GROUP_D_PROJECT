@@ -21,6 +21,16 @@ from dialogues import poker_intro_line
 from dialogues import roulette_intro_line
 from dialogues import invalid_selection_line
 from dialogues import leave_chat_line
+# FLIGHT FUNCTION IMPORTS
+from free_flight import free_flight
+from used_functions import current_location, calculate_coordinates
+import random
+from data_function import villain_gen
+from used_functions import type_with_cursor
+from used_functions import store_data
+from used_functions import radar
+from used_functions import blip_line
+from used_functions import type_with_sound
 
 
 
@@ -1621,6 +1631,7 @@ pardoned of all misunderstandings.\n""")
     time.sleep(2)
 
 
+
 def arceus_encounter():
     """
     Used for when the player triggers an Arceus encounter after playing
@@ -1629,57 +1640,113 @@ def arceus_encounter():
     """
     if Arceus not in wild_poke and Arceus not in player.team and "Sinful Transgression" in player_achv:
         wild_arceus_battle(player.team[0], player, arceus_list)
+        player_achv.append("")
 
 
 
-arceus_list = [Arceus]
-wild_poke = []
-evil_poke = []
-player_achv = ["Sinful Transgression"]
-villain_list = villain_gen()
+def poke_stat_options(player):
+    """
+    A function to run when the player opens the Pokemon & Player Stats Menu
+    :param player:
+    :return:
+    """
+    d_print("Press Enter to Continue or Enter \"RELEASE\" to select a Pokemon to release.\n")
+    choice = input("Enter your choice: ")
+    if choice == "RELEASE":
+        print("Which Pokemon do you want to release?")
+        release = input("Select your choice: ")
+        print("""Are you sure?""")
+        print("""1. Yes
+2. No""")
+        sure = input("Select your choice: ")
+        try:
+            test = player.team[int(release) - 1]
+            if player.team[int(release) - 1] in player.team and sure == "1":
+                d_print(f"{player.team[int(release) -1].name} was released into the wild. Goodbye, friend.\n")
+                wild_poke.append(player.team[int(release) - 1])
+                player.team.remove(player.team[int(release) - 1])
+        except ValueError:
+            print("Invalid Input")
 
 
-Sam = Human("Sam", "manager")
-Meeri = Human("Meeri", "exec")
-Dahmer = Human("Police Officer Dahmer", "cop")
-
-# villain_interaction(Sam, Meeri)
-player = character_creator()
-villain_interaction(player, Meeri)
-# tutorial(player)
-# print(villain_list[0].name)
-# print(villain_list[0].team)
-# for pokemon in villain_list[4].team:
-#     print(pokemon.name)
-# villain_interaction(player, villain_list[0])
-#
-# for pokemon in player.team:
-#     print(pokemon.name)
-# # print(player_achv)
-# print(achv_dict["poker"][1])
-
-# all_poke_heal(player)
-# villain_interaction(player, villain_list[0])
-#
-# all_poke_heal(player)
-# wild_encounter_battle(player.team[0], player, wild_poke)
 
 
-# distance = "calculate_distance(A,B,C,D)"
-distance = 5000
 
 
-# for i in range(10):
-#     flight_cost(distance)
-#     achievement_check(achv_dict, player_achv)
-#     print(player_achv)
-#     print(player.fuel)
+def villain_assign_randomly(airport_list,villain_list):
+    villain_list=villain_gen()
+    villain_airport=None
+    chance_of_villain=0.5
+    villain_randomize={airport['ident']:None for airport in airport_list}
+    if airport_list and random.random()<chance_of_villain:
+        villain_airport=random.choice(airport_list)
+        villain_randomize[villain_airport['ident']]=villain_list[0]
+    return villain_airport,villain_randomize
 
-###############################################################3 TEST
+
+
+def main_mechanics():
+    # print(b)
+
+    airport_list=radar(lat,longi,ident=b)
+    while True:
+
+        villain_airport,villain_randomize=villain_assign_randomly(airport_list,villain_list=None)
+        #{here should be the randomizer for villains}
+        # villain_list=villain_gen()
+        # #this will just assign the chance of villain being there
+        # villain_airport=None
+        # chance_of_villain=0.5 #50%chance of villain being there
+        # villain_randomize={airport['ident']:None for airport in airport_list}
+        # if airport_list and random.random()<chance_of_villain:
+        #     villain_airport=random.choice(airport_list)
+        #     villain_randomize[villain_airport['ident']]=villain_list[0]
+
+        print("NEARBY AIRPORTS:\n")
+        villain_yn=None
+        for i, item in enumerate(airport_list,start=1):
+            list_of_airports=f"{i} . [{item['ident']}] {item['name']}, {item['airport_name']} [{item['continent']}]"
+
+            if villain_airport and item ==villain_airport:
+                blip_line("\033[31m    ANOMALY DETECTED \033[0m")
+                list_of_airports=f"\033[31m{list_of_airports} \033[0m"
+                villain_yn="y"
+
+            type_with_sound(list_of_airports)
+        type_with_sound('0 . Free Flight',speed=0.03)
+
+
+
+
+        value=int(input("\nPress the given corresponding number you want to travel: "))
+        if value==0:
+            #{here should be the flying part i mean graphcal)
+            distance=float(input("enter the distance in km: "))
+            degree=float(input("enter the direction in degree: "))
+            new_airport_list= free_flight(lat,longi,distance,degree,ident=b)
+            if new_airport_list:
+                airport_list=new_airport_list
+                villain_airport,villain_randomize=villain_assign_randomly(airport_list,villain_list=None)
+
+        elif 1<=value<=len(airport_list):
+            #{here should be the landing part)
+            airport=airport_list[value-1]
+            lat1=float(airport['latitude'])
+            lon1=float(airport['longitude'])
+            current_location(lat1,lon1)
+            airport_list=radar(lat1,lon1,ident=airport['ident'])
+            break
+        else:
+            print("Not a valid choice 😡")
+    else:
+        print('goodbye')
+
+
+
 
 def second_menu(input_sec, player):
+    """Part of the main menu"""
     choice = str(input_sec).strip().casefold()
-
     if choice == "a" or choice.casefold() == "menu":
         print("=" * 120)
         print("PLACE HOLDER MENU FOR MENU")
@@ -1696,12 +1763,17 @@ def second_menu(input_sec, player):
         return None
     elif choice == "c" or choice.casefold() == "stats":
         print("=" * 120)
+        print()
+        print("Airplane: " + str(player.health) + "/300")
+        print("Fuel: " + str(player.fuel) + "/100")
+        print("Location: " + str(player.location))
         print("Pokemon List:")
         for index, pokemon in enumerate(player.team):
             print(f"{index + 1}. {pokemon.name} "
                   f"[{pokemon.health}/{pokemon.max_health}]"
                   f" - Attacks: [{pokemon.atk_1:^16}] [{pokemon.atk_2:^16}]"
                   f" [{pokemon.atk_3:^16}] [{pokemon.atk_4:^16}]")
+        poke_stat_options(player)
         input("Press Enter to continue")
         print("=" * 120)
         return None
@@ -1742,29 +1814,14 @@ def second_menu(input_sec, player):
 
 
 def travel_menu(input_travel, player):
+    """Part of the main menu, but for travelling"""
     choice = int(input_travel)
     if choice == 1:
         print("=" * 120)
-        print("PLACE HOLDER MENU FOR TRAVEL OPTION 1")
-        villain_interaction(player, villain_list[0])
-        input("Press Enter to continue")
-        print("=" * 120)
-    elif choice == 2:
-        print("=" * 120)
-        print("PLACE HOLDER MENU FOR TRAVEL OPTION 2")
-        input("Press Enter to continue")
-        print("=" * 120)
-    elif choice == 3:
-        print("=" * 120)
-        print("PLACE HOLDER MENU FOR TRAVEL OPTION 3")
-        input("Press Enter to continue")
-        print("=" * 120)
-        arceus_encounter()
-    elif choice == 0 or choice == "FREE FLIGHT":
-        print("=" * 120)
-        print("PLACE HOLDER MENU FOR FREE FLIGHT")
-        input("Press Enter to continue")
-        print("=" * 120)
+        main_mechanics()
+    elif choice == 0:
+        if vil
+        elif
     else:
         print("=" * 120)
         print("Please enter a valid input.")
@@ -1774,25 +1831,14 @@ def travel_menu(input_travel, player):
 
 
 def main_menu(player):
+    """Main menu, start this after the tutorial"""
     while True:
-        all_poke_heal(player)
-        print("Airplane: " + str(player.health) + "/300")
-        print("Fuel: " + str(player.fuel) + "/100")
-        print("Location: " + str(player.location))
-        print("Airport Distress Signals: ")
-        if len(distress_list) > 0:
-            for index, distress in enumerate(distress_list[0:3]):
-                print(str(index) + distress_list[distress])
-        else:
-            print("[None]")
-        print("\n" * 4)
-        print("Travel: ")
-        if len(airport_range_list) > 0:
-            for index, airport in enumerate(airport_range_list[0:3]):
-                print(str(index +1) + ". " + airport)
-        else:
-            print("[No airport within landing range]")
-        print("0. Free Flight")
+        print()
+        print()
+        print()
+        print()
+        print("1. Initiate Travel")
+        print("0. Land")
         print("-" * 120)
         print("A. Open Menu")
         print("B. Open Bag")
@@ -1808,14 +1854,22 @@ def main_menu(player):
 
 
 
+#RUN DUY'S INTRO HERE
 
-
-airport_range_list = ["Thailand, Suvarnabhumi International Airport [Longitude, Latitude] NW 354°",
-                "Cambodia, Phnom Penh International Airport [Longitude, Latitude] NW 340°",
-                "Vietnam, Noi Bai International Airport [Longitude, Latitude] NE 112°",
-                "Singapore, Changi Airport [Longitude, Latitude] NE 170°",
-]
-
+# LIST OF LISTS AND STUFF WE WANT TO START OUT WITH
+arceus_list = [Arceus]
+wild_poke = []
+evil_poke = []
+player_achv = []
+villain_list = villain_gen()
+Dahmer = Human("Police Officer Dahmer", "cop")
+airport_range_list = []
 distress_list = []
+default_location="EFHK"
+lat = float(store_data()[default_location]["latitude"])
+longi = float(store_data()[default_location]["longitude"])
+b=current_location(lat,longi,silent=False)
 
+player = character_creator()
+# tutorial(player)
 main_menu(player)
