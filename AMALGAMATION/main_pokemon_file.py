@@ -1640,7 +1640,7 @@ def arceus_encounter():
     """
     if Arceus not in wild_poke and Arceus not in player.team and "Sinful Transgression" in player_achv:
         wild_arceus_battle(player.team[0], player, arceus_list)
-        player_achv.append("")
+        achv_dict["defeat god"][1] -= 1
 
 
 
@@ -1663,13 +1663,12 @@ def poke_stat_options(player):
             test = player.team[int(release) - 1]
             if player.team[int(release) - 1] in player.team and sure == "1":
                 d_print(f"{player.team[int(release) -1].name} was released into the wild. Goodbye, friend.\n")
+                if "Father's Blessing" not in player_achv and player.team[int(release) -1] == Arceus:
+                    achv_dict["free god"][1] -= 1
                 wild_poke.append(player.team[int(release) - 1])
                 player.team.remove(player.team[int(release) - 1])
         except ValueError:
             print("Invalid Input")
-
-
-
 
 
 
@@ -1738,7 +1737,6 @@ def main_mechanics():
             print("Not a valid choice 😡")
     else:
         print('goodbye')
-
 
 
 
@@ -1841,10 +1839,69 @@ def travel_menu(input_travel, player, villain_status):
 
 
 
+def banner_text(text: str = " ", screen_width: int = 80) -> None:
+    """
+    Prints out different lines of a banner created with `** on each sides`.
+
+    :param text: Prints str inside the banner.
+        An asterisk (*) will result in a row of asterisks.
+        Prints out " " by default if left empty.
+    :param screen_width: The width of the banner by character number.
+        The width is set to 80 by default if left empty.
+    :raises ValueError: if the supplied str is too long to fit the banner.
+    :return:
+        None
+    """
+    # screen_width = y # I originally used this, but you can just change it up there
+    if len(text) > screen_width - 4:
+        raise ValueError("String {0} is larger than specified width {1}"
+                         .format(text, screen_width))
+    if text == "*":
+        print("*" * screen_width)
+    else:
+        output_string = f"**{text.center(screen_width - 4)}**"
+        print(output_string)
+
+
+
+def death_check():
+    if len(player.team) == 0:
+        d_print("""You have no Pokemon left, you see a black Rayquaza in the distance. 
+Unfortunately for you, it seems like you are caught in it's territory.
+Without any Pokemon to defend you, Rayquaza attacked you directly with 
+a Hyper Beam.\n""")
+        banner_text("*")
+        banner_text()
+        banner_text("- GAME OVER -")
+        banner_text()
+        banner_text("*")
+        return True
+    elif player.health <= 0:
+        d_print("You've taken too much damage without recovery. Your journey ends here.")
+        banner_text("*")
+        banner_text()
+        banner_text("- GAME OVER -")
+        banner_text()
+        banner_text("*")
+        return True
+    elif player.fuel <= 0:
+        print("""You're out of fuel, your plane is losing altitude fast. You try to...""")
+        banner_text("*")
+        banner_text()
+        banner_text("- GAME OVER -")
+        banner_text()
+        banner_text("*")
+        return True
+    else:
+        return False
 
 def main_menu(player):
     """Main menu, start this after the tutorial"""
     while True:
+        achievement_check(achv_dict, player_achv)
+        check = death_check()
+        if check == True:
+            break
         print()
         print()
         print()
@@ -1885,3 +1942,5 @@ player = character_creator()
 wild_pokemon_assigner(player, evil_poke)
 # tutorial(player)
 main_menu(player)
+
+
