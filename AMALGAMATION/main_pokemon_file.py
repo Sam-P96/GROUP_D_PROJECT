@@ -12,6 +12,8 @@ from all_pokemon_list import NU_Poke
 from all_pokemon_list import OU_Poke
 from all_pokemon_list import Uber_Poke
 from achievements import achv_dict
+from dialogues import landed_evil
+from dialogues import land_safe
 from dialogues import villain_intro
 from dialogues import wdyw_line
 from dialogues import battle_intro_line
@@ -497,7 +499,6 @@ def into_team(player, opo, wild):
                     print(f"{opo.team[0].name} was added to your team.")
                     player.team.append(opo.team[0])
                     opo.team.remove(opo.team[0])
-                break
             else:
                 d_print("Which Pokemon would you like to add to your team?\n")
                 for index_o, poke_o in enumerate(opo.team):
@@ -815,6 +816,32 @@ def wild_encounter_battle(your_mon, you, wild_pokemon_list):
     :param wild_pokemon_list: the list of wild Pokemon to be randomly selected
     :return:
     """
+    d_print(random.choice(land_safe) + "\n")
+    wild_mon = random.choice(wild_pokemon_list)
+    d_print(f"\nA wild {wild_mon.name} appeared!!\n")
+    pokemon_battle_4wild(your_mon, wild_mon, you)
+    your_healthy_team = team_health_check(you)
+    if len(your_healthy_team) <= 0:
+        print("You Lost!")
+    else:
+        wild_capture(wild_mon, you)
+    # for poke in you.team: # Code for testing team modification
+    #     print(poke.name)
+
+
+
+def wild_arceus_battle(your_mon, you, wild_pokemon_list):
+    """
+    Takes in your first Pokemon, you, and the wild Pokemon list (wild Poke)
+    or you can change the wild Poke list to be randomly selected from, then
+    runs the wild Pokemon Battle Function
+    :param your_mon: Your first Pokemon in you.team format
+    :param you: The player
+    :param wild_pokemon_list: the list of wild Pokemon to be randomly selected
+    :return:
+    """
+    d_print("The earth began to rumble, the heavens parted, and a portal in the sky opened.\n")
+    d_print("For your transgression, you will be judge by he who stands above all other Pokemon.\n")
     wild_mon = random.choice(wild_pokemon_list)
     d_print(f"\nA wild {wild_mon.name} appeared!!\n")
     pokemon_battle_4wild(your_mon, wild_mon, you)
@@ -1293,7 +1320,6 @@ def into_team2(player, opo, wild):
                     print(f"{opo.team[0].name} was added to your team.")
                     player.team.append(opo.team[0])
                     opo.team.remove(opo.team[0])
-                break
             else:
                 d_print("Which Pokemon would you like to add to your team?\n")
                 for index_o, poke_o in enumerate(opo.team):
@@ -1381,6 +1407,8 @@ def villain_interaction(player, villain):
     :param villain:
     :return:
     """
+    d_print(random.choice(landed_evil) + "\n")
+    print()
     d_print(f"{villain.name}: {random.choice(villain_intro)}\n")
     d_print(f"{villain.name}: {random.choice(wdyw_line)}\n")
     print("""1. Battle
@@ -1557,6 +1585,7 @@ probably doesn't care.""")
     d_print("""\nDahmer: Dont underestimate me, I am aware that when battling, 
 that my command to my Pokemon is case sensitive, or my Pokemon will get confused 
 and freeze.\n""")
+    time.sleep(2)
     print("=" * 100)
     trainer_battle(player, Dahmer)
     if len(player.team) > 0:
@@ -1592,8 +1621,8 @@ def arceus_encounter():
     Russian Roulette 2 times.
     :return: None
     """
-    if Arceus not in wild_poke and Arceus not in player.team:
-        wild_encounter_battle(player.team[0], player, arceus_list)
+    if Arceus not in wild_poke and Arceus not in player.team and "Sinful Transgression" in player_achv:
+        wild_arceus_battle(player.team[0], player, arceus_list)
 
 
 
@@ -1604,11 +1633,13 @@ player_achv = []
 villain_list = villain_gen()
 
 
-Sam = Human("Sam", "exec")
-Meeri = Human("Meeri", "cop")
+Sam = Human("Sam", "manager")
+Meeri = Human("Meeri", "exec")
 Dahmer = Human("Police Officer Dahmer", "cop")
-player = character_creator()
-tutorial(player)
+
+villain_interaction(Sam, Meeri)
+# player = character_creator()
+# tutorial(player)
 # print(villain_list[0].name)
 # print(villain_list[0].team)
 # for pokemon in villain_list[4].team:
@@ -1721,6 +1752,7 @@ def travel_menu(input_travel, player):
         print("PLACE HOLDER MENU FOR TRAVEL OPTION 3")
         input("Press Enter to continue")
         print("=" * 120)
+        arceus_encounter()
     elif choice == 0 or choice == "FREE FLIGHT":
         print("=" * 120)
         print("PLACE HOLDER MENU FOR FREE FLIGHT")
@@ -1736,6 +1768,7 @@ def travel_menu(input_travel, player):
 
 def main_menu(player):
     while True:
+        all_poke_heal(player)
         print("Airplane: " + str(player.health) + "/300")
         print("Fuel: " + str(player.fuel) + "/100")
         print("Location: " + str(player.location))
@@ -1778,4 +1811,4 @@ airport_range_list = ["Thailand, Suvarnabhumi International Airport [Longitude, 
 
 distress_list = []
 
-main_menu(player)
+# main_menu(player)
