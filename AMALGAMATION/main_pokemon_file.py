@@ -1703,19 +1703,16 @@ def main_mechanics():
         #     villain_randomize[villain_airport['ident']]=villain_list[0]
 
         print("NEARBY AIRPORTS:\n")
-        villain_yn=None
         for i, item in enumerate(airport_list,start=1):
             list_of_airports=f"{i} . [{item['ident']}] {item['name']}, {item['airport_name']} [{item['continent']}]"
 
             if villain_airport and item ==villain_airport:
                 blip_line("\033[31m    ANOMALY DETECTED \033[0m")
                 list_of_airports=f"\033[31m{list_of_airports} \033[0m"
-                villain_yn="y"
+                villain_yn = True
 
             type_with_sound(list_of_airports)
         type_with_sound('0 . Free Flight',speed=0.03)
-
-
 
 
         value=int(input("\nPress the given corresponding number you want to travel: "))
@@ -1735,7 +1732,8 @@ def main_mechanics():
             lon1=float(airport['longitude'])
             current_location(lat1,lon1)
             airport_list=radar(lat1,lon1,ident=airport['ident'])
-            break
+            has_villain = (villain_randomize.get(airport['ident']))  # assumes value is None/False if no villain
+            return "VILLAIN" if has_villain else "SAFE"
         else:
             print("Not a valid choice 😡")
     else:
@@ -1812,21 +1810,35 @@ def second_menu(input_sec, player):
         return None
 
 
+villain_yn = "SAFE"
 
-def travel_menu(input_travel, player):
+def travel_menu(input_travel, player, villain_status):
     """Part of the main menu, but for travelling"""
     choice = int(input_travel)
     if choice == 1:
         print("=" * 120)
-        main_mechanics()
+        villain_yn.remove(villain_yn[0])
+        x = main_mechanics()
+        print(x)
+        villain_yn.append(x)
+        all_poke_heal(player)
     elif choice == 0:
-        if vil
-        elif
+        all_poke_heal(player)
+        if villain_status[0] == "VILLAIN":
+            villain_interaction(player, villain_list[0])
+            villain_yn.remove(villain_yn[0])
+            villain_yn.append("SAFE")
+        else:
+            arceus_encounter()
+            wild_encounter_battle(player.team[0], player, wild_poke)
+            villain_yn.remove(villain_yn[0])
+            villain_yn.append("SAFE")
     else:
         print("=" * 120)
         print("Please enter a valid input.")
         input("Press Enter to continue")
         print("=" * 120)
+
 
 
 
@@ -1846,7 +1858,7 @@ def main_menu(player):
         print("D. Open Achievements")
         main_input = input("Enter choice: ")
         if main_input.isdigit():
-            travel_menu(main_input, player)
+            travel_menu(main_input, player, villain_yn)
         else:
             if second_menu(main_input, player) == "exit":
                 print("-Session Ended-")
@@ -1863,13 +1875,13 @@ evil_poke = []
 player_achv = []
 villain_list = villain_gen()
 Dahmer = Human("Police Officer Dahmer", "cop")
-airport_range_list = []
-distress_list = []
+villain_yn = ["SAFE"]
 default_location="EFHK"
 lat = float(store_data()[default_location]["latitude"])
 longi = float(store_data()[default_location]["longitude"])
 b=current_location(lat,longi,silent=False)
 
 player = character_creator()
+wild_pokemon_assigner(player, evil_poke)
 # tutorial(player)
 main_menu(player)
