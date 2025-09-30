@@ -1398,6 +1398,7 @@ def villain_interaction(player, villain):
                 continue
         if user_input == "1": # Battle
             d_print(random.choice(battle_intro_line) + "\n")
+            time.sleep(1)
             trainer_battle(player, villain)
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
@@ -1407,6 +1408,7 @@ def villain_interaction(player, villain):
             break
         elif user_input == "2": # Poker
             d_print(random.choice(poker_intro_line) + "\n")
+            time.sleep(1)
             poker(player, villain)
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
@@ -1417,6 +1419,7 @@ def villain_interaction(player, villain):
             break
         elif user_input == "3": # Roulette
             d_print(random.choice(roulette_intro_line) + "\n")
+            time.sleep(1)
             start_rr_game(player, villain)
             if len(villain.team) <= 0:
                 d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
@@ -1524,18 +1527,19 @@ party and the Snag Em gear.\n""")
     print("")
     input("--Press Enter to continue--")
     print("=" * 100)
-    print("\n")
+    print()
     d_print("""You somehow made it to the airport. It's empty, everyone had been
 evacuated due to the terrorist threats. They upped the the security, but you 
 were able to make it past most of the guards. If only you could get to your
 plane then you would be able to...\n""")
-    #SLEEP
     print("")
+    time.sleep(1)
     print("Police Officer Jeffrey Dahmer: HOLD IT RIGHT THERE!!!")
-    time.sleep(2) #################################################################################3333 CHECK IF THIS BREAKS THE CODE "####################################################
+    time.sleep(3)
     print("")
     d_print("Oh no...\n")
     print()
+    time.sleep(1)
     input("--Press Enter to continue--")
     print("")
     d_print(f"""Dahmer: {player.name}, you are under arrest! Unlike other criminals
@@ -1579,7 +1583,7 @@ throughout the world. Surely, if you defeat all 8 of them, you will be
 pardoned of all misunderstandings.\n""")
     print("=" * 100 + "\n")
     # USE DUY'S FLIGHT AIMATION HERE 3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
-
+    time.sleep(2)
 
 
 def arceus_encounter():
