@@ -499,6 +499,8 @@ def into_team(player, opo, wild):
                     print(f"{opo.team[0].name} was added to your team.")
                     player.team.append(opo.team[0])
                     opo.team.remove(opo.team[0])
+                    if len(player.team) == 6:
+                        continue
             else:
                 d_print("Which Pokemon would you like to add to your team?\n")
                 for index_o, poke_o in enumerate(opo.team):
@@ -1320,6 +1322,8 @@ def into_team2(player, opo, wild):
                     print(f"{opo.team[0].name} was added to your team.")
                     player.team.append(opo.team[0])
                     opo.team.remove(opo.team[0])
+                    if len(player.team) == 6:
+                        continue
             else:
                 d_print("Which Pokemon would you like to add to your team?\n")
                 for index_o, poke_o in enumerate(opo.team):
@@ -1364,6 +1368,7 @@ def into_team2(player, opo, wild):
                     break
                 else:
                     print("Invalid input")
+            # break
     elif opo == None:
         while True:
             d_print("Which Pokemon from your team would you like to release?\n")
@@ -1390,12 +1395,13 @@ def into_team2(player, opo, wild):
 
 
 def lose_poke(player,opo):
-    d_print("The opponent stole one od your Pokemon, you ran off!")
+    d_print("The opponent stole one od your Pokemon, you ran off!\n")
+    time.sleep(1)
     if len(player.team) > 0:
         take = random.choice(player.team)
         player.team.remove(take)
         opo.team.append(take)
-        wild_poke.append(take)
+        evil_poke.append(take)
 
 
 
@@ -1469,7 +1475,7 @@ def villain_gen() -> list:
     Generates a list of villains
     :return: list of villains
     """
-    villain_1 = Human("Lady Gaga", "grunt")
+    villain_1 = Human("Lady Gaga", "exec")
     villain_2 = Human("Zandaya", "grunt")
     villain_3 = Human("Beyonce", "grunt")
     villain_4 = Human("P Diddy", "manager")
@@ -1629,7 +1635,7 @@ def arceus_encounter():
 arceus_list = [Arceus]
 wild_poke = []
 evil_poke = []
-player_achv = []
+player_achv = ["Sinful Transgression"]
 villain_list = villain_gen()
 
 
@@ -1637,8 +1643,9 @@ Sam = Human("Sam", "manager")
 Meeri = Human("Meeri", "exec")
 Dahmer = Human("Police Officer Dahmer", "cop")
 
-villain_interaction(Sam, Meeri)
-# player = character_creator()
+# villain_interaction(Sam, Meeri)
+player = character_creator()
+villain_interaction(player, Meeri)
 # tutorial(player)
 # print(villain_list[0].name)
 # print(villain_list[0].team)
@@ -1811,4 +1818,4 @@ airport_range_list = ["Thailand, Suvarnabhumi International Airport [Longitude, 
 
 distress_list = []
 
-# main_menu(player)
+main_menu(player)
