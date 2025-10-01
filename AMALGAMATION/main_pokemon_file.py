@@ -607,7 +607,7 @@ legal access to a PC to store excess Pokemon.\n""")
                 break
             else:
                 print("Invalid input")
-
+input("Press Enter to continue")
 
 # Ignore the highlight here
 def battle_steal(player, opo):
@@ -1708,10 +1708,10 @@ def main_mechanics():
             if villain_airport and item ==villain_airport:
                 blip_line("\033[31m    ANOMALY DETECTED \033[0m")
                 list_of_airports=f"\033[31m{list_of_airports} \033[0m"
-                villain_yn = True
+                # villain_yn = True
 
-            type_with_sound(list_of_airports)
-        type_with_sound('0 . Free Flight',speed=0.03)
+            print(list_of_airports)
+        print('0 . Free Flight')
 
 
         value=int(input("\nPress the given corresponding number you want to travel: "))
@@ -1732,7 +1732,7 @@ def main_mechanics():
             current_location(lat1,lon1)
             airport_list=radar(lat1,lon1,ident=airport['ident'])
             has_villain = (villain_randomize.get(airport['ident']))  # assumes value is None/False if no villain
-            return "VILLAIN" if has_villain else "SAFE"
+            return "VILLAIN" if has_villain else "SAFE", airport
         else:
             print("Not a valid choice 😡")
     else:
@@ -1745,24 +1745,52 @@ def second_menu(input_sec, player):
     choice = str(input_sec).strip().casefold()
     if choice == "a" or choice.casefold() == "menu":
         print("=" * 120)
-        print("PLACE HOLDER MENU FOR MENU")
-        a_menu = input("Press Enter to continue")
+        print("""
+1. Help
+2. Cheats
+0. Exit""")
+        a_menu = input("Select your choice: ")
+        if a_menu == "1":
+            print("Your objective is to fly around the world looking for villains to defeat.")
+            print("If there are not anomolies in your area, try free flight. Don't fly too far in one go.")
+            print("When you detect an anomoly fly to that location, then choose to ladnd there.")
+            print("Defeat all 8 villains to win the game. If you are out of Pokemon, you lose the game.")
+            print("You can heal your Pokemon with medicine from your bag.")
+            print("You may only carry 6 Pokemon at one time, you do not have access to a PC to store them.")
+        elif a_menu == "2":
+            print("Enter: PAYDAY to add 'Meowth' to your team in the main user interface")
+            print("Enter: PAYDAY to add 'I choose you!' to your team in the main user interface")
         print("=" * 120)
         if a_menu.casefold() == "exit":
             return "exit"
         return None
     elif choice == "b" or choice.casefold() == "bag":
         print("=" * 120)
-        print("PLACE HOLDER MENU FOR BAG")
+        print("1. Medicine")
+        print("2. Photograph")
+        print("3. Gun")
+        print("0. Exit")
+        choice = input("Select an Item: ")
+        if choice == "1":
+            all_poke_heal(player)
+            d_print("You've fully restored all your Pokemon to full health!\n")
+
+        elif choice == "2":
+            d_print("""Its a photo of you and your best friend from childhood. He's a
+famous pop star now a days, Ed Sheeran. Wonder what he is up to right now.\n""")
+
+        elif choice == "3":
+            d_print("Things arent that bad yet.\n")
         input("Press Enter to continue")
         print("=" * 120)
         return None
     elif choice == "c" or choice.casefold() == "stats":
         print("=" * 120)
         print()
-        print("Airplane: " + str(player.health) + "/300")
+        print(f"Player Name: {player.name}")
+        print("Airplane HP: " + str(player.health) + "/300")
         print("Fuel: " + str(player.fuel) + "/100")
-        print("Location: " + str(player.location))
+        print()
         print("Pokemon List:")
         for index, pokemon in enumerate(player.team):
             print(f"{index + 1}. {pokemon.name} "
@@ -1770,11 +1798,12 @@ def second_menu(input_sec, player):
                   f" - Attacks: [{pokemon.atk_1:^16}] [{pokemon.atk_2:^16}]"
                   f" [{pokemon.atk_3:^16}] [{pokemon.atk_4:^16}]")
         poke_stat_options(player)
-        input("Press Enter to continue")
         print("=" * 120)
         return None
     elif choice == "d" or choice.casefold() == "achievements":
         print("=" * 120)
+        if len(player_achv) == 0:
+            print("You have not unlocked any achievements.")
         for index, achv in enumerate(player_achv):
             print(f"{index + 1}. {achv}")
         input("Press Enter to continue")
@@ -1808,16 +1837,38 @@ def second_menu(input_sec, player):
         return None
 
 
-villain_yn = "SAFE"
 
+def latitude_check(latitude: float) -> str:
+    """ Checks the latitude then returns N or S depending on the degree"""
+    if latitude >= 0:
+        return "N"
+    else:
+        return "S"
+
+
+
+def longitude_check(longitude: float) -> str:
+    """Checks the longitude then returns E or W depending on the degree"""
+    if longitude >= 0:
+        return "E"
+    else:
+        return "W"
+
+
+
+# villain_yn = "SAFE" PUT THIS BACK IF ERRORS ARISE
 def travel_menu(input_travel, player, villain_status):
     """Part of the main menu, but for travelling"""
     choice = int(input_travel)
     if choice == 1:
         print("=" * 120)
         villain_yn.remove(villain_yn[0])
-        x = main_mechanics()
-        print(x)
+        output = main_mechanics()
+        x = output[0]
+        player_loca.remove(player_loca[0])
+        player_loca.remove(player_loca[0])
+        player_loca.append(output[1]["latitude"])
+        player_loca.append(output[1]["longitude"])
         villain_yn.append(x)
         all_poke_heal(player)
     elif choice == 0:
@@ -1864,7 +1915,8 @@ def banner_text(text: str = " ", screen_width: int = 80) -> None:
 
 
 
-def death_check():
+def death_check(): # Lose conditions
+    """Checks the player for losing conditions and ends the game accordingly."""
     if len(player.team) == 0:
         d_print("""You have no Pokemon left, you see a black Rayquaza in the distance. 
 Unfortunately for you, it seems like you are caught in it's territory.
@@ -1895,14 +1947,27 @@ a Hyper Beam.\n""")
     else:
         return False
 
+
+
 def main_menu(player):
     """Main menu, start this after the tutorial"""
     while True:
         achievement_check(achv_dict, player_achv)
         check = death_check()
+        if len(villain_list) <= 0:
+            banner_text("*")
+            banner_text("*")
+            banner_text("You beat the main game!")
+            banner_text("-You may continue playing-")
+            banner_text("*")
+            banner_text("*")
+            break
         if check == True:
             break
-        print()
+        print("=" * 120)
+        print("Airplane: " + str(player.health) + "/300")
+        print("Fuel: " + str(player.fuel) + "/100")
+        print(f"Location: [{player_loca[0]}° {latitude_check(float(player_loca[0]))}, {player_loca[1]}° {longitude_check(float(player_loca[1]))}])")
         print()
         print()
         print()
@@ -1930,6 +1995,7 @@ arceus_list = [Arceus]
 wild_poke = []
 evil_poke = []
 player_achv = []
+player_loca = ["60.3172", "24.9633"]
 villain_list = villain_gen()
 Dahmer = Human("Police Officer Dahmer", "cop")
 villain_yn = ["SAFE"]
