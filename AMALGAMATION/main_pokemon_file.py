@@ -2005,6 +2005,7 @@ def main_menu(player):
         ap_hp = "Airplane: " + str(player.health) + "/300"
         fuel = "Fuel: " + str(player.fuel) + "/100"
         location = f"Location: [{player_loca[0]}° {latitude_check(float(player_loca[0]))}, {player_loca[1]}° {longitude_check(float(player_loca[1]))}])"
+        print(f"[{ap_hp}]           [{fuel}]             [{location}]")
         print()
         print()
         print()
