@@ -143,11 +143,15 @@ class Pokemon:
 
 
 
-def police_attack():
+def police_attack(): ########################################################################3
     "function to place at the beginning of every flight selection"
-    if "Global Warming" in  player_achv:
-        player.health -= 50
-        print("Global ")
+    if "Global Warming" in player_achv:
+        player.health -= 20
+        cop = Human("Cop", "cop")
+        d_print("Hold it right there! You're under arrest for excessive co2 discahrge!")
+        trainer_battle(player, cop)
+        print("Nows your chance, RUN!!!")
+        input("Press Enter to flee from the cops!")
 
 
 
@@ -1744,7 +1748,7 @@ def second_menu(input_sec, player):
     """Part of the main menu"""
     choice = str(input_sec).strip().casefold()
     if choice == "a" or choice.casefold() == "menu":
-        print("=" * 120)
+        print("=" * 100)
         print("""
 1. Help
 2. Cheats
@@ -1760,12 +1764,12 @@ def second_menu(input_sec, player):
         elif a_menu == "2":
             print("Enter: PAYDAY to add 'Meowth' to your team in the main user interface")
             print("Enter: PAYDAY to add 'I choose you!' to your team in the main user interface")
-        print("=" * 120)
+        print("=" * 100)
         if a_menu.casefold() == "exit":
             return "exit"
         return None
     elif choice == "b" or choice.casefold() == "bag":
-        print("=" * 120)
+        print("=" * 100)
         print("1. Medicine")
         print("2. Photograph")
         print("3. Gun")
@@ -1782,10 +1786,10 @@ famous pop star now a days, Ed Sheeran. Wonder what he is up to right now.\n""")
         elif choice == "3":
             d_print("Things arent that bad yet.\n")
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
     elif choice == "c" or choice.casefold() == "stats":
-        print("=" * 120)
+        print("=" * 100)
         print()
         print(f"Player Name: {player.name}")
         print("Airplane HP: " + str(player.health) + "/300")
@@ -1798,42 +1802,42 @@ famous pop star now a days, Ed Sheeran. Wonder what he is up to right now.\n""")
                   f" - Attacks: [{pokemon.atk_1:^16}] [{pokemon.atk_2:^16}]"
                   f" [{pokemon.atk_3:^16}] [{pokemon.atk_4:^16}]")
         poke_stat_options(player)
-        print("=" * 120)
+        print("=" * 100)
         return None
     elif choice == "d" or choice.casefold() == "achievements":
-        print("=" * 120)
+        print("=" * 100)
         if len(player_achv) == 0:
             print("You have not unlocked any achievements.")
         for index, achv in enumerate(player_achv):
             print(f"{index + 1}. {achv}")
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
     elif input_sec == "PAYDAY" and Meowth not in player.team:
-        print("=" * 120)
+        print("=" * 100)
         print("[YOU RECEIVED MEOWTH]") # Saved for later MIGHT REMOVE
         if len(player.team) == 6:
             into_team(player, None, Meowth)
         else:
             wild_capture(Meowth, player)
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
     elif input_sec == "I choose you!" and Pikachu not in player.team:
-        print("=" * 120)
+        print("=" * 100)
         print("[YOU RECEIVED PIKACHU]") # Saved for later MIGHT REMOVE
         if len(player.team) == 6:
             into_team(player, None, Pikachu)
         else:
             wild_capture(Pikachu, player)
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
     else:
-        print("=" * 120)
+        print("=" * 100)
         print("Please enter a valid input.")
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
 
 
@@ -1861,7 +1865,7 @@ def travel_menu(input_travel, player, villain_status):
     """Part of the main menu, but for travelling"""
     choice = int(input_travel)
     if choice == 1:
-        print("=" * 120)
+        print("=" * 100)
         villain_yn.remove(villain_yn[0])
         output = main_mechanics()
         x = output[0]
@@ -1882,11 +1886,12 @@ def travel_menu(input_travel, player, villain_status):
             wild_encounter_battle(player.team[0], player, wild_poke)
             villain_yn.remove(villain_yn[0])
             villain_yn.append("SAFE")
+            police_attack()
     else:
-        print("=" * 120)
+        print("=" * 100)
         print("Please enter a valid input.")
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
 
 
 
@@ -1964,7 +1969,7 @@ def main_menu(player):
             break
         if check == True:
             break
-        print("=" * 120)
+        print("=" * 100)
         print("Airplane: " + str(player.health) + "/300")
         print("Fuel: " + str(player.fuel) + "/100")
         print(f"Location: [{player_loca[0]}° {latitude_check(float(player_loca[0]))}, {player_loca[1]}° {longitude_check(float(player_loca[1]))}])")
@@ -1973,7 +1978,7 @@ def main_menu(player):
         print()
         print("1. Initiate Travel")
         print("0. Land")
-        print("-" * 120)
+        print("-" * 100)
         print("A. Open Menu")
         print("B. Open Bag")
         print("C. Pokemon Stats")
@@ -1994,7 +1999,7 @@ def main_menu(player):
 arceus_list = [Arceus]
 wild_poke = []
 evil_poke = []
-player_achv = []
+player_achv = ["Global Warming"]
 player_loca = ["60.3172", "24.9633"]
 villain_list = villain_gen()
 Dahmer = Human("Police Officer Dahmer", "cop")
