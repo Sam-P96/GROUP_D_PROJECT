@@ -162,7 +162,7 @@ def flight_cost():
     distance = 500
     fuel_cost = (distance / 7500) * 100
     player.fuel -= int(fuel_cost)
-    co2_cost = int(distance * 0.246)
+    co2_cost = 1
     achv_dict["co2"][1] -= co2_cost
 
 
@@ -1885,6 +1885,7 @@ def travel_menu(input_travel, player, villain_status):
     """Part of the main menu, but for travelling"""
     choice = int(input_travel)
     if choice == 1:
+        flight_cost()
         print("=" * 100)
         villain_yn.remove(villain_yn[0])
         output = main_mechanics()
@@ -1898,6 +1899,7 @@ def travel_menu(input_travel, player, villain_status):
         villain_yn.append(x)
         all_poke_heal(player)
     elif choice == 0:
+        player.fuel = 100
         all_poke_heal(player)
         if villain_status[0] == "VILLAIN":
             villain_interaction(player, villain_list[3])
