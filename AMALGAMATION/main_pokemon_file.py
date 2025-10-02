@@ -30,7 +30,7 @@ from used_functions import type_with_cursor
 from used_functions import store_data
 from used_functions import radar
 from used_functions import blip_line
-from used_functions import type_with_sound
+
 
 
 

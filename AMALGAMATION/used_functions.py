@@ -1,5 +1,3 @@
-
-
 from fetching_database import store_data
 import math
 import time
