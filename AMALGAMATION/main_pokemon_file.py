@@ -1,4 +1,4 @@
-import random
+import random #
 import sys
 import time
 import all_pokemon_list
