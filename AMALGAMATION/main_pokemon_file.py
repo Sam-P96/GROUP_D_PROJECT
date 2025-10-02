@@ -1902,7 +1902,7 @@ def travel_menu(input_travel, player, villain_status):
         player.fuel = 100
         all_poke_heal(player)
         if villain_status[0] == "VILLAIN":
-            villain_interaction(player, villain_list[3])
+            villain_interaction(player, villain_list[0])
             villain_yn.remove(villain_yn[0])
             villain_yn.append("SAFE")
         else:
