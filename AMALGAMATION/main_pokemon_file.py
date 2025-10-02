@@ -1418,7 +1418,8 @@ def into_team2(player, opo, wild):
 
 
 def lose_poke(player,opo):
-    d_print("The opponent stole one od your Pokemon, you ran off!\n")
+    d_print("The opponent stole one of your Pokemon, you ran off!\n")
+    d_print("Well, that suck.")
     time.sleep(1)
     if len(player.team) > 0:
         take = random.choice(player.team)
@@ -1451,9 +1452,9 @@ def villain_interaction(player, villain):
         d_print(f"{villain.name}: {random.choice(villain_intro)}\n")
         d_print(f"{villain.name}: {random.choice(wdyw_line)}\n")
         print("""1. Battle
-    2. Play Poker
-    3. Play Russian Roulette
-    0. Exit""")
+2. Play Poker
+3. Play Russian Roulette
+0. Exit""")
         while True:
             while True:
                 user_input = input("Select your choice: ")
@@ -1890,14 +1891,16 @@ def travel_menu(input_travel, player, villain_status):
         x = output[0]
         player_loca.remove(player_loca[0])
         player_loca.remove(player_loca[0])
+        player_loca.remove(player_loca[0])
         player_loca.append(output[1]["latitude"])
         player_loca.append(output[1]["longitude"])
+        player_loca.append(output[1]["airport_name"])
         villain_yn.append(x)
         all_poke_heal(player)
     elif choice == 0:
         all_poke_heal(player)
         if villain_status[0] == "VILLAIN":
-            villain_interaction(player, villain_list[0])
+            villain_interaction(player, villain_list[3])
             villain_yn.remove(villain_yn[0])
             villain_yn.append("SAFE")
         else:
@@ -2004,18 +2007,19 @@ def main_menu(player):
         print("=" * 100)
         ap_hp = "Airplane: " + str(player.health) + "/300"
         fuel = "Fuel: " + str(player.fuel) + "/100"
-        location = f"Location: [{player_loca[0]}° {latitude_check(float(player_loca[0]))}, {player_loca[1]}° {longitude_check(float(player_loca[1]))}])"
+        location = f"Location: [{player_loca[0]}° {latitude_check(float(player_loca[0]))}, {player_loca[1]}° {longitude_check(float(player_loca[1]))}]"
         print(f"[{ap_hp}]           [{fuel}]             [{location}]")
         print()
         print()
         print()
         print("1. Initiate Travel")
-        print("0. Land")
+        print(f"0. Land at {player_loca[2]}")
         print("-" * 100)
         print("A. Open Menu")
         print("B. Open Bag")
         print("C. Pokemon Stats")
         print("D. Open Achievements")
+        print("=" * 100)
         main_input = input("Enter choice: ")
         if main_input.isdigit():
             travel_menu(main_input, player, villain_yn)
@@ -2032,8 +2036,8 @@ def main_menu(player):
 arceus_list = [Arceus]
 wild_poke = []
 evil_poke = []
-player_achv = ["Global Warming"]
-player_loca = ["60.3172", "24.9633"]
+player_achv = []
+player_loca = ["60.3172", "24.9633", "Helsinki Vantaa Airport"]
 villain_list = villain_gen()
 Dahmer = Human("Police Officer Dahmer", "cop")
 villain_yn = ["SAFE"]
