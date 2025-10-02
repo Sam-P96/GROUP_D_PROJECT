@@ -30,7 +30,7 @@ def free_flight(lat,lon,distance,degree,ident):
             if items['ident']!=ident: # and items['ident']!=default_location:
                 nearby_airports.append(items)
     else:
-        print("\033[31mThere are no airports nearby, You are Over The Ocean 🙁\033[0m")
+        print("\033[31mThere are no airports nearby, Co-ordinates are Over The Ocean 🙁\033[0m")
         print("\033[32m Try Again 😉\033[0m ")
     # print(f'NEARBY AIRPORTS TO LAND')
     # for i, item in enumerate(nearby_airports,start=1):

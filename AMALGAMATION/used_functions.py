@@ -85,8 +85,10 @@ def current_location(lat,longi,silent=False):
             d=data[item]['ident']
             e=data[item]['airport_name']
             if not silent: #small changes because it kept printing
-               type_with_cursor(    f'Your Current Location is :\n\033[32m[AIRPORT NAME]: {e}\033[0m \n[CONTINENT]: {b}\n[COUNTRY]: {a}\n[gps_code]: {c}\n')
-
+                if [e]:
+                   typewriter(    f'\nYour Current Location is :\n\033[32m[AIRPORT NAME]: {e}\033[0m \n[CONTINENT]: {b}\n[COUNTRY]: {a}\n[gps_code]: {c}\n')
+            else:
+                    print(f'\nYour Current Location is :\n\033[32m[AIRPORT NAME]: {e}\033[0m \n[CONTINENT]: {b}\n[COUNTRY]: {a}\n[gps_code]: {c}\n')
             return d
 
     if not silent:
@@ -174,36 +176,91 @@ def line_by_line_print(lines, pause=1.0):
         time.sleep(pause)
 
 
+import sys, time, random, re
+import pygame
+import platform
 
+# Initialize pygame mixer
+pygame.mixer.init()
+click_sound = pygame.mixer.Sound("click.wav")  # Typing sound
 
-import winsound  # Windows-only
-
-
-def type_with_sound(text, speed=0.05, cursor=None, blip_speed=0.2, frequency=800, duration=30):
+def play_ping(times=2, delay_ms=100):
     """
-    Prints text with typing effect and optional blinking cursor,
-    with a typing sound for each character.
-
-    Parameters:
-    - text: str, the text to print
-    - speed: float, delay between characters
-    - cursor: str or None, optional blinking cursor character at the end
-    - blip_speed: float, cursor blink speed if cursor is used
-    - frequency: int, pitch of typing sound in Hz
-    - duration: int, duration of each typing sound in ms
+    Plays a short ping to highlight status/current location.
+    Cross-platform: winsound for Windows, ASCII bell for others.
+    times: how many times to repeat
+    delay_ms: delay between pings in milliseconds
     """
-    for char in text:
-        print(char, end='', flush=True)
-        winsound.Beep(frequency, duration)  # typing sound
-        time.sleep(speed)
+    if platform.system() == "Windows":
+        import winsound
+        for _ in range(times):
+            winsound.Beep(1000, 150)  # 1000 Hz, 150 ms
+            time.sleep(delay_ms / 1000)
+    else:
+        for _ in range(times):
+            print('\a', end='', flush=True)
+            time.sleep(delay_ms / 1000)
 
-    # optional blinking cursor at the end
-    if cursor:
-        print(cursor, end='', flush=True)
-        time.sleep(blip_speed)
-        print('\b \b', end='', flush=True)
+def typewriter(text):
+    """
+    Drop-in replacement for print() with typewriter effect.
+    - Plays typing click per character
+    - Plays a double ping at the end
+    """
+    min_delay = 0.05
+    max_delay = 0.1
+    cursor = '|'
 
-    print()  # move to next line
+    ansi_escape = re.compile(r'(\033\[[0-9;]*m)')
+    parts = ansi_escape.split(text)
+
+    for part in parts:
+        if ansi_escape.match(part):
+            sys.stdout.write(part)
+            sys.stdout.flush()
+        else:
+            for char in part:
+                sys.stdout.write(f"{char}{cursor}")
+                sys.stdout.flush()
+                try:
+                    click_sound.play()
+                except Exception:
+                    pass
+                time.sleep(random.uniform(min_delay, max_delay))
+                sys.stdout.write('\b')
+                sys.stdout.flush()
+
+    print()  # newline at the end
+    play_ping(times=2, delay_ms=100)  # double ping at the end
+
+# Example usage:
+location_text = (
+    "Your current location is:\n"
+    "Airport name: ALSKDFJLASDKF, Continent: EU, Country: Finland, GPS code: EFHK"
+)
+
+
+
+
+
+
+
+
+import pygame
+
+# Initialize the mixer once
+pygame.mixer.init()
+
+def play_sound(file_path="sound.mp3"):
+    """Play an MP3 file."""
+    pygame.mixer.music.load(file_path)
+    pygame.mixer.music.play()
+
+
+
+
+import time
+
 
 
 
