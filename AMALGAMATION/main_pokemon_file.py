@@ -143,15 +143,23 @@ class Pokemon:
 
 
 
-def police_attack():
+def police_attack(): ########################################################################3
     "function to place at the beginning of every flight selection"
-    if "Global Warming" in  player_achv:
-        player.health -= 50
-        print("Global ")
+    if "Global Warming" in player_achv:
+        player.health -= 20
+        cop = Human("Cop", "cop")
+        d_print("You noticed someone running after you, its the cops!!")
+        d_print("Hold it right there! You're under arrest for excessive co2 discharge!")
+        trainer_battle(player, cop)
+        print("Nows your chance, RUN!!!")
+        input("Press Enter to flee from the cops!")
 
 
 
-def flight_cost(distance):
+
+
+def flight_cost():
+    distance = 500
     fuel_cost = (distance / 7500) * 100
     player.fuel -= int(fuel_cost)
     co2_cost = int(distance * 0.246)
@@ -625,7 +633,7 @@ def battle_steal(player, opo):
         d_print("""You won! But you're only able to carry 6 Pokemon at all times.\n""")
         first_time -= 1
 
-    into_team(player, opo, None)
+    into_team2(player, opo, None)
 
 
 
@@ -1327,6 +1335,8 @@ def into_team2(player, opo, wild):
     """
     if wild == None:
         while True:
+            if len(opo.team) == 0:
+                break
             if len(player.team) < 6:
                 while len(player.team) < 6 and len(opo.team) > 0:
                     print(f"{opo.team[0].name} was added to your team.")
@@ -1334,6 +1344,9 @@ def into_team2(player, opo, wild):
                     opo.team.remove(opo.team[0])
                     if len(player.team) == 6:
                         continue
+                    if len(opo.team) == 0:
+                        break
+                # break
             else:
                 d_print("Which Pokemon would you like to add to your team?\n")
                 for index_o, poke_o in enumerate(opo.team):
@@ -1405,7 +1418,8 @@ def into_team2(player, opo, wild):
 
 
 def lose_poke(player,opo):
-    d_print("The opponent stole one od your Pokemon, you ran off!\n")
+    d_print("The opponent stole one of your Pokemon, you ran off!\n")
+    d_print("Well, that suck.")
     time.sleep(1)
     if len(player.team) > 0:
         take = random.choice(player.team)
@@ -1423,60 +1437,70 @@ def villain_interaction(player, villain):
     :param villain:
     :return:
     """
-    d_print(random.choice(landed_evil) + "\n")
-    print()
-    d_print(f"{villain.name}: {random.choice(villain_intro)}\n")
-    d_print(f"{villain.name}: {random.choice(wdyw_line)}\n")
-    print("""1. Battle
+    if villain.rank == "cop":
+        time.sleep(1.5)
+        trainer_battle(player, villain)
+        if len(villain.team) <= 0:
+            d_print(f"The {villain.name} fumbled and you took his Pokemon.\n")
+            if len(villain.team) < 0:
+                villain_list.remove(villain)
+                wild_pokemon_assigner(player, evil_poke)
+
+    else:
+        d_print(random.choice(landed_evil) + "\n")
+        print()
+        d_print(f"{villain.name}: {random.choice(villain_intro)}\n")
+        d_print(f"{villain.name}: {random.choice(wdyw_line)}\n")
+        print("""1. Battle
 2. Play Poker
 3. Play Russian Roulette
 0. Exit""")
-    while True:
         while True:
-            user_input = input("Select your choice: ")
-            try:
-                input_check = int(user_input)
+            while True:
+                user_input = input("Select your choice: ")
+                try:
+                    input_check = int(user_input)
+                    break
+                except ValueError:
+                    print("Invalid input")
+                    continue
+            if user_input == "1": # Battle
+                d_print(random.choice(battle_intro_line) + "\n")
+                time.sleep(1)
+                trainer_battle(player, villain)
+                if len(villain.team) <= 0:
+                    d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
+                    if len(villain.team) < 0:
+                        villain_list.remove(villain)
+                        wild_pokemon_assigner(player, evil_poke)
                 break
-            except ValueError:
-                print("Invalid input")
-                continue
-        if user_input == "1": # Battle
-            d_print(random.choice(battle_intro_line) + "\n")
-            time.sleep(1)
-            trainer_battle(player, villain)
-            if len(villain.team) <= 0:
-                d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
-                if len(villain.team) < 0:
-                    villain_list.remove(villain)
-                    wild_pokemon_assigner(player, evil_poke)
-            break
-        elif user_input == "2": # Poker
-            d_print(random.choice(poker_intro_line) + "\n")
-            time.sleep(1)
-            poker(player, villain)
-            if len(villain.team) <= 0:
-                d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
-                # ACHV DICT ALREADY MODIFIED IN THE POKER FUNCTION
-                if len(villain.team) < 0:
-                    villain_list.remove(villain)
-                    wild_pokemon_assigner(player, evil_poke)
-            break
-        elif user_input == "3": # Roulette
-            d_print(random.choice(roulette_intro_line) + "\n")
-            time.sleep(1)
-            start_rr_game(player, villain)
-            if len(villain.team) <= 0:
-                d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
-                if len(villain.team) < 0:
-                    achv_dict["rr"][1] -= 1
-                    villain_list.remove(villain)
-                    wild_pokemon_assigner(player, evil_poke)
-            break
-        elif user_input == "0":
-            d_print(random.choice(leave_chat_line) + "\n")
-            break
-        else:
-            print(random.choice(invalid_selection_line))
+            elif user_input == "2": # Poker
+                d_print(random.choice(poker_intro_line) + "\n")
+                time.sleep(1)
+                poker(player, villain)
+                if len(villain.team) <= 0:
+                    d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
+                    # ACHV DICT ALREADY MODIFIED IN THE POKER FUNCTION
+                    if len(villain.team) < 0:
+                        villain_list.remove(villain)
+                        wild_pokemon_assigner(player, evil_poke)
+                break
+            elif user_input == "3": # Roulette
+                d_print(random.choice(roulette_intro_line) + "\n")
+                time.sleep(1)
+                start_rr_game(player, villain)
+                if len(villain.team) <= 0:
+                    d_print(f"{villain.name} surrendered and have given themselves to the police.\n")
+                    if len(villain.team) < 0:
+                        achv_dict["rr"][1] -= 1
+                        villain_list.remove(villain)
+                        wild_pokemon_assigner(player, evil_poke)
+                break
+            elif user_input == "0":
+                d_print(random.choice(leave_chat_line) + "\n")
+                break
+            else:
+                print(random.choice(invalid_selection_line))
 
 
 
@@ -1744,7 +1768,7 @@ def second_menu(input_sec, player):
     """Part of the main menu"""
     choice = str(input_sec).strip().casefold()
     if choice == "a" or choice.casefold() == "menu":
-        print("=" * 120)
+        print("=" * 100)
         print("""
 1. Help
 2. Cheats
@@ -1760,12 +1784,12 @@ def second_menu(input_sec, player):
         elif a_menu == "2":
             print("Enter: PAYDAY to add 'Meowth' to your team in the main user interface")
             print("Enter: PAYDAY to add 'I choose you!' to your team in the main user interface")
-        print("=" * 120)
+        print("=" * 100)
         if a_menu.casefold() == "exit":
             return "exit"
         return None
     elif choice == "b" or choice.casefold() == "bag":
-        print("=" * 120)
+        print("=" * 100)
         print("1. Medicine")
         print("2. Photograph")
         print("3. Gun")
@@ -1782,10 +1806,10 @@ famous pop star now a days, Ed Sheeran. Wonder what he is up to right now.\n""")
         elif choice == "3":
             d_print("Things arent that bad yet.\n")
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
     elif choice == "c" or choice.casefold() == "stats":
-        print("=" * 120)
+        print("=" * 100)
         print()
         print(f"Player Name: {player.name}")
         print("Airplane HP: " + str(player.health) + "/300")
@@ -1798,42 +1822,42 @@ famous pop star now a days, Ed Sheeran. Wonder what he is up to right now.\n""")
                   f" - Attacks: [{pokemon.atk_1:^16}] [{pokemon.atk_2:^16}]"
                   f" [{pokemon.atk_3:^16}] [{pokemon.atk_4:^16}]")
         poke_stat_options(player)
-        print("=" * 120)
+        print("=" * 100)
         return None
     elif choice == "d" or choice.casefold() == "achievements":
-        print("=" * 120)
+        print("=" * 100)
         if len(player_achv) == 0:
             print("You have not unlocked any achievements.")
         for index, achv in enumerate(player_achv):
             print(f"{index + 1}. {achv}")
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
     elif input_sec == "PAYDAY" and Meowth not in player.team:
-        print("=" * 120)
+        print("=" * 100)
         print("[YOU RECEIVED MEOWTH]") # Saved for later MIGHT REMOVE
         if len(player.team) == 6:
             into_team(player, None, Meowth)
         else:
             wild_capture(Meowth, player)
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
     elif input_sec == "I choose you!" and Pikachu not in player.team:
-        print("=" * 120)
+        print("=" * 100)
         print("[YOU RECEIVED PIKACHU]") # Saved for later MIGHT REMOVE
         if len(player.team) == 6:
             into_team(player, None, Pikachu)
         else:
             wild_capture(Pikachu, player)
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
     else:
-        print("=" * 120)
+        print("=" * 100)
         print("Please enter a valid input.")
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
         return None
 
 
@@ -1861,20 +1885,22 @@ def travel_menu(input_travel, player, villain_status):
     """Part of the main menu, but for travelling"""
     choice = int(input_travel)
     if choice == 1:
-        print("=" * 120)
+        print("=" * 100)
         villain_yn.remove(villain_yn[0])
         output = main_mechanics()
         x = output[0]
         player_loca.remove(player_loca[0])
         player_loca.remove(player_loca[0])
+        player_loca.remove(player_loca[0])
         player_loca.append(output[1]["latitude"])
         player_loca.append(output[1]["longitude"])
+        player_loca.append(output[1]["airport_name"])
         villain_yn.append(x)
         all_poke_heal(player)
     elif choice == 0:
         all_poke_heal(player)
         if villain_status[0] == "VILLAIN":
-            villain_interaction(player, villain_list[0])
+            villain_interaction(player, villain_list[3])
             villain_yn.remove(villain_yn[0])
             villain_yn.append("SAFE")
         else:
@@ -1882,11 +1908,25 @@ def travel_menu(input_travel, player, villain_status):
             wild_encounter_battle(player.team[0], player, wild_poke)
             villain_yn.remove(villain_yn[0])
             villain_yn.append("SAFE")
+            # police_attack()
+            if "Global Warming" in player_achv:
+                player.health -= 20
+                cop = Human("Cop", "cop")
+                d_print("You noticed someone running after you, its the cops!!\n")
+                d_print("Hold it right there! You're under arrest for excessive co2 discharge!\n")
+                villain_interaction(player, cop)
+                villain_yn.remove(villain_yn[0])
+                villain_yn.append("SAFE")
+                print("Now's your chance, RUN!!!")
+                input("Press Enter to flee from the cops!")
+
+
+
     else:
-        print("=" * 120)
+        print("=" * 100)
         print("Please enter a valid input.")
         input("Press Enter to continue")
-        print("=" * 120)
+        print("=" * 100)
 
 
 
@@ -1964,20 +2004,22 @@ def main_menu(player):
             break
         if check == True:
             break
-        print("=" * 120)
-        print("Airplane: " + str(player.health) + "/300")
-        print("Fuel: " + str(player.fuel) + "/100")
-        print(f"Location: [{player_loca[0]}° {latitude_check(float(player_loca[0]))}, {player_loca[1]}° {longitude_check(float(player_loca[1]))}])")
+        print("=" * 100)
+        ap_hp = "Airplane: " + str(player.health) + "/300"
+        fuel = "Fuel: " + str(player.fuel) + "/100"
+        location = f"Location: [{player_loca[0]}° {latitude_check(float(player_loca[0]))}, {player_loca[1]}° {longitude_check(float(player_loca[1]))}]"
+        print(f"[{ap_hp}]           [{fuel}]             [{location}]")
         print()
         print()
         print()
         print("1. Initiate Travel")
-        print("0. Land")
-        print("-" * 120)
+        print(f"0. Land at {player_loca[2]}")
+        print("-" * 100)
         print("A. Open Menu")
         print("B. Open Bag")
         print("C. Pokemon Stats")
         print("D. Open Achievements")
+        print("=" * 100)
         main_input = input("Enter choice: ")
         if main_input.isdigit():
             travel_menu(main_input, player, villain_yn)
@@ -1995,7 +2037,7 @@ arceus_list = [Arceus]
 wild_poke = []
 evil_poke = []
 player_achv = []
-player_loca = ["60.3172", "24.9633"]
+player_loca = ["60.3172", "24.9633", "Helsinki Vantaa Airport"]
 villain_list = villain_gen()
 Dahmer = Human("Police Officer Dahmer", "cop")
 villain_yn = ["SAFE"]

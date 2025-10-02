@@ -48,7 +48,7 @@ class Pokemon:
         self.atk_2 = a2
         self.atk_3 = a3
         self.atk_4 = a4
-        self.att_key = [a1, a2, a3, a4, "DELETE"]
+        self.att_key = [a1, a2, a3, a4]
 
 
 
