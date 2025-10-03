@@ -69,7 +69,6 @@ def loading_ani():
     for i in range(8):  # in thử 6 frame
         frame = next(loading)
         clear()# lấy frame kế tiếp
-        draw_art(10,70,frame)
+        draw_art(10,0,frame)
         sys.stdout.flush()
         time.sleep(0.2)
-
