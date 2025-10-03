@@ -1980,7 +1980,7 @@ def banner_text(text: str = " ", screen_width: int = 80) -> None:
 
 
 
-def death_check(): # Lose conditions
+def death_check(): # Lose conditions #######################################################33 LOSING CONDITION DUY DUY DUY DUY DUY!!!!
     """Checks the player for losing conditions and ends the game accordingly."""
     if len(player.team) == 0:
         d_print("""You have no Pokemon left, you see a black Rayquaza in the distance. 
@@ -2022,7 +2022,7 @@ def main_menu(player):
         if len(villain_list) <= 0:
             banner_text("*")
             banner_text("*")
-            banner_text("You beat the main game!")
+            banner_text("You beat the main game!") ##########3 DUY DUY DUY DUYYYYYYYYY!! Win animation here, ty
             banner_text("-You may continue playing-")
             banner_text("*")
             banner_text("*")
