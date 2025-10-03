@@ -35,6 +35,7 @@ from used_functions import blip_line
 # Duy's Animation
 from Intro import intro
 from Fly import animation_flying
+from loading import loading_ani
 from Fly import animation_landing
 from airport import airport_ani
 
@@ -1730,6 +1731,8 @@ def main_mechanics():
 
     airport_list=radar(lat,longi,ident=b)
     while True:
+        # Duy's Loading Animation
+        loading_ani()
 
         villain_airport,villain_randomize=villain_assign_randomly(airport_list,villain_list=None)
         #{here should be the randomizer for villains}
@@ -2072,7 +2075,7 @@ b=current_location(lat,longi,silent=False)
 player = character_creator()
 wild_pokemon_assigner(player, evil_poke)
 #FLYING ANIMATION
-tutorial(player)
+# tutorial(player)
 animation_flying()
 main_menu(player)
 

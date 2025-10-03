@@ -72,3 +72,4 @@ def loading_ani():
         draw_art(10,0,frame)
         sys.stdout.flush()
         time.sleep(0.2)
+    clear()
