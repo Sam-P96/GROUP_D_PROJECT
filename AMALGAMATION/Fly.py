@@ -77,6 +77,8 @@ def animation_straight(x,y,str):
             ani_row = x
             ani_condi = True
             clear()
+
+
 def animation_flying():
     animation_fly(10,170,plane)
 def animation_landing():

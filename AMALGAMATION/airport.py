@@ -62,6 +62,6 @@ def airport_ani(name):
                 ani_condi = True
                 ani_row = x
 
-    animation(10,100)
+    animation(10,25)
     # draw_art(15,91,b)
-airport_ani(name)
+# airport_ani("name")

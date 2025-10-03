@@ -2,6 +2,8 @@ import random #
 import sys
 import time
 import all_pokemon_list
+import msvcrt
+import threading
 from type_chart_factor import type_bonus_dict
 from attack_dict import attack_dict
 from all_pokemon_list import Arceus
@@ -30,6 +32,11 @@ from used_functions import type_with_cursor
 from used_functions import store_data
 from used_functions import radar
 from used_functions import blip_line
+# Duy's Animation
+from Intro import intro
+from Fly import animation_flying
+from Fly import animation_landing
+from airport import airport_ani
 
 
 
@@ -146,15 +153,13 @@ class Pokemon:
 def police_attack(): ########################################################################3
     "function to place at the beginning of every flight selection"
     if "Global Warming" in player_achv:
-        player.health -= 20
+        # player.health -= 20
         cop = Human("Cop", "cop")
         d_print("You noticed someone running after you, its the cops!!")
         d_print("Hold it right there! You're under arrest for excessive co2 discharge!")
         trainer_battle(player, cop)
         print("Nows your chance, RUN!!!")
         input("Press Enter to flee from the cops!")
-
-
 
 
 
@@ -197,7 +202,15 @@ def d_print(s): # CHANGE time.sleep to 0 when testing code.
         sys.stdout.write(c)
         sys.stdout.flush()
         time.sleep(0.05)
+        if msvcrt.kbhit():
+            key = msvcrt.getch()
+
+            if key == b'\r':
+                sys.stdout.write(s)
+                sys.stdout.flush()
+                break
     # print(s)
+
 
 
 
@@ -1509,9 +1522,9 @@ def villain_gen() -> list:
     Generates a list of villains
     :return: list of villains
     """
-    villain_1 = Human("Lady Gaga", "exec")
+    villain_1 = Human("Lady Gaga", "grunt")
     villain_2 = Human("Zandaya", "grunt")
-    villain_3 = Human("Beyonce", "grunt")
+    villain_3 = Human("Beyonce", "manager")
     villain_4 = Human("P Diddy", "manager")
     villain_5 = Human("Taylor Swift", "manager")
     villain_6 = Human("Elon Musk", "exec")
@@ -1528,6 +1541,8 @@ def character_creator():
     :return:
     """
     player_name = input("Enter Your Name: ")
+    if player_name == "":
+        player_name = "-Blank-" # Reference to No Game No Life Anime
     player = Human(str(player_name), "player")
     d_print(f"Welcome, {player.name}.\n")
     print("""Select your partner Pokemon:
@@ -1626,7 +1641,7 @@ probably doesn't care.""")
 that my command to my Pokemon is case sensitive, or my Pokemon will get confused 
 and freeze.\n""")
     time.sleep(2)
-    print("=" * 100)
+    print("=" * 100 + "\n")
     trainer_battle(player, Dahmer)
     if len(player.team) > 0:
         d_print("""Dahmer: If I had more Pokemon, I could have swapped out 
@@ -1638,8 +1653,11 @@ Pokemon by using the SWAP command when it was my turn.\n""")
     d_print("""You quickly make your way to your airplane, the runway is empty
 so you easily took off without worrying about collision with another
 plane in the area.\n""")
-    print()
-    d_print("=" * 100)
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    # USE DUY'S FLIGHT ANIMATION
+    airport_ani("Helsinki Vantaa Airport")
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("=" * 100)
     print("\n")
     print("-beep beep-")
     d_print(f"""Ed Sheeran: Hey man, I saw what happened to you on the news, this
@@ -1651,7 +1669,6 @@ advice, or... you can clear your name and defeat all 8 terrorists scattered
 throughout the world. Surely, if you defeat all 8 of them, you will be 
 pardoned of all misunderstandings.\n""")
     print("=" * 100 + "\n")
-    # USE DUY'S FLIGHT AIMATION HERE 3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     time.sleep(2)
 
 
@@ -1749,7 +1766,8 @@ def main_mechanics():
                 villain_airport,villain_randomize=villain_assign_randomly(airport_list,villain_list=None)
 
         elif 1<=value<=len(airport_list):
-            #{here should be the landing part)
+            # Animation to Fly to the location
+            animation_flying()
             airport=airport_list[value-1]
             lat1=float(airport['latitude'])
             lon1=float(airport['longitude'])
@@ -1901,6 +1919,8 @@ def travel_menu(input_travel, player, villain_status):
     elif choice == 0:
         player.fuel = 100
         all_poke_heal(player)
+        airport_ani(str(player_loca[2]))
+        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         if villain_status[0] == "VILLAIN":
             villain_interaction(player, villain_list[0])
             villain_yn.remove(villain_yn[0])
@@ -2033,7 +2053,8 @@ def main_menu(player):
 
 
 #RUN DUY'S INTRO HERE
-
+intro()
+print("\n\n\n\n\n\n")
 # LIST OF LISTS AND STUFF WE WANT TO START OUT WITH
 arceus_list = [Arceus]
 wild_poke = []
@@ -2047,10 +2068,12 @@ default_location="EFHK"
 lat = float(store_data()[default_location]["latitude"])
 longi = float(store_data()[default_location]["longitude"])
 b=current_location(lat,longi,silent=False)
-
+# Game Starts Here
 player = character_creator()
 wild_pokemon_assigner(player, evil_poke)
-# tutorial(player)
+#FLYING ANIMATION
+tutorial(player)
+animation_flying()
 main_menu(player)
 
 

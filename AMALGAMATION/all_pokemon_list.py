@@ -731,7 +731,7 @@ NU_Poke = [Metagross, Escavalier, Jolteon, Medicham, Mismagius, Clawitzer,
 # Pokemon(name, None, type1, type2_or_None, HP, max(Atk,SpA), max(Def,SpD), Spe, move1, move2, move3, move4)
 
 Charizard = Pokemon("Charizard", "Mega Charizard X",
-                      "Fire", "Flying", 78, 109,
+                      "Fire", "Flying", 78, 99999999999109,
                       85, 100, "Overheat","Thunder Punch",
                     "Aerial Ace", "Shadow Claw")
 

@@ -180,7 +180,7 @@ import platform
 
 # Initialize pygame mixer
 pygame.mixer.init()
-click_sound = pygame.mixer.Sound("click.wav")  # Typing sound
+# click_sound = pygame.mixer.Sound("click.wav")  # Typing sound
 
 def play_ping(times=2, delay_ms=100):
     """
