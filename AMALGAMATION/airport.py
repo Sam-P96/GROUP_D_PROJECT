@@ -43,7 +43,7 @@ def airport_ani(name):
         for k, l in enumerate(line):
             goto(r + k, c)
             sys.stdout.write(l)
-    def animation(x,y,):
+    def animation(x,y):
         ani_condi =False
         ani_row = 20
         ani_col = y
@@ -52,10 +52,9 @@ def airport_ani(name):
         while not ani_condi:
             clear()
             ani_row -=1
-            draw_art(1,70,a)
+            draw_art(1,y-21,a)
             draw_art(ani_row,ani_col, b)
-
-            draw_art(4, 106, f"{Kolyre.foreground_256(next(color))}{Kolyre.BOLD}\r{name}{Kolyre.RESET}")
+            draw_art(2, y+9, f"{Kolyre.foreground_256(next(color))}{Kolyre.BOLD}\r{name}{Kolyre.RESET}")
 
             sys.stdout.flush()
             time.sleep(0.1)
@@ -63,6 +62,6 @@ def airport_ani(name):
                 ani_condi = True
                 ani_row = x
 
-    animation(10,91)
+    animation(10,100)
     # draw_art(15,91,b)
-# airport_ani()
+airport_ani(name)
