@@ -1,7 +1,5 @@
 # import Intro
 import sys,time
-from loading import loading_ani
-from airport import airport_ani
 plane = r"""
         ______
         _\ _~-\___
@@ -79,10 +77,7 @@ def animation_straight(x,y,str):
             ani_row = x
             ani_condi = True
             clear()
-
-# airport_ani("Espoo")
-# animation_fly(10,170,plane)
-# loading_ani()
-# animation_down(10,170,plane)
-# airport_ani("Helsinki")
-# animation_straight(10,140,plane)
+def animation_flying():
+    animation_fly(10,170,plane)
+def animation_landing():
+    animation_down(10,170,plane)
