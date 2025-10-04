@@ -191,3 +191,4 @@ def ani_win(x,y,y2,str1):
 
 def ani_win1(x,y,y2):
     ani_win(x,y,y2,cover3)
+#Test here
