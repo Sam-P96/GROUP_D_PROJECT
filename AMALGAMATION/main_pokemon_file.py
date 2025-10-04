@@ -38,6 +38,7 @@ from Fly import animation_flying
 from loading import loading_ani
 from Fly import animation_landing
 from airport import airport_ani
+from win import ani_win1
 
 
 
@@ -2022,7 +2023,7 @@ def main_menu(player):
         if len(villain_list) <= 0:
             banner_text("*")
             banner_text("*")
-            banner_text("You beat the main game!") ##########3 DUY DUY DUY DUYYYYYYYYY!! Win animation here, ty
+            ani_win1(7,100,135) ################Here is Win animation and you guys could modify position by x & y -> ani_win1(x,y,y2)###################################################
             banner_text("-You may continue playing-")
             banner_text("*")
             banner_text("*")
